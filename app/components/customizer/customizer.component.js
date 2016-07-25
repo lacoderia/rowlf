@@ -40,12 +40,10 @@
         ctrl.submitCurrentStep = function submitCurrentStep(stepData) {
             var deferred = $q.defer();
             ctrl.showBusyText = true;
-            console.log('On before submit');
             if (!stepData.completed) {
                 //simulate $http
                 $timeout(function () {
                     ctrl.showBusyText = false;
-                    console.log('On submit success');
                     deferred.resolve({ status: 200, statusText: 'success', data: {} });
                     //move to next step when success
                     stepData.completed = true;
