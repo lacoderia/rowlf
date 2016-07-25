@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html lang="en" ng-app="omtApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html lang="en" ng-app="omtApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html lang="en" ng-app="omtApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="omtApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title><%= title %></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/assets/favicons/manifest.json">
+    <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor style sheets -->
+    <link rel="stylesheet" href="/bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="/bower_components/html5-boilerplate/dist/css/main.css">
+    <!-- Angular Material style sheets -->
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/bower_components/md-steppers/dist/md-steppers.min.css">
+    <!-- Application style sheets -->
+    <link rel="stylesheet" href="/app.css">
+
+</head>
+<body ng-cloak layout="column">
+    <navigation></navigation>
+    <div id="main" ng-view flex layout="column"></div>
+
+    <!-- Angular libs -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-loader/angular-loader.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="bower_components/md-steppers/dist/md-steppers.min.js"></script>
+
+    <!-- Application scripts -->
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+
+    <!-- Application services -->
+    <script src="shared/services/utils.service.js"></script>
+    <script src="shared/services/store.service.js"></script>
+    <script src="shared/services/session.service.js"></script>
+    <script src="shared/services/routing.service.js"></script>
+
+    <!-- Application directives -->
+    <script src="shared/directives/password-check.directive.js"></script>
+
+    <!-- Common Classes -->
+    <script src="shared/classes/User.js"></script>
+
+    <!-- Components -->
+
+    <!-- Intro Component -->
+    <script src="components/intro/intro.module.js"></script>
+    <script src="components/intro/intro.component.js"></script>
+
+    <!-- Login Component -->
+    <script src="components/login/login.module.js"></script>
+    <script src="components/login/login.component.js"></script>
+    <script src="components/login/login.service.js"></script>
+
+    <!-- Navigation Component -->
+    <script src="components/navigation/navigation.module.js"></script>
+    <script src="components/navigation/navigation.component.js"></script>
+    <script src="components/navigation/navigation.service.js"></script>
+
+    <!-- Customizer Component -->
+    <script src="components/customizer/customizer.module.js"></script>
+    <script src="components/customizer/customizer.component.js"></script>
+    <script src="components/customizer/customizer.service.js"></script>
+
+    <!-- Collection Tiles Component -->
+    <script src="components/collection-tiles/collection-tiles.module.js"></script>
+    <script src="components/collection-tiles/collection-tiles.component.js"></script>
+    <script src="components/collection-tiles/collection-tiles.service.js"></script>
+
+    <!-- Collection Grids Component -->
+    <script src="components/collection-grids/collection-grids.module.js"></script>
+    <script src="components/collection-grids/collection-grids.component.js"></script>
+    <script src="components/collection-grids/collection-grids.service.js"></script>
+    <script src="components/collection-grids/collection-grids.provider.js"></script>
+
+    <!-- Tile Customizer Component -->
+    <script src="components/tile-customizer/tile-customizer.module.js"></script>
+    <script src="components/tile-customizer/tile-customizer.component.js"></script>
+    <script src="components/tile-customizer/tile-customizer.service.js"></script>
+</body>
+</html>

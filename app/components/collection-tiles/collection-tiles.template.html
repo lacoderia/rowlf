@@ -1,0 +1,33 @@
+<h2 layout="row" class="md-display-1">1. Size selector</h2>
+<p layout="row">Select the collection of sizes to see the tile design available on each collection:</p>
+<div layout="row" class="tile-collection" layout-align="center start" layout-margin layout-wrap ng-init="$ctrl.init()">
+    <div class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1" flex="15" flex-xs="70" flex-sm="45" flex-md="30">
+        <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
+            <div class="tile-body">
+                <div class="tile-size size-{{ ::item.inches }}"></div>
+            </div>
+            <h3 class="tile-title" ng-bind="::item.title"></h3>
+            <div class="selected-overlay"></div>
+            <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+        </a>
+    </div>
+    <div layout-margin layout="column" class="tile-bottom-sheet" ng-class="{ true: 'collection-tile-selected', false: ''}[!$ctrl.areSelectedCollections()]">
+        <div layout="column" layout-align="start start">
+            <h3>Collection: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
+            <p layout="row">Select all the tile designs you like:</p>
+        </div>
+        <div class="tile-selector" layout="row" layout-align="center center" layout-margin layout-wrap>
+            <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)">
+                <img class="tile-image" ng-src="{{ item.url }}"/>
+                <h3 class="tile-title" ng-bind="::item.name"></h3>
+                <div class="selected-overlay"></div>
+                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="step-action" layout-sm="column" layout-wrap layout-margin>
+    <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.areSelectedCollections()">
+        Next <md-icon class="material-icons">&#xE409;</md-icon>
+    </md-button>
+</div>

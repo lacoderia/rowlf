@@ -1,0 +1,191 @@
+// App styles
+@import "../../assets/styles/base/_mixins"
+@import "../../assets/styles/base/_typography"
+@import "../../assets/styles/base/_variables"
+
+.tile-set-content
+  background: $color-gray-100
+
+collection-tiles
+
+  .tile-collection
+
+    .tile-collection-item
+      background: white
+      cursor: pointer
+      padding: 0
+      text-align: center
+
+      a.tile-content
+        box-sizing: border-box
+        display: block
+        padding: 1.5rem 0
+        position: relative
+        text-decoration: none
+
+        &:after
+          border-bottom: 10px solid $color-gray-900
+          border-left: 10px solid transparent
+          border-right: 10px solid transparent
+          bottom: -10px
+          content: ""
+          left: 50%
+          opacity: 0
+          position: absolute
+          transform: translateX(-50%)
+          height: 0
+          width: 0
+
+        .tile-body
+          align-items: center
+          display: flex
+          margin: 0
+          min-height: 80px
+          padding: 0
+          width: 100%
+
+        .tile-size
+          background: $color-blue-500
+          margin: 0 auto
+
+          &.size-12
+            height: 80px
+            width: 80px
+
+          &.size-10
+            height: 70px
+            width: 70px
+
+          &.size-8
+            height: 60px
+            width: 60px
+
+          &.size-6
+            height: 50px
+            width: 50px
+
+          &.size-4
+            height: 40px
+            width: 40px
+
+          &.size-3
+            height: 28px
+            width: 28px
+
+        .tile-title
+          color: $color-gray-500
+          font-size: 0.9rem
+          margin: 1rem 0 0
+          padding: 0 1rem
+
+      .selected-overlay
+        background: $color-light-green-300
+        bottom: 0
+        display: none
+        left: 0
+        opacity: 0
+        position: absolute
+        right: 0
+        top: 0
+        transition: opacity 0.2s
+
+      .selected-icon
+        bottom: 10px
+        color: $color-light-green-500
+        content: ""
+        height: 20px
+        opacity: 0
+        position: absolute
+        right: 10px
+        width: 20px
+        transition: opacity 0.2s
+
+      &.selected
+
+        a.tile-content
+          &:after
+            opacity: 1
+
+        .selected-overlay
+          display: block
+          opacity: 0.1
+
+        .selected-icon
+          opacity: 1
+
+
+
+.tile-bottom-sheet
+  background: $color-gray-900
+  box-sizing: border-box
+  display: none
+  margin: 0 1rem
+  padding: 2rem
+  width: 100%
+  transition: 1s ease
+
+  &.collection-tile-selected
+    display: block
+
+  h3
+    color: white
+    margin: 0
+
+  p
+    color: $color-gray-400
+    margin: 0.8rem 0 2rem
+
+  .tile-selector
+    display: flex
+    justify-content: space-between
+
+    .tile-item
+      background: white
+      border: 3px solid transparent
+      cursor: pointer
+      padding: 1rem
+      position: relative
+
+      &:hover
+        &:not(.selected)
+          border-color: $color-light-green-300
+
+      .tile-image
+        width: 100%
+
+      .tile-title
+        color: $color-gray-900
+        font-size: 0.9rem
+        margin-top: 1rem
+        text-align: center
+
+      .selected-overlay
+        background: $color-light-green-300
+        bottom: 0
+        display: none
+        left: 0
+        opacity: 0
+        position: absolute
+        right: 0
+        top: 0
+        transition: opacity 0.2s
+
+      .selected-icon
+        bottom: 10px
+        color: $color-light-green-500
+        content: ""
+        height: 20px
+        opacity: 0
+        position: absolute
+        right: 10px
+        width: 20px
+        transition: opacity 0.2s
+
+      &.selected
+
+        .selected-overlay
+          display: block
+          opacity: 0.1
+
+        .selected-icon
+          opacity: 1

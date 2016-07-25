@@ -1,0 +1,49 @@
+// App styles
+@import "../../assets/styles/base/_mixins"
+@import "../../assets/styles/base/_typography"
+@import "../../assets/styles/base/_variables"
+
+.login-component
+  left: 50%
+  max-width: 320px
+  position: absolute
+  top: 50%
+  transform: translate(-50%, -50%)
+  width: 100%
+
+  hgroup
+    display: block
+
+    img
+      max-width: 26px
+      width: 100%
+
+  md-input-container:not(.md-input-invalid) .md-input-message-animation
+    visibility: hidden
+
+  .group-title
+    font-size: 18px
+
+  .hint
+    /* Position the hint */
+    position: absolute
+    left: 2px
+    right: auto
+    bottom: 7px
+    /* Copy styles from ng-messages */
+    font-size: 12px
+    line-height: 14px
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2)
+    /* Set our own color */
+    color: grey
+
+  .inputdemoErrorsAdvanced .hint.ng-hide,
+  .inputdemoErrorsAdvanced .hint.ng-enter,
+  .inputdemoErrorsAdvanced .hint.ng-leave.ng-leave-active
+    bottom: 26px
+    opacity: 0
+
+  .inputdemoErrorsAdvanced .hint.ng-leave,
+  .inputdemoErrorsAdvanced .hint.ng-enter.ng-enter-active
+    bottom: 7px
+    opacity: 1
