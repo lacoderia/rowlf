@@ -1,6 +1,17 @@
-<h2 layout="row" class="md-display-1">2. Customize your tiles patterns</h2>
+<h2 layout="row" class="md-display-1">3. Customize your tiles patterns</h2>
 <p layout="row">You can change color, rotate and delete the tiles</p>
 <div layout="rows" class="tile-customizer">
+    <ul layouts="rows" class="tile-tools">
+        <li class="tile-clone-button">
+            <button>
+                <md-tooltip>Add a clone of selected tiles</md-tooltip>
+                <md-icon class="material-icons">&#xE147;</md-icon>
+            </button>
+        </li>
+        <li class="tile-tool-item"></li>
+    </ul>
+</div>
+<!--div layout="rows" class="tile-customizer">
     <div class="selected-tiles" flex="50" layout-margin layout="rows" layout-align="start start" layout-margin layout-wrap>
         <div ng-repeat="tile in $ctrl.getSelectedTiles()" flex="15" class="tile">
             <a href="#" ng-click="$ctrl.selectTile(tile)">
@@ -11,4 +22,4 @@
     <div id="work-table" class="work-table" flex="50" layout-margin>
         <div id="canvas" ng-init="$ctrl.canvasInit('#canvas')" ng-if="$ctrl.getSelectedTile()"></div>
     </div>
-</div>
+</div-->

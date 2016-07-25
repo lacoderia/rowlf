@@ -43,3 +43,7 @@ jspm_packages
 
 # Bower dependencies
 app/bower_components
+
+# Styles
+*.css
+*.css.map
