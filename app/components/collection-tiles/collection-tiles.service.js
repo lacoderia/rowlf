@@ -134,8 +134,7 @@
          * @param selectedTiles
          */
         function setSelectedTiles(selectedTiles) {
-            console.log(selectedTiles);
-            //_selectedTiles = selectedTiles;
+            _selectedTiles = selectedTiles;
         }
 
         var service = {

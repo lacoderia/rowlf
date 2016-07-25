@@ -22,10 +22,10 @@
          *
          * @returns {Array}
          */
-        ctrl.getSelectedTiles = function() {
-            //_selectedTiles = collectionTilesService.getSelectedTiles();
+        ctrl.getSelectedTiles = _.memoize(function() {
+            _selectedTiles = collectionTilesService.getSelectedTiles();
             return _selectedTiles;
-        };
+        });
 
         /**
          *

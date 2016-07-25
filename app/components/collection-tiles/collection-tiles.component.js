@@ -76,9 +76,7 @@
                                 }
                             );
                 }
-
-                showGridBottomSheet();
-
+                
             }catch (error){
                 console.log(error);
             }
@@ -161,28 +159,6 @@
             } catch(error){
                 console.log(error)
             }
-        };
-
-
-        /**
-         *
-         */
-        var showGridBottomSheet = function() {
-            //resetTiles();
-
-            /*$mdBottomSheet.show({
-                templateUrl: 'components/collection-tiles/tile-selector.template.html',
-                controller: collectionTilesController,
-                scope: $scope,
-                preserveScope: true,
-            }).then(function(clickedItem) {
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent('¡Vamos bien!')
-                        .position('top right')
-                        .hideDelay(1500)
-                );
-            });*/
         };
 
         /**
