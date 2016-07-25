@@ -14,6 +14,12 @@
 
         /**
          *
+         * @type {boolean}
+         */
+        ctrl.loading = false;
+
+        /**
+         *
          * @param tile
          */
         var selectTile = function(tile) {
@@ -50,21 +56,25 @@
          */
         ctrl.selectCollectionTiles = function(collection){
             try{
-                if(!_selectedCollectionTiles){
-                    _selectedCollectionTiles = collection;
-                    collectionTilesService.setSelectedCollectionTiles(collection.id);
-                    if(_selectedCollectionTiles.tiles.length <= 0){
-                        collectionTilesService.callTilesByCollectionId(collection.id).then(
-                            function (response) {
-                                _selectedCollectionTiles.tiles = response;
-                            }
-                        );
-                    }
-                }else{
-                    if(_selectedCollectionTiles.id != collection.id){
-                        _selectedCollectionTiles = collection;
-                        collectionTilesService.setSelectedCollectionTiles(collection.id);
-                    }
+
+                _selectedCollectionTiles = collection;
+
+                if(_selectedCollectionTiles.tiles.length){
+                    collectionTilesService.setSelectedCollection(collection.id);
+                } else {
+                        ctrl.loading = true;
+                        collectionTilesService.callTilesByCollectionId(collection.id).
+                            then(
+                                function (response) {
+                                    collectionTilesService.setSelectedCollection(collection.id);
+                                    _selectedCollectionTiles.tiles = collectionTilesService.getSelectedCollectionTiles();
+                                }
+                            ).
+                            finally(
+                                function (){
+                                    ctrl.loading = false;
+                                }
+                            );
                 }
 
                 showGridBottomSheet();
@@ -91,7 +101,7 @@
          *
          */
         ctrl.setSelectedTiles = function() {
-            collectionTilesService.setSelectedCollectionTiles(_selectedTiles);
+            collectionTilesService.setSelectedTiles(_selectedTiles);
         };
 
         /**

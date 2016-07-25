@@ -52,7 +52,6 @@
                 function (response) {
                     try{
                         if(response.data){
-                            console.log(response.data)
                             var collectionTiles = getCollectionTilesById(collectionId);
                             collectionTiles.tiles = [];
                             for(var itemIndex=0; itemIndex<response.data.tiles.length; itemIndex++){
@@ -98,7 +97,7 @@
          * @returns {*}
          */
         function getSelectedCollectionTiles() {
-            return angular.copy(_selectedCollection);
+            return angular.copy(_selectedCollection.tiles);
         };
 
         /**
@@ -118,7 +117,7 @@
          *
          * @param selectedCollection
          */
-        function setSelectedCollectionTiles(collectionId) {
+        function setSelectedCollection(collectionId) {
             var selectedCollection = getCollectionTilesById(collectionId);
             _selectedCollection = selectedCollection;
         };
@@ -144,8 +143,8 @@
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
             setCollectionTiles: setCollectionTiles,
+            setSelectedCollection: setSelectedCollection,
             getSelectedCollectionTiles: getSelectedCollectionTiles,
-            setSelectedCollectionTiles: setSelectedCollectionTiles,
             getSelectedTiles: getSelectedTiles,
             setSelectedTiles: setSelectedTiles,
             callTilesByCollectionId: callTilesByCollectionId
