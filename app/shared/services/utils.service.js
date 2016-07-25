@@ -25,8 +25,8 @@
         function existItem(array, objectProperty, value) {
             if(array){
                 for(var itemIndex=0; itemIndex<array.length; itemIndex++){
-                    var tmpTile = array[itemIndex];
-                    if(tmpTile['objectProperty'] == value){
+                    var tmpItem = array[itemIndex];
+                    if(tmpItem[objectProperty] == value){
                         return true;
                     }
                 }
@@ -34,9 +34,22 @@
             }
         }
 
+        function getItem(array, objectProperty, value) {
+            if(array){
+                for(var itemIndex=0; itemIndex<array.length; itemIndex++){
+                    var tmpItem = array[itemIndex];
+                    if(tmpItem[objectProperty] == value){
+                        return tmpItem;
+                    }
+                }
+                return undefined;
+            }
+        }
+
         var service = {
             existItem: existItem,
-            isEmpty: isEmpty
+            isEmpty: isEmpty,
+            getItem: getItem
         };
 
         return service;

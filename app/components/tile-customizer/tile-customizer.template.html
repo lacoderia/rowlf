@@ -1,6 +1,6 @@
 <h2 layout="row" class="md-display-1">3. Customize your tiles patterns</h2>
 <p layout="row">You can change color, rotate and delete the tiles</p>
-<div layout="rows" class="tile-customizer">
+<div layout="rows" class="tile-customizer" ng-init="$ctrl.init()">
     <ul layouts="rows" class="tile-tools">
         <li class="tile-clone-button">
             <button>
@@ -8,7 +8,7 @@
                 <md-icon class="material-icons">&#xE147;</md-icon>
             </button>
         </li>
-        <li class="tile-tool-item"></li>
+        <li class="tile-tool-item" ng-repeat="item in $ctrl.getSelectedTiles()"></li>
     </ul>
 </div>
 <!--div layout="rows" class="tile-customizer">

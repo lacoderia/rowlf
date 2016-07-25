@@ -189,6 +189,7 @@
          *
          */
         ctrl.completeStep = function() {
+            collectionTilesService.setSelectedTiles(_selectedTiles);
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[0].data);
             $mdBottomSheet.hide();
         };

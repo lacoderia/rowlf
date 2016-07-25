@@ -1,14 +1,19 @@
 (function(angular) {
     'use strict';
 
-    function tileCustomizerController($http) {
+    function tileCustomizerController($http, collectionTilesService) {
 
         /**
          *
          * @type {Object}
          */
         var ctrl = this;
-        var _selectedTiles = [];
+        var _selectedTiles = [
+            { id: 7, name: "uno 3x3", url: "/assets/images/collection-tiles/Amalia 12x12.svg" },
+            { id: 8, name: "uno 3x3", url: "/assets/images/collection-tiles/Amalia 12x12.svg" },
+            { id: 9, name: "uno 3x3", url: "/assets/images/collection-tiles/Amalia 12x12.svg" },
+            { id: 10, name: "uno 3x3", url: "/assets/images/collection-tiles/Amalia 12x12.svg" }
+        ];
         var _selectedTile = undefined;
         var _canvas = undefined;
         var _source = new Image();
@@ -18,6 +23,7 @@
          * @returns {Array}
          */
         ctrl.getSelectedTiles = function() {
+            //_selectedTiles = collectionTilesService.getSelectedTiles();
             return _selectedTiles;
         };
 
@@ -58,7 +64,6 @@
             _canvas = angular.element(document.querySelector(idCanvas))[0];
             paintTile();
         };
-
 
     }
 

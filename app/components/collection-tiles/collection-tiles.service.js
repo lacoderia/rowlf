@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('collectionTilesService', ['$http', 'AUTH_API_URL_BASE', function ($http, AUTH_API_URL_BASE) {
+    angular.module('omtApp').factory('collectionTilesService', ['$http', 'utilsService', 'AUTH_API_URL_BASE', function ($http, utilsService, AUTH_API_URL_BASE) {
 
         /**
          * Collection tiles array
@@ -32,7 +32,7 @@
                                     title: tile_type.value,
                                     inches: tile_type.inches,
                                     centimeters: tile_type.centimeters,
-                                    tiles: [],
+                                    tiles: []
                                 });
                             }
                         }
@@ -44,7 +44,7 @@
                     console.log(error);
                 }
             );
-        };
+        }
 
         function callTilesByCollectionId(collectionId) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
@@ -65,7 +65,6 @@
                                     });
                                 }
                             }
-                            return collectionTiles.tiles;
                         }
                     } catch(error){
                         console.log(error)
@@ -75,14 +74,14 @@
                     console.log(error);
                 }
             );
-        };
+        }
 
         /**
          *
          */
         function getCollectionTiles() {
             return angular.copy(_collectionTiles);
-        };
+        }
 
         /**
          *
@@ -90,7 +89,7 @@
          */
         function setCollectionTiles(collectionTiles) {
             _collectionTiles = collectionTiles;
-        };
+        }
 
         /**
          *
@@ -98,7 +97,7 @@
          */
         function getSelectedCollectionTiles() {
             return angular.copy(_selectedCollection.tiles);
-        };
+        }
 
         /**
          *
@@ -111,7 +110,7 @@
             });
 
             return (collections.length > 0)? collections[0] : [];
-        };
+        }
 
         /**
          *
@@ -120,7 +119,7 @@
         function setSelectedCollection(collectionId) {
             var selectedCollection = getCollectionTilesById(collectionId);
             _selectedCollection = selectedCollection;
-        };
+        }
 
         /**
          *
@@ -128,17 +127,17 @@
          */
         function getSelectedTiles() {
             return angular.copy(_selectedTiles);
-        };
+        }
 
         /**
          *
          * @param selectedTiles
          */
         function setSelectedTiles(selectedTiles) {
-            _selectedTiles = selectedTiles;
-        };
+            console.log(selectedTiles);
+            //_selectedTiles = selectedTiles;
+        }
 
-        
         var service = {
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
