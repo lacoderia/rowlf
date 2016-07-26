@@ -11,15 +11,16 @@
 
         ctrl.selectedStep = 0;
         ctrl.stepProgress = 1;
-        ctrl.maxStep = 3;
+        ctrl.maxStep = 4;
         ctrl.showBusyText = false;
         ctrl.stepData = [
             { step: 1, completed: false, optional: false, data: {} },
             { step: 2, completed: false, optional: false, data: {} },
             { step: 3, completed: false, optional: false, data: {} },
+            { step: 4, completed: false, optional: false, data: {} },
         ];
 
-        ctrl.enableNextStep = function nextStep() {
+        ctrl.enableNextStep = function() {
             //do not exceed into max step
             if (ctrl.selectedStep >= ctrl.maxStep) {
                 return;
@@ -29,15 +30,15 @@
                 ctrl.stepProgress = ctrl.stepProgress + 1;
             }
             ctrl.selectedStep = ctrl.selectedStep + 1;
-        }
+        };
 
-        ctrl.moveToPreviousStep = function moveToPreviousStep() {
+        ctrl.moveToPreviousStep = function() {
             if (ctrl.selectedStep > 0) {
                 ctrl.selectedStep = ctrl.selectedStep - 1;
             }
-        }
+        };
 
-        ctrl.submitCurrentStep = function submitCurrentStep(stepData) {
+        ctrl.submitCurrentStep = function(stepData) {
             var deferred = $q.defer();
             ctrl.showBusyText = true;
             if (!stepData.completed) {
@@ -53,7 +54,7 @@
                 ctrl.showBusyText = false;
                 ctrl.enableNextStep();
             }
-        }
+        };
     }
 
     angular

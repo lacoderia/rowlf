@@ -10,8 +10,8 @@
         </a>
     </div>
 </div>
-<div class="step-action" layout-sm="column" layout-wrap layout-margin>
-    <md-button ng-click="$ctrl.completeStep()">
+<div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
+    <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.areSelectedCollections()">
         Next <md-icon class="material-icons">&#xE409;</md-icon>
     </md-button>
 </div>

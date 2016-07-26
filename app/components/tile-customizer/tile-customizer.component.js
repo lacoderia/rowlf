@@ -65,6 +65,13 @@
             paintTile();
         };
 
+        /**
+         *
+         */
+        ctrl.completeStep = function() {
+            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[1].data);
+        };
+
     }
 
     angular
@@ -74,6 +81,9 @@
             controller: tileCustomizerController,
             bindings: {
 
+            },
+            require: {
+                customizerCtrl: '^customizer'
             }
         });
 

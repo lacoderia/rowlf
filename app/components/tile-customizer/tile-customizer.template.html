@@ -11,15 +11,8 @@
         <li class="tile-tool-item" ng-repeat="item in $ctrl.getSelectedTiles()"></li>
     </ul>
 </div>
-<!--div layout="rows" class="tile-customizer">
-    <div class="selected-tiles" flex="50" layout-margin layout="rows" layout-align="start start" layout-margin layout-wrap>
-        <div ng-repeat="tile in $ctrl.getSelectedTiles()" flex="15" class="tile">
-            <a href="#" ng-click="$ctrl.selectTile(tile)">
-                <img ng-src="{{ tile.url }}" title="{{ tile.id }}">
-            </a>
-        </div>
-    </div>
-    <div id="work-table" class="work-table" flex="50" layout-margin>
-        <div id="canvas" ng-init="$ctrl.canvasInit('#canvas')" ng-if="$ctrl.getSelectedTile()"></div>
-    </div>
-</div-->
+<div class="step-action" layout-sm="column" layout-wrap layout-margin>
+    <md-button ng-click="$ctrl.completeStep()">
+        Next <md-icon class="material-icons">&#xE409;</md-icon>
+    </md-button>
+</div>
