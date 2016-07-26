@@ -9,7 +9,7 @@
          */
         var ctrl = this;
 
-        var currentView = 'login';
+        var currentView = 'signup';
         var resetToken = undefined;
 
         ctrl.loading = false;

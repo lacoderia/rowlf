@@ -67,7 +67,7 @@ angular.
 
             $routeProvider.
                 when('/login', {
-                    template: '<login></login>',
+                    template: '<login layout-fill layout="column" flex></login>',
                     resolve: authenticate,
                     view: 'login'
                 }).
