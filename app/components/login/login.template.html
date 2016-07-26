@@ -1,6 +1,6 @@
 <section class="login-component" layout-gt-sm="column" layout="column" layout-align="center center" flex layout-padding layout-fill>
     <div layout="row" layout-fill layout-align="center center">
-        <div class="login-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.LOGIN)" layout="row" layout-align="center center" flex="100">
+        <div class="login-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.LOGIN)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
@@ -34,7 +34,7 @@
                 </form>
             </div>
         </div>
-        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100">
+        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="60" flex-sm="60" flex-xs="75">
                 <hgroup>
                     <h1>
@@ -112,19 +112,19 @@
                                 <input type="text" name="reference" ng-model="$ctrl.newUser.reference">
                                 <div class="hint">Opcional</div>
                             </md-input-container>
-                            <md-input-container layout="row" layout-align="end center">
+                            <md-input-container layout="row" layout-align="end center" layout-align-sm="center center" layout-align-xs="center center">
                                 <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                                 <md-button type='submit' class="md-raised md-primary">Registrar</md-button>
                             </md-input-container>
                         </div>
                     </div>
                     <div layout="column" layout-align="center center">
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">¿Ya eres socio y tienes una cuenta registrada?</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">¿Ya tienes una cuenta registrada?</md-button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="forgot-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.FORGOT)" layout="row" layout-align="center center" flex="100">
+        <div class="forgot-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.FORGOT)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
@@ -150,7 +150,7 @@
                 </form>
             </div>
         </div>
-        <div class="reset-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.RESET)" layout="row" layout-align="center center" flex="100">
+        <div class="reset-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.RESET)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
