@@ -4,35 +4,99 @@
 @import "../../assets/styles/base/_variables"
 
 tile-customizer
-  .tile-customizer
-    background: white
+  h3
+    color: $color-gray-500
+    margin: 8px 1rem 1rem
 
-    .tile-tools
-      align-items: center
+  .tile-customizer
+
+    .tile-collection-tools
       background: $color-gray-900
+      margin-bottom: 2rem
+      padding: 8px
+      width: 100%
+
+    .tile-selector
+      align-items: center
       display: flex
       justify-content: start
       list-style: none
       margin: 0
+      padding: 0
+      width: 100%
+
+      .tile-selector-item
+        background: white
+        border: 2px solid transparent
+        box-sizing: border-box
+        cursor: pointer
+        height: auto
+        margin: 0 8px
+        max-width: 92px
+        width: 100%
+
+        &:hover
+          border: 2px solid $color-light-green-400
+
+        img
+          width: 100%
+
+      .tile-clone-button
+        button
+          background: transparent !important
+          border: 2px dotted $color-gray-400
+          padding: 2rem
+          width: 100%
+
+          md-icon
+            color: $color-light-green-500
+
+      .selected-tiles
+        .tile
+          border: 1px solid $color-gray-400
+
+    .work-table
+      align-content: center
+      background: $color-gray-900
+      display: flex
+      flex-wrap: wrap
+      justify-content: flex-start
       padding: 8px
       width: 100%
 
-    .tile-tool-item
-      background: white
-      box-sizing: border-box
-      margin: 0 8px
-      padding: 8px
+      .work-table-tiles
+        min-height: 400px
 
-    .tile-clone-button
-      button
-        background: transparent !important
-        border: 2px dotted $color-gray-400
-        padding: 2rem
-        width: 100%
+        ul
+          list-style: none
+          margin: 0
+          padding: 0
 
-        md-icon
-          color: $color-light-green-500
+        button
+          background: white
+          border: 2px solid transparent
+          height: auto
+          margin: 8px
+          padding: 0
+          width: 20%
 
-    .selected-tiles
-      .tile
-        border: 1px solid $color-gray-400
+          img
+            width: 100%
+
+      .work-table-customizer
+        padding: 0 3rem
+
+        #canvas
+          max-width: 350px
+          width: 100%
+
+        .tile-tools
+          margin: 8px 1rem
+
+          ul
+            align-content: center
+            display: flex
+            list-style: none
+            justify-content: center
+            padding: 0
+

@@ -12,9 +12,14 @@ collection-tiles
 
     .tile-collection-item
       background: white
+      border: 2px solid transparent
       cursor: pointer
       padding: 0
       text-align: center
+
+      &:hover
+        &:not(.selected)
+          border-color: $color-light-green-300
 
       a.tile-content
         box-sizing: border-box
@@ -141,7 +146,7 @@ collection-tiles
 
     .tile-item
       background: white
-      border: 3px solid transparent
+      border: 2px solid transparent
       cursor: pointer
       padding: 1rem
       position: relative

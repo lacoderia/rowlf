@@ -56,15 +56,16 @@
                             collectionTiles.tiles = [];
                             for(var itemIndex=0; itemIndex<response.data.tiles.length; itemIndex++){
                                 var tile = response.data.tiles[itemIndex];
-                                if(tile.active){
+                                if(tile.active && tile.image){
                                     collectionTiles.tiles.push({
                                         id: tile.id,
                                         name: tile.name,
-                                        //url: tile.url
-                                        url: '/assets/images/collection-tiles/Amalia 12x12.svg'
+                                        url: AUTH_API_URL_BASE + tile.image,
+                                        xml: tile.xml
                                     });
                                 }
                             }
+                            console.log(collectionTiles);
                         }
                     } catch(error){
                         console.log(error)
