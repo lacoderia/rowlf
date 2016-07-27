@@ -36,6 +36,24 @@
 
         /**
          *
+         */
+        ctrl.toggleTile = function(tile) {
+            try{
+                for(var tileIndex=0; tileIndex<_selectedTiles.length; tileIndex++){
+                    var tmpTile = _selectedTiles[tileIndex];
+                    if(tmpTile.id == tile.id){
+                        deselectTile(tileIndex);
+                        return;
+                    }
+                }
+                selectTile(tile);
+            } catch(error){
+                console.log(error)
+            }
+        };
+
+        /**
+         *
          * @returns {*}
          */
         ctrl.getCollectionTiles = function(){
@@ -58,6 +76,7 @@
             try{
 
                 _selectedCollectionTiles = collection;
+                _selectedTiles = [];
 
                 if(_selectedCollectionTiles.tiles.length){
                     collectionTilesService.setSelectedCollection(collection.id);
@@ -133,32 +152,6 @@
          */
         ctrl.getSelectedTiles = function () {
             return _selectedTiles;
-        };
-
-
-        /**
-         *
-         */
-        var resetTiles = function() {
-            _selectedTiles = collectionTilesService.getSelectedTiles();
-        };
-
-        /**
-         *
-         */
-        ctrl.toggleTile = function(tile) {
-            try{
-                for(var tileIndex=0; tileIndex<_selectedTiles.length; tileIndex++){
-                    var tmpTile = _selectedTiles[tileIndex];
-                    if(tmpTile.id == tile.id){
-                        deselectTile(tileIndex);
-                        return;
-                    }
-                }
-                selectTile(tile);
-            } catch(error){
-                console.log(error)
-            }
         };
 
         /**
