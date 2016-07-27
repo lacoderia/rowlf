@@ -176,8 +176,15 @@
             </div>
         </div>
         <div class="wait-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.WAIT)">
-            <p>We need to validate your information to create your account.</p>
-            <p>You'll receive an email when your account is created.</p>
+            <hgroup>
+                <h1>
+                    We are almost there!
+                </h1>
+            </hgroup>
+            <p>We'll validate your information and send you an email when your account is ready.</p>
+            <div layout="row" layout-align="end center">
+                <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Got it!</md-button>
+            </div>
         </div>
     </div>
 </section>

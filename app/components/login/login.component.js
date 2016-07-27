@@ -9,7 +9,6 @@
          */
         var ctrl = this;
 
-        var currentView = 'login';
         var resetToken = undefined;
 
         ctrl.loading = false;
@@ -22,6 +21,8 @@
             RESET: 'reset',
             WAIT: 'wait'
         };
+
+        var currentView = ctrl.VIEWS.LOGIN;
 
         // Object that holds the username and password values
         ctrl.credentials = {
@@ -75,23 +76,15 @@
             switch(formName){
                 case 'login':
                     ctrl.credentials = angular.copy(originalCredentials);
-                    //ctrl.loginForm.$setPristine();
-                    //ctrl.loginForm.$setUntouched();
                     break;
                 case 'signup':
                     ctrl.newUser = angular.copy(originalNewUser);
-                    //ctrl.signupForm.$setPristine();
-                    //ctrl.signupForm.$setUntouched();
                     break;
                 case 'forgot':
                     ctrl.forgot = angular.copy(originalForgot);
-                    //ctrl.forgotForm.$setPristine();
-                    //ctrl.forgotForm.$setUntouched();
                     break;
                 case 'reset':
                     ctrl.reset = angular.copy(originalReset);
-                    //ctrl.resetForm.$setPristine();
-                    //ctrl.resetForm.$setUntouched();
                     break;
                 default:
                     break;
@@ -131,6 +124,8 @@
             ctrl.loading = true;
 
             var user = {
+                first_name: 'Nombre',
+                last_name: 'Apellido',
                 name: ctrl.newUser.name,
                 city: ctrl.newUser.city,
                 state: ctrl.newUser.state,
