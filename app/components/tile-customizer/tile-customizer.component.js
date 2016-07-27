@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function tileCustomizerController($http, collectionTilesService, TILES_ACTIONS) {
+    function tileCustomizerController($scope, collectionTilesService, TILES_ACTIONS) {
 
         /**
          *↵
@@ -16,14 +16,21 @@
         var _canvas = undefined;
         var _source = new Image();
 
+        $scope.$on('refreshSelectedTiles', function(){
+            ctrl.refreshSelectedTiles();
+        });
+
         /**
          *
          * @returns {Array}
          */
-        ctrl.getSelectedTiles = _.memoize(function() {
-            //_selectedTiles = collectionTilesService.getSelectedTiles();
+        ctrl.getSelectedTiles = function() {
             return _selectedTiles;
-        });
+        };
+
+        ctrl.refreshSelectedTiles = function() {
+            _selectedTiles = collectionTilesService.getSelectedTiles();
+        };
 
         /**
          *

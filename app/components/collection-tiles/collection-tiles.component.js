@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function collectionTilesController($scope, $mdBottomSheet, $mdToast, collectionTilesService, utilsService) {
+    function collectionTilesController($rootScope, collectionTilesService, utilsService) {
 
         /**
          *
@@ -166,6 +166,7 @@
          */
         ctrl.completeStep = function() {
             collectionTilesService.setSelectedTiles(_selectedTiles);
+            $rootScope.$broadcast('refreshSelectedTiles');
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[0].data);
         };
 
