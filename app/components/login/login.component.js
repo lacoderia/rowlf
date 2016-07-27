@@ -31,8 +31,7 @@
 
         // Object that holds new user parameters
         ctrl.newUser = {
-            firstName: undefined,
-            lastName: undefined,
+            name: undefined,
             city: undefined,
             state: undefined,
             country: undefined,
@@ -132,8 +131,7 @@
             ctrl.loading = true;
 
             var user = {
-                first_name: ctrl.newUser.firstName,
-                last_name: ctrl.newUser.lastName,
+                name: ctrl.newUser.name,
                 city: ctrl.newUser.city,
                 state: ctrl.newUser.state,
                 country: ctrl.newUser.country,
