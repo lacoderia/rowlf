@@ -105,13 +105,17 @@
                         }
                         ctrl.loading = false;
                     }, function(error) {
+                        var errorText = 'An error occured, please try again later...';
                         if(error && error.errors){
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent(error.errors[0].title)
-                                    .position('top right')
-                            );
+                            errorText = error.errors[0].title;
                         }
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
+
                         ctrl.loading = false;
                     });
             }
@@ -145,13 +149,17 @@
                         ctrl.changeView(ctrl.VIEWS.WAIT);
                         ctrl.loading = false;
                     }, function(error) {
+                        var errorText = 'An error occured, please try again later...';
                         if(error && error.errors){
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent(error.errors[0].title)
-                                    .position('top right')
-                            );
+                            errorText = error.errors[0].title;
                         }
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
+
                         ctrl.loading = false;
                     });
             }
@@ -173,13 +181,17 @@
                         );
                         ctrl.loading = false;
                     }, function(error) {
+                        var errorText = 'An error occured, please try again later...';
                         if(error && error.errors){
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent(error.errors[0].title)
-                                    .position('top right')
-                            );
+                            errorText = error.errors[0].title;
                         }
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
+
                         ctrl.loading = false;
                     });
             }
@@ -207,13 +219,17 @@
                         );
                         ctrl.loading = false;
                     }, function(error) {
+                        var errorText = 'An error occured, please try again later...';
                         if(error && error.errors){
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent(error.errors[0].title)
-                                    .position('top right')
-                            );
+                            errorText = error.errors[0].title;
                         }
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
+                        
                         ctrl.loading = false;
                     });
             }
