@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('utilsService', [function () {
+    angular.module('tileDesignStudio').factory('utilsService', [function () {
 
         /**
          * Returns if an array has items

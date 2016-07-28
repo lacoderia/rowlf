@@ -3,7 +3,7 @@
 
     'use strict';
 
-    angular.module('omtApp').provider('collectionGrids', [function () {
+    angular.module('tileDesignStudio').provider('collectionGrids', [function () {
 
         /**
          * Collection grids array

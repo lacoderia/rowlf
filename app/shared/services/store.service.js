@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('storeService', [function () {
+    angular.module('tileDesignStudio').factory('storeService', [function () {
 
         /**
          *

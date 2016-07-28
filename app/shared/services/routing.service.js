@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('routingService', [function () {
+    angular.module('tileDesignStudio').factory('routingService', [function () {
 
         var _view = undefined;
 

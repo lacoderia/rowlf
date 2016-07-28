@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('omtApp')
+angular.module('tileDesignStudio')
     .constant('COLLECTION_GRID_ITEMS', [
         { id: 1, title: '2x2', url: 'assets/images/grid 2x2.svg', cols: 2, rows: 2, default: false },
         { id: 2, title: '4x4', url: 'assets/images/grid 4x4.svg', cols: 4, rows: 4, default: true }
     ]);
 
 angular.
-    module('omtApp').
+    module('tileDesignStudio').
     config(['$locationProvider', '$routeProvider', '$mdThemingProvider', 'localStorageServiceProvider',
         function config($locationProvider, $routeProvider, $mdThemingProvider, localStorageServiceProvider) {
             $mdThemingProvider.theme('default')

@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').directive('pwCheck', function() {
+    angular.module('tileDesignStudio').directive('pwCheck', function() {
         return {
             require : 'ngModel',
             scope: {

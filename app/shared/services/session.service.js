@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('sessionService', ['$http', '$rootScope', 'localStorageService', function ($http, $rootScope, localStorageService) {
+    angular.module('tileDesignStudio').factory('sessionService', ['$http', '$rootScope', 'localStorageService', function ($http, $rootScope, localStorageService) {
 
         var Session = undefined;
 
