@@ -15,7 +15,8 @@ angular.module('omtApp', [
     'collectionTiles',
     'collectionGrids',
     'tileCustomizer',
-    'tileCanvas'
+    'tileCanvas',
+    'builder'
 ]);
 
 angular.module('omtApp')

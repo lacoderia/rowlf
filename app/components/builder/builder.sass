@@ -1,0 +1,79 @@
+builder
+  .builder
+
+    .tile-selector
+      background: $color-gray-900
+      margin: 0 0 1rem
+      padding: 8px
+
+      ul
+        align-items: center
+        display: flex
+        justify-content: start
+        list-style: none
+        margin: 0
+        padding: 0
+
+        .tile-selector-item
+          background: white
+          border: 2px solid transparent
+          box-sizing: border-box
+          cursor: pointer
+          height: auto
+          margin: 0 8px
+          max-width: 60px
+          width: 100%
+
+          &:hover
+            border: 2px solid $color-light-green-400
+
+          img
+            width: 100%
+
+        .tile-clone-button
+          button
+            background: transparent !important
+            border: 2px dotted $color-gray-400
+            padding: 1rem
+            width: 100%
+
+            md-icon
+              color: $color-light-green-500
+
+      .selected-tiles
+        .tile
+          border: 1px solid $color-gray-400
+
+
+    .work-table
+      .grid
+        border: 1px solid $color-gray-600
+        box-sizing: border-box
+        display: inline-block
+        font-size: 0px
+        margin: 0 auto
+        max-width: 400px
+        text-align: center
+        width: 100%
+
+        > div.row
+          box-sizing: border-box
+          display: inline-block
+          font-size: 0px
+          margin: 0
+          padding: 0
+          width: 100%
+
+          > div.cell
+            background-color: $color-light-green-50
+            box-sizing: border-box
+            border: 1px solid $color-gray-600
+            display: inline-block
+            font-size: 16px
+            margin: 0
+            padding: 0
+
+    .worktable-tools
+      background: white
+
+

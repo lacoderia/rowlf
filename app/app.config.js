@@ -2,10 +2,8 @@
 
 angular.module('omtApp')
     .constant('COLLECTION_GRID_ITEMS', [
-        { 'id': 1, 'title': '2x2', url: 'assets/images/grid 2x2.svg' },
-        { 'id': 2, 'title': '3x3', url: 'assets/images/grid 3x3.svg' },
-        { 'id': 3, 'title': '3x2', url: 'assets/images/grid 3x2.svg' },
-        { 'id': 4, 'title': '3x4', url: 'assets/images/grid 3x4.svg' }
+        { id: 1, title: '2x2', url: 'assets/images/grid 2x2.svg', cols: 2, rows: 2, default: false },
+        { id: 2, title: '4x4', url: 'assets/images/grid 4x4.svg', cols: 4, rows: 4, default: true }
     ]);
 
 angular.
