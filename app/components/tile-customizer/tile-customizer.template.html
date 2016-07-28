@@ -9,37 +9,31 @@
                     <md-icon class="material-icons">&#xE147;</md-icon>
                 </button>
             </li>
-            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.selectCustomTile(item)">
-                <md-tooltip>{{ ::item.name }}</md-tooltip>
-                <img ng-src="{{ ::item.url }}">
+            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.selectTile(item)">
+                <tile-canvas id="tile-button-{{ item.id }}" canvasid="#canvas" tileurl="{{ item.url }}" tilexml="{{ item.xml }}"></tile-canvas>
             </li>
         </ul>
     </div>
     <div class="work-table" layout="row" layout-fill>
-        <div class="work-table-tiles" flex="40" layout-fill layout-wrap>
-            <h3 layout="column">Tiles copied</h3>
-            <ul>
-                <li>
-                    <button ng-repeat="item in $ctrl.getCustomTiles() track by $index" ng-click="$ctrl.selectTile(item)">
-                        <tile-canvas id="button-tile-{{ $index }}" canvasid="#button-tile-{{ $index }}" tileurl="{{ item.url }}" tilexml="{{ item.xml }}"></tile-canvas>
-                    </button>
-                </li>
-            </ul>
-        </div>
-        <div class="work-table-customizer" flex="60" layout-fill layout-wrap>
-            <h3 layout="column">Tile customizer</h3>
-            <div class="tile-tools">
-                <ul>
-                    <li ng-repeat="action in $ctrl.getTileActions()">
-                        <button>
-                            <md-tooltip ng-bind="::action.title"></md-tooltip>
-                            <md-icon class="material-icons">{{ ::action.icon }}</md-icon>
-                        </button>
-                    </li>
-                </ul>
+        <h3>Tile customizer</h3>
+        <div layout="row" flex="100" layout-align="center start">
+            <div layout="row" flex="35" layout-fill layout-wrap>
+                <div class="tile-tools" md-whiteframe="1" layout-align="center start">
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-repeat="action in $ctrl.getTileActions()">
+                            <div class="md-list-item-text">
+                                <md-icon class="material-icons">{{ ::action.icon }}</md-icon>
+                                <h2>{{ action.tile }}</h2>
+                            </div>
+                            <md-button class="md-secondary">Respond</md-button>
+                            <md-divider ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </div>
             </div>
-            <tile-canvas id="canvas" canvasid="#canvas" tileurl="{{ $ctrl.getSelectedTile().url }}" tilexml="{{ $ctrl.getSelectedTile().xml }}"></tile-canvas>
-            <!--div id="canvas" ng-init="$ctrl.canvasInit('#canvas')"></div-->
+            <div layout="row" flex="65" layout-fill layout-wrap>
+                <tile-canvas id="canvas" canvasid="#canvas" tileurl="{{ $ctrl.getSelectedTile().url }}" tilexml="{{ $ctrl.getSelectedTile().xml }}"></tile-canvas>
+            </div>
         </div>
     </div>
 </div>
