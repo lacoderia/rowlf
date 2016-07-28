@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function collectionTilesController($rootScope, collectionTilesService, utilsService) {
+    function collectionTilesController($scope, collectionTilesService, utilsService) {
 
         /**
          *
@@ -17,6 +17,20 @@
          * @type {boolean}
          */
         ctrl.loading = false;
+
+        /**
+         *
+         */
+        $scope.$on('selectedTilesChange', function(){
+            ctrl.refreshSelectedTiles();
+        });
+
+        /**
+         *
+         */
+        ctrl.refreshSelectedTiles = function() {
+            _selectedTiles = collectionTilesService.getSelectedTiles();
+        };
 
         /**
          *
@@ -159,7 +173,6 @@
          */
         ctrl.completeStep = function() {
             collectionTilesService.setSelectedTiles(_selectedTiles);
-            $rootScope.$broadcast('refreshSelectedTiles');
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[0].data);
         };
 

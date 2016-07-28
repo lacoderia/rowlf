@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('omtApp').factory('collectionTilesService', ['$http', 'utilsService', 'AUTH_API_URL_BASE', function ($http, utilsService, AUTH_API_URL_BASE) {
+    angular.module('omtApp').factory('collectionTilesService', ['$http', '$rootScope', 'utilsService', 'AUTH_API_URL_BASE', function ($http, $rootScope, utilsService, AUTH_API_URL_BASE) {
 
         /**
          * Collection tiles array
@@ -136,6 +136,7 @@
          */
         function setSelectedTiles(selectedTiles) {
             _selectedTiles = selectedTiles;
+            $rootScope.$broadcast('selectedTilesChange')
         }
 
         var service = {
