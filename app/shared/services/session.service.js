@@ -31,7 +31,7 @@
         };
 
         var getHttpHeaders = function(){
-            return localStorageService.cookie.get('gonzo-headers');
+            return localStorageService.cookie.get('rowlf-headers');
         };
 
         var configHttpHeaders = function(){
@@ -45,12 +45,12 @@
         };
 
         var setHttpHeaders = function(headers){
-            localStorageService.cookie.set('gonzo-headers', headers);
+            localStorageService.cookie.set('rowlf-headers', headers);
             configHttpHeaders(headers);
         };
 
         var unsetHttpHeaders = function(){
-            localStorageService.cookie.remove('gonzo-headers');
+            localStorageService.cookie.remove('rowlf-headers');
 
             $http.defaults.headers.common['access-token'] = undefined;
             $http.defaults.headers.common['expiry'] = undefined;
