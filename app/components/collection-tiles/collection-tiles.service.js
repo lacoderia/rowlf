@@ -18,8 +18,20 @@
          */
         var _selectedTiles = [];
 
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        var _tileCount = 0;
+
+        var getTileCount = function() {
+            _tileCount++;
+            return _tileCount;
+        }
+
         var callCollectionTiles = function () {
-            var serviceURL = AUTH_API_URL_BASE + '/tiles/tile_types';
+            var serviceURL = AUTH_API_URL_BASE + '/tile_types';
             return $http.get(serviceURL, {}).then(
                 function (response) {
                     try{
@@ -44,7 +56,7 @@
                     console.log(error);
                 }
             );
-        }
+        };
 
         function callTilesByCollectionId(collectionId) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
@@ -65,7 +77,6 @@
                                     });
                                 }
                             }
-                            console.log(collectionTiles);
                         }
                     } catch(error){
                         console.log(error)
@@ -136,9 +147,11 @@
          */
         function setSelectedTiles(selectedTiles) {
             _selectedTiles = selectedTiles;
+            $rootScope.$broadcast('selectedTilesChange')
         }
 
         var service = {
+            getTileCount: getTileCount,
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
             setCollectionTiles: setCollectionTiles,

@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function collectionTilesController($scope, $mdBottomSheet, $mdToast, collectionTilesService, utilsService) {
+    function collectionTilesController($scope, collectionTilesService, utilsService) {
 
         /**
          *
@@ -20,10 +20,26 @@
 
         /**
          *
+         */
+        $scope.$on('selectedTilesChange', function(){
+            ctrl.refreshSelectedTiles();
+        });
+
+        /**
+         *
+         */
+        ctrl.refreshSelectedTiles = function() {
+            _selectedTiles = collectionTilesService.getSelectedTiles();
+        };
+
+        /**
+         *
          * @param tile
          */
         var selectTile = function(tile) {
-            _selectedTiles.push(tile);
+            var tmpTile = angular.copy(tile);
+            tmpTile.tmpId = collectionTilesService.getTileCount();
+            _selectedTiles.push(tmpTile);
         };
 
         /**
@@ -32,6 +48,24 @@
          */
         var deselectTile = function(index) {
             _selectedTiles.splice(index, 1);
+        };
+
+        /**
+         *
+         */
+        ctrl.toggleTile = function(tile) {
+            try{
+                for(var tileIndex=0; tileIndex<_selectedTiles.length; tileIndex++){
+                    var tmpTile = _selectedTiles[tileIndex];
+                    if(tmpTile.id == tile.id){
+                        deselectTile(tileIndex);
+                        return;
+                    }
+                }
+                selectTile(tile);
+            } catch(error){
+                console.log(error)
+            }
         };
 
         /**
@@ -58,6 +92,7 @@
             try{
 
                 _selectedCollectionTiles = collection;
+                _selectedTiles = [];
 
                 if(_selectedCollectionTiles.tiles.length){
                     collectionTilesService.setSelectedCollection(collection.id);
@@ -133,32 +168,6 @@
          */
         ctrl.getSelectedTiles = function () {
             return _selectedTiles;
-        };
-
-
-        /**
-         *
-         */
-        var resetTiles = function() {
-            _selectedTiles = collectionTilesService.getSelectedTiles();
-        };
-
-        /**
-         *
-         */
-        ctrl.toggleTile = function(tile) {
-            try{
-                for(var tileIndex=0; tileIndex<_selectedTiles.length; tileIndex++){
-                    var tmpTile = _selectedTiles[tileIndex];
-                    if(tmpTile.id == tile.id){
-                        deselectTile(tileIndex);
-                        return;
-                    }
-                }
-                selectTile(tile);
-            } catch(error){
-                console.log(error)
-            }
         };
 
         /**

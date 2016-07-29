@@ -9,7 +9,7 @@
                     <md-icon class="material-icons">&#xE147;</md-icon>
                 </button>
             </li>
-            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.selectTile(item)">
+            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.customizeTile(item)">
                 <tile-canvas id="tile-button-{{ item.id }}" canvasid="#canvas" tileurl="{{ item.url }}" tilexml="{{ item.xml }}"></tile-canvas>
             </li>
         </ul>

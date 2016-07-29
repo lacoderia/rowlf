@@ -41,23 +41,6 @@
                     console.log(response);
                     var data = response.data;
                     if (typeof data === 'object') {
-
-                        if(data.user){
-                            var headers = {
-                                'accessToken' : response.headers('access-token'),
-                                'expiry': response.headers('expiry'),
-                                'tokenType': response.headers('token-type'),
-                                'uid': response.headers('uid'),
-                                'client': response.headers('client')
-                            };
-                            console.log(headers);
-
-                            sessionService.setHttpHeaders(headers);
-
-                            var user = data.user;
-                            sessionService.createSession(user);
-                        }
-
                         return data;
                     } else {
                         return $q.reject(data);
