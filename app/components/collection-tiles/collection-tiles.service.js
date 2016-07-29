@@ -18,6 +18,18 @@
          */
         var _selectedTiles = [];
 
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        var _tileCount = 0;
+
+        var getTileCount = function() {
+            _tileCount++;
+            return _tileCount;
+        }
+
         var callCollectionTiles = function () {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/tile_types';
             return $http.get(serviceURL, {}).then(
@@ -65,7 +77,6 @@
                                     });
                                 }
                             }
-                            console.log(collectionTiles);
                         }
                     } catch(error){
                         console.log(error)
@@ -140,6 +151,7 @@
         }
 
         var service = {
+            getTileCount: getTileCount,
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
             setCollectionTiles: setCollectionTiles,

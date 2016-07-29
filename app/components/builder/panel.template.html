@@ -1,0 +1,25 @@
+<div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Customize your tile</h2>
+        </div>
+    </md-toolbar>
+    <div class="work-table" layout="row" layout-fill>
+        <div layout="row" flex="50" layout-fill layout-wrap layout-margin>
+            <div class="color-item" ng-repeat="color in $ctrl.getColors()" ng-style="$ctrl.getColorStyle(color)" ng-click="$ctrl.setColor(color)">
+                {{ color.name }}
+            </div>
+        </div>
+        <div layout="row" flex="50" layout-align="center center" layout-fill layout-wrap>
+            <tile-canvas flex="50" id="customizer-canvas" tileurl="{{ $ctrl.getTmpTile().url }}" tilexml="{{ $ctrl.getTmpTile().xml }}"></tile-canvas>
+        </div>
+    </div>
+    <div layout="row" class="demo-dialog-button">
+        <md-button md-autofocus class="md-primary" ng-click="$ctrl.closeDialog()">
+            Close
+        </md-button>
+        <md-button md-autofocus class="md-primary" ng-click="$ctrl.saveChanges()">
+            Save
+        </md-button>
+    </div>
+</div>

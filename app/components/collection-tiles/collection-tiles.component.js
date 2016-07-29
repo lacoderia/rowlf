@@ -37,7 +37,9 @@
          * @param tile
          */
         var selectTile = function(tile) {
-            _selectedTiles.push(tile);
+            var tmpTile = angular.copy(tile);
+            tmpTile.tmpId = collectionTilesService.getTileCount();
+            _selectedTiles.push(tmpTile);
         };
 
         /**
