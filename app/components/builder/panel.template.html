@@ -1,15 +1,19 @@
-<div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center">
+<div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill>
         <div layout="row" flex="65" layout-align="center center" layout-fill layout-wrap>
             <tile-canvas flex="50" id="customizer-canvas" tileurl="{{ $ctrl.getTmpTile().url }}" tilexml="{{ $ctrl.getTmpTile().xml }}"></tile-canvas>
         </div>
         <div class="tile-tools" layout="row" flex="35" layout-fill layout-wrap layout-padding>
-            <div></div>
-            <ul class="color-picker">
-                <li class="color-item" ng-repeat="color in $ctrl.getColors()" ng-style="$ctrl.getColorStyle(color)" ng-click="$ctrl.setColor(color)">
-                    {{ color.name }}
-                </li>
-            </ul>
+            <div layout="column" layout-fill>
+                <div>
+                    <ul class="color-picker">
+                        <li class="color-item" ng-repeat="color in $ctrl.getColors()" ng-style="$ctrl.getColorStyle(color)" ng-click="$ctrl.setColor(color)">
+                            {{ color.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
     <div layout="row" class="demo-dialog-button">
