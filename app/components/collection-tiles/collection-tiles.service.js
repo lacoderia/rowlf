@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('collectionTilesService', ['$http', 'utilsService', 'AUTH_API_URL_BASE', function ($http, utilsService, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('collectionTilesService', ['$rootScope', '$http', 'utilsService', 'AUTH_API_URL_BASE', function ($rootScope, $http, utilsService, AUTH_API_URL_BASE) {
 
         /**
          * Collection tiles array
@@ -17,6 +17,18 @@
          * Selected tiles
          */
         var _selectedTiles = [];
+
+        /**
+         *
+         * @type {number}
+         * @private
+         */
+        var _tileCount = 0;
+
+        var getTileCount = function() {
+            _tileCount++;
+            return _tileCount;
+        }
 
         var callCollectionTiles = function () {
             var serviceURL = AUTH_API_URL_BASE + '/tile_types';
@@ -44,7 +56,7 @@
                     console.log(error);
                 }
             );
-        }
+        };
 
         function callTilesByCollectionId(collectionId) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
@@ -135,9 +147,11 @@
          */
         function setSelectedTiles(selectedTiles) {
             _selectedTiles = selectedTiles;
+            $rootScope.$broadcast('selectedTilesChange')
         }
 
         var service = {
+            getTileCount: getTileCount,
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
             setCollectionTiles: setCollectionTiles,

@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function tileCustomizerController($http, collectionTilesService, TILES_ACTIONS) {
+    function tileCustomizerController($scope, collectionTilesService, TILES_ACTIONS) {
 
         /**
          *↵
@@ -15,14 +15,15 @@
         var _canvas = undefined;
         var _source = new Image();
 
-        /**
-         *
-         * @returns {Array}
-         */
-        ctrl.getSelectedTiles = _.memoize(function() {
-            //_selectedTiles = collectionTilesService.getSelectedTiles();
-            return _selectedTiles;
+        $scope.$on('selectedTilesChange', function(){
+            ctrl.refreshSelectedTiles();
         });
+
+        ctrl.refreshSelectedTiles = function() {
+            _selectedTiles = collectionTilesService.getSelectedTiles();
+        };
+
+
 
         /**
          *

@@ -4,32 +4,32 @@
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
-                        Iniciar sesión
+                        Sign in
                     </h1>
                 </hgroup>
                 <form name="$ctrl.loginForm" ng-submit="$ctrl.login()">
                     <md-input-container class="md-block">
-                        <label>Correo electrónico</label>
+                        <label>Email</label>
                         <input type="email" name="email" ng-model="$ctrl.credentials.email" required>
                         <div ng-messages="$ctrl.loginForm.email.$error" md-auto-hide="false">
-                            <div ng-message="required">El correo electrónico es requerido</div>
-                            <div ng-message="email">El correo electrónico es inválido</div>
+                            <div ng-message="required">Email is required</div>
+                            <div ng-message="email">Not a valid email</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block">
-                        <label>Contraseña</label>
+                        <label>Password</label>
                         <input type="password" name="password" ng-model="$ctrl.credentials.password" required>
                         <div ng-messages="$ctrl.loginForm.password.$error" md-auto-hide="false">
-                            <div ng-message="required">La contraseña es requerida</div>
+                            <div ng-message="required">A password is required</div>
                         </div>
                     </md-input-container>
                     <md-input-container layout="row" layout-align="start center" >
-                        <md-button type='submit' class="md-raised md-primary">Ingresar</md-button>
+                        <md-button type='submit' class="md-raised md-primary">Sign in</md-button>
                         <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                     </md-input-container>
                     <div layout="column">
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.SIGNUP)">¿No tienes una cuenta?</md-button>
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.FORGOT)">¿Olvidaste tu contraseña?</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.SIGNUP)">Create an account</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.FORGOT)">Forgot your password?</md-button>
                     </div>
                 </form>
             </div>
@@ -38,88 +38,87 @@
             <div layout="column" flex="60" flex-sm="60" flex-xs="75">
                 <hgroup>
                     <h1>
-                        Registro
+                        Create account
                     </h1>
                 </hgroup>
                 <form name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <div layout="row" layout-sm="column" layout-xs="column" layout-padding>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
-                                <label>Nombre</label>
-                                <input type="text" name="firstName" ng-model="$ctrl.newUser.firstName" required>
-                                <div ng-messages="$ctrl.signupForm.firstName.$error" md-auto-hide="false">
-                                    <div ng-message="required">El nombre es requerido</div>
+                                <label>Your name</label>
+                                <input type="text" name="name" ng-model="$ctrl.newUser.name" required>
+                                <div ng-messages="$ctrl.signupForm.name.$error" md-auto-hide="false">
+                                    <div ng-message="required">Your name is required</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
-                                <label>Apellidos</label>
-                                <input type="text" name="lastName" ng-model="$ctrl.newUser.lastName" required>
-                                <div ng-messages="$ctrl.signupForm.lastName.$error" md-auto-hide="false">
-                                    <div ng-message="required">Los apellidos son requeridos</div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block">
-                                <label>Ciudad</label>
+                                <label>City</label>
                                 <input type="text" name="city" ng-model="$ctrl.newUser.city" required>
                                 <div ng-messages="$ctrl.signupForm.city.$error" md-auto-hide="false">
-                                    <div ng-message="required">La ciudad es requerida</div>
+                                    <div ng-message="required">City is required</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
-                                <label>Estado</label>
+                                <label>State/Province/Region</label>
                                 <input type="text" name="state" ng-model="$ctrl.newUser.state" required>
                                 <div ng-messages="$ctrl.signupForm.state.$error" md-auto-hide="false">
-                                    <div ng-message="required">El estado es requerido</div>
+                                    <div ng-message="required">State/Province/Region is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
-                                <label>País</label>
-                                <input type="text" name="country" ng-model="$ctrl.newUser.country" required>
-                                <div ng-messages="$ctrl.signupForm.country.$error" md-auto-hide="false">
-                                    <div ng-message="required">El país es requerido</div>
+                            <md-autocomplete flex required
+                                             md-input-name="country"
+                                             md-no-cache="$ctrl.noCache"
+                                             md-selected-item="$ctrl.selectedItem"
+                                             md-search-text="$ctrl.searchText"
+                                             md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                                             md-item-text="item.display"
+                                             md-floating-label="Country">
+                                <md-item-template>
+                                    <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
+                                </md-item-template>
+                                <div ng-messages="$ctrl.signupForm.country.$error" ng-if="$ctrl.signupForm.country.$touched">
+                                    <div ng-message="required">Country is required</div>
                                 </div>
-                            </md-input-container>
+                            </md-autocomplete>
                         </div>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
-                                <label>Correo electrónico</label>
+                                <label>Email</label>
                                 <input type="email" name="email" ng-model="$ctrl.newUser.email" required>
                                 <div ng-messages="$ctrl.signupForm.email.$error" md-auto-hide="false">
-                                    <div ng-message="required">El correo electrónico es requerido</div>
-                                    <div ng-message="email">El correo electrónico es inválido</div>
+                                    <div ng-message="required">Email is required</div>
+                                    <div ng-message="email">Not a valid email</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
-                                <label>Contraseña</label>
+                                <label>Password</label>
                                 <input type="password" name="password" ng-model="$ctrl.newUser.password" minlength="8" required>
-                                <div class="hint" ng-show="$ctrl.signupForm.password.$invalid && $ctrl.signupForm.password.$untouched">Debe tener una longitud mínima de 8 caracteres</div>
                                 <div ng-messages="$ctrl.signupForm.password.$error" md-auto-hide="false">
-                                    <div ng-message="required">La contraseña es requerida</div>
-                                    <div ng-message="minlength">Debe tener una longitud mínima de 8 caracteres</div>
+                                    <div ng-message="required">A password is required</div>
+                                    <div ng-message="minlength">Use at least 8 characters</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
-                                <label>Confirmar contraseña</label>
+                                <label>Confirm password</label>
                                 <input type="password" name="confirmation" ng-model="$ctrl.newUser.confirmation" pw-check="$ctrl.newUser.password" required>
-                                <div class="hint" ng-show="!$ctrl.signupForm.confirmation.$invalid">Debe coincidir con la contraseña</div>
                                 <div ng-messages="$ctrl.signupForm.confirmation.$error" md-auto-hide="false">
-                                    <div ng-message="required">La confirmación de la contraseña es requerida</div>
-                                    <div ng-message="pwCheck">Debe coincidir con la contraseña</div>
+                                    <div ng-message="required">A password is required</div>
+                                    <div ng-message="pwCheck">Passwords don't match</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
-                                <label>Referencia</label>
+                                <label>Distributor reference</label>
                                 <input type="text" name="reference" ng-model="$ctrl.newUser.reference">
-                                <div class="hint">Opcional</div>
-                            </md-input-container>
-                            <md-input-container layout="row" layout-align="end center" layout-align-sm="center center" layout-align-xs="center center">
-                                <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
-                                <md-button type='submit' class="md-raised md-primary">Registrar</md-button>
+                                <div class="hint">Who recommended our tool?</div>
                             </md-input-container>
                         </div>
                     </div>
+                    <md-input-container layout="row" layout-align="start center" layout-align-sm="center center" layout-align-xs="center center">
+                        <md-button type='submit' class="md-raised md-primary">Create account</md-button>
+                        <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
+                    </md-input-container>
                     <div layout="column" layout-align="center center">
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">¿Ya tienes una cuenta registrada?</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Already have an account?</md-button>
                     </div>
                 </form>
             </div>
@@ -128,24 +127,24 @@
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
-                        Recuperar password
+                        Password recovery
                     </h1>
                 </hgroup>
                 <form name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
                     <md-input-container class="md-block">
-                        <label>Correo electrónico</label>
+                        <label>Email</label>
                         <input type="email" name="email" ng-model="$ctrl.forgot.email" required>
                         <div ng-messages="$ctrl.forgotForm.email.$error" md-auto-hide="false">
-                            <div ng-message="required">El correo electrónico es requerido</div>
-                            <div ng-message="email">El correo electrónico es inválido</div>
+                            <div ng-message="required">Email is required</div>
+                            <div ng-message="email">Not a valid email</div>
                         </div>
                     </md-input-container>
                     <md-input-container layout="row" layout-align="start center" >
-                        <md-button type='submit' class="md-raised md-primary">Recuperar</md-button>
+                        <md-button type='submit' class="md-raised md-primary">Recover password</md-button>
                         <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                     </md-input-container>
                     <div layout="colum">
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Regresar</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Go back</md-button>
                     </div>
                 </form>
             </div>
@@ -154,40 +153,46 @@
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
                 <hgroup>
                     <h1>
-                        Cambiar contraseña
+                        Create new password
                     </h1>
                 </hgroup>
                 <form name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
                     <md-input-container class="md-block">
-                        <label>Contraseña</label>
+                        <label>New password</label>
                         <input type="password" name="password" ng-model="$ctrl.reset.password" minlength="8" required>
-                        <div class="hint" ng-show="!loginForm.email.$dirty">Al menos 8 caracteres</div>
                         <div ng-messages="$ctrl.resetForm.password.$error" md-auto-hide="false">
-                            <div ng-message="required">La contraseña es requerida</div>
-                            <div ng-message="minlength">La contraseña debe tener una longitud mínima de 8 caracteres</div>
+                            <div ng-message="required">A password is required</div>
+                            <div ng-message="minlength">Use at least 8 characters</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block">
-                        <label>Confirmar contraseña</label>
+                        <label>Confirm new password</label>
                         <input type="password" name="confirmation" ng-model="$ctrl.reset.confirmation" pw-check="$ctrl.reset.password" required>
                         <div ng-messages="$ctrl.resetForm.confirmation.$error" md-auto-hide="false">
-                            <div ng-message="required">La confirmación de la contraseña es requerida</div>
-                            <div ng-message="pwCheck">La contraseña y la confirmación deben ser iguales</div>
+                            <div ng-message="required">A password is required</div>
+                            <div ng-message="pwCheck">Passwords don't match</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block">
-                        <md-button type='submit' class="md-raised md-primary">Cambiar contraseña</md-button>
+                        <md-button type='submit' class="md-raised md-primary">Create password</md-button>
                         <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                     </md-input-container>
                     <div layout="colum">
-                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Regresar</md-button>
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Go back</md-button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="wait-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.WAIT)">
-            <p>Recibimos tus datos.</p>
-            <p>Una vez que autoricemos tu acceso podrás hacer uso de nuestro personalizador de tiles.</p>
+            <hgroup>
+                <h1>
+                    We are almost there!
+                </h1>
+            </hgroup>
+            <p>We'll validate your information and send you an email when your account is ready.</p>
+            <div layout="row" layout-align="end center">
+                <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Got it!</md-button>
+            </div>
         </div>
     </div>
 </section>
