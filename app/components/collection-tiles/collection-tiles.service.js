@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('collectionTilesService', ['$http', 'utilsService', 'AUTH_API_URL_BASE', function ($http, utilsService, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('collectionTilesService', ['$rootScope', '$http', 'utilsService', 'AUTH_API_URL_BASE', function ($rootScope, $http, utilsService, AUTH_API_URL_BASE) {
 
         /**
          * Collection tiles array

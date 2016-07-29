@@ -11,6 +11,7 @@
         */
         var _selectedTiles = [];
         var _tmpTile;
+        var _selectedTile;
         var _gridTypes;
         var _grid = [];
         var _selectedGridType;
@@ -62,8 +63,7 @@
 
         ctrl.setSelectedGridType = function (gridType) {
             _selectedGridType = gridType;
-            console.log(_selectedGridType)
-            //paintCanvas();
+            paintCanvas();
         };
 
         ctrl.getGrid = function () {
