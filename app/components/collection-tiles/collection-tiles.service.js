@@ -65,7 +65,6 @@
                                     });
                                 }
                             }
-                            console.log(collectionTiles);
                         }
                     } catch(error){
                         console.log(error)

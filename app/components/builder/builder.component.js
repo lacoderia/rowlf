@@ -13,12 +13,22 @@
         var _selectedGridType;
         var _tableStyle;
 
+        ctrl.getGridTypes = function () {
+            return _gridTypes;
+        };
+
         ctrl.getSelectedTiles = function () {
             return _selectedTiles;
         };
 
         ctrl.getSelectedGridType = function () {
             return _selectedGridType;
+        };
+
+        ctrl.setSelectedGridType = function (gridType) {
+            _selectedGridType = gridType;
+            console.log(_selectedGridType)
+            //paintCanvas();
         };
 
         ctrl.getGrid = function () {
@@ -33,6 +43,23 @@
             };
         };
 
+        var paintCanvas = function() {
+            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
+                _grid[rowIndex] = [];
+                for(var colIndex=0; colIndex<_grid[colIndex].length; colIndex++){
+                    _grid[rowIndex][colIndex].active = false;
+                }
+            }
+
+            for(var rowIndex=0; rowIndex<_selectedGridType.rows; rowIndex++){
+                _grid[rowIndex] = [];
+                for(var colIndex=0; colIndex<_selectedGridType.cols; colIndex++){
+                    _grid[rowIndex][colIndex].active = true;
+                }
+            }
+
+        }
+
         ctrl.$onInit = function() {
             _gridTypes = collectionGrids.getCollectionGrids();
 
@@ -43,9 +70,10 @@
                 var gridType = _gridTypes[gridIndex];
                 maxCols = (maxCols <= gridType.cols)? gridType.cols : maxCols;
                 maxRows = (maxRows <= gridType.rows)? gridType.rows : maxRows;
-                if(gridType.default){
-                    _selectedGridType = gridType;
-                }
+            }
+
+            if(_gridTypes.length > 0){
+                _selectedGridType = _gridTypes[0];
             }
 
             for(var rowIndex=0; rowIndex<maxRows; rowIndex++){
@@ -57,6 +85,7 @@
                     };
                 }
             }
+
         };
 
     }

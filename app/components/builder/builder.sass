@@ -1,3 +1,8 @@
+// App styles
+@import "../../assets/styles/base/_mixins"
+@import "../../assets/styles/base/_typography"
+@import "../../assets/styles/base/_variables"
+
 builder
   .builder
 
@@ -49,14 +54,14 @@ builder
       .grid
         border: 1px solid $color-gray-600
         box-sizing: border-box
-        display: inline-block
+        display: block
         font-size: 0px
         margin: 0 auto
         max-width: 400px
         text-align: center
         width: 100%
 
-        > div.row
+        div.row
           box-sizing: border-box
           display: inline-block
           font-size: 0px
@@ -64,8 +69,8 @@ builder
           padding: 0
           width: 100%
 
-          > div.cell
-            background-color: $color-light-green-50
+          span.cell
+            background-color: white
             box-sizing: border-box
             border: 1px solid $color-gray-600
             display: inline-block
@@ -75,5 +80,37 @@ builder
 
     .worktable-tools
       background: white
+
+      md-list-item
+        label.grid-size-selector
+          cursor: pointer
+          display: inline-block
+          margin-right: 4px
+          position: relative
+
+          input
+            display: none
+            visibility: hidden
+
+            &:checked + img
+              background-color: $color-gray-200
+              opacity: 0.4
+
+          img
+            border: 2px solid white
+            max-width: 30px
+            width: 100%
+
+            &:hover
+              border: 2px solid $color-light-green-300
+
+          .grid-size-selector-text
+            font-size: 0.6rem
+            font-weight: bold
+            left: 50%
+            position: absolute
+            top: 50%
+            transform: translate(-50%, -50%)
+
 
 

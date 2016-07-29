@@ -14,16 +14,31 @@
             </li>
         </ul>
     </div>
-    <div layout="column" layout="row" layout-fill layout-wrap  layout-align="center start">
-        <div class="work-table" flex="45" layout-fill layout-wrap  layout-align="center start">
+    <div layout="row" layout-fill layout-wrap layout-align="center start">
+        <div class="worktable-tools" flex="35" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
+            <md-list ng-cloak>
+                <md-subheader class="md-no-sticky">Grid actions</md-subheader>
+                <md-list-item>
+                    <div class="md-list-item-text">
+                        <h4>Grid size</h4>
+                    </div>
+                    <div class="md-secondary">
+                        <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()">
+                            <input type="radio" ng-model="$ctrl.getSelectedGridType().id" ng-value="{{ type.id }}" ng-change="$ctrl.setSelectedGridType(type)">
+                            <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
+                            <span class="grid-size-selector-text" ng-bind="::type.title"></span>
+                        </label>
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </div>
+        <div class="work-table" flex="65" layout-fill layout-wrap  layout-align="center start">
             <div class="grid">
-                <div class="row" ng-repeat="row in $ctrl.getGrid()">
-                    <div class="cell" ng-style="$ctrl.getTableStyle()" ng-repeat="col in row" ng-if="col.active"></div>
+                <div class="row" ng-repeat="row in $ctrl.getGrid()" flex>
+                    <span class="cell" ng-style="$ctrl.getTableStyle()" ng-repeat="col in row" ng-if="col.active"></span>
                 </div>
             </div>
-        </div>
-        <div class="worktable-tools" flex="45" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
-            AQUI ESTAN LOS
         </div>
     </div>
 </div>
