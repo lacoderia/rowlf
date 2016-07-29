@@ -24,7 +24,7 @@
                     </div>
                     <div class="md-secondary">
                         <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()">
-                            <input type="radio" ng-model="$ctrl.getSelectedGridType().id" ng-value="{{ type.id }}" ng-change="$ctrl.setSelectedGridType(type)">
+                            <input type="radio" ng-model="$ctrl._selectedGridType" ng-value="type" ng-change="$ctrl.setSelectedGridType(type)">
                             <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
                             <span class="grid-size-selector-text" ng-bind="::type.title"></span>
                         </label>

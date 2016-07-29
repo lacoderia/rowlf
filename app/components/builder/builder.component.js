@@ -10,8 +10,9 @@
         var _selectedTile;
         var _gridTypes;
         var _grid = [];
-        var _selectedGridType;
         var _tableStyle;
+
+        ctrl._selectedGridType;
 
         ctrl.getGridTypes = function () {
             return _gridTypes;
@@ -21,14 +22,9 @@
             return _selectedTiles;
         };
 
-        ctrl.getSelectedGridType = function () {
-            return _selectedGridType;
-        };
-
         ctrl.setSelectedGridType = function (gridType) {
-            _selectedGridType = gridType;
-            console.log(_selectedGridType)
-            //paintCanvas();
+            ctrl._selectedGridType = gridType;
+            paintCanvas();
         };
 
         ctrl.getGrid = function () {
@@ -38,26 +34,23 @@
         ctrl.getTableStyle = function () {
 
             return _tableStyle = {
-                'padding-top': (100/_selectedGridType.cols)+'%',
-                'width': (100/_selectedGridType.cols)+'%'
+                'padding-top': (100/ctrl._selectedGridType.cols)+'%',
+                'width': (100/ctrl._selectedGridType.cols)+'%'
             };
         };
 
         var paintCanvas = function() {
             for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
-                _grid[rowIndex] = [];
-                for(var colIndex=0; colIndex<_grid[colIndex].length; colIndex++){
+                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
                     _grid[rowIndex][colIndex].active = false;
                 }
             }
 
-            for(var rowIndex=0; rowIndex<_selectedGridType.rows; rowIndex++){
-                _grid[rowIndex] = [];
-                for(var colIndex=0; colIndex<_selectedGridType.cols; colIndex++){
+            for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
+                for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
-
         }
 
         ctrl.$onInit = function() {
@@ -73,14 +66,14 @@
             }
 
             if(_gridTypes.length > 0){
-                _selectedGridType = _gridTypes[0];
+                ctrl._selectedGridType = _gridTypes[0]
             }
 
             for(var rowIndex=0; rowIndex<maxRows; rowIndex++){
                 _grid[rowIndex] = [];
                 for(var colIndex=0; colIndex<maxCols; colIndex++){
                     _grid[rowIndex][colIndex] = {
-                        active: (rowIndex <= (_selectedGridType.rows-1) && colIndex <= (_selectedGridType.cols-1)),
+                        active: (rowIndex <= (ctrl._selectedGridType.rows-1) && colIndex <= (ctrl._selectedGridType.cols-1)),
                         tile: {}
                     };
                 }

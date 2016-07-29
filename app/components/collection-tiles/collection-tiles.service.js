@@ -19,7 +19,7 @@
         var _selectedTiles = [];
 
         var callCollectionTiles = function () {
-            var serviceURL = AUTH_API_URL_BASE + '/tiles/tile_types';
+            var serviceURL = AUTH_API_URL_BASE + '/tile_types';
             return $http.get(serviceURL, {}).then(
                 function (response) {
                     try{

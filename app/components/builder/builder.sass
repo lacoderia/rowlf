@@ -88,21 +88,25 @@ builder
           margin-right: 4px
           position: relative
 
+          &:hover > img
+            border: 2px solid $color-light-green-300
+
           input
             display: none
             visibility: hidden
 
-            &:checked + img
+            + img
               background-color: $color-gray-200
               opacity: 0.4
+
+            &:checked + img
+              background-color: $color-gray-200
+              opacity: 1
 
           img
             border: 2px solid white
             max-width: 30px
             width: 100%
-
-            &:hover
-              border: 2px solid $color-light-green-300
 
           .grid-size-selector-text
             font-size: 0.6rem
