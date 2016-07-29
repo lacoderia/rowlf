@@ -14,6 +14,23 @@
             </li>
         </ul>
     </div>
+    <div layout="column" class="tile-bottom-sheet" ng-class="{ true: 'collection-tile-selected', false: ''}[!$ctrl.areSelectedCollections()]">
+        <div layout="column" layout-align="start start">
+            <h3>Size: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
+            <p layout="row">Select all the tile designs you like:</p>
+        </div>
+        <div layout="row" layout-align="center center" ng-if="$ctrl.loading">
+            <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+        </div>
+        <div class="tile-selector" layout="row" layout-align="center center" layout-margin layout-wrap>
+            <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)">
+                <img class="tile-image" ng-src="{{ item.url }}"/>
+                <h3 class="tile-title" ng-bind="::item.name"></h3>
+                <div class="selected-overlay"></div>
+                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+            </div>
+        </div>
+    </div>
     <div layout="row" layout-fill layout-wrap layout-align="center start">
         <div class="worktable-tools" flex="35" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
             <md-list ng-cloak>

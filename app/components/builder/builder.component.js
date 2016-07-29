@@ -11,10 +11,9 @@
         */
         var _selectedTiles = [];
         var _tmpTile;
-        var _selectedTile;
+        var _selectedCollectionTiles = [];
         var _gridTypes;
         var _grid = [];
-        var _selectedGridType;
         var _tableStyle;
         var _mdPanel = undefined;
 
@@ -25,7 +24,10 @@
             { name: 'green', hex: 'green'},
             { name: 'orange', hex: 'orange'}
         ];
+
         ctrl.selectedColor = 0;
+
+        ctrl._selectedGridType;
 
         ctrl.setColor = function(indexColor){
             ctrl.selectedColor = indexColor;
@@ -49,7 +51,21 @@
             _selectedTiles = collectionTilesService.getSelectedTiles();
         };
 
-        ctrl._selectedGridType;
+        $scope.$on('selectedCollectionTilesChange', function(){
+            ctrl.refreshSelectedCollectionTiles();
+        });
+
+        ctrl.refreshSelectedCollectionTiles = function() {
+            _selectedCollectionTiles = collectionTilesService.getSelectedCollectionTiles();
+        };
+
+        /**
+         *
+         * @returns {*}
+         */
+        ctrl.getSelectedCollectionTiles = function() {
+            return _selectedCollectionTiles;
+        };
 
         ctrl.getGridTypes = function () {
             return _gridTypes;

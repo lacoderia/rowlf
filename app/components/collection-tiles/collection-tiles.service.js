@@ -131,6 +131,7 @@
         function setSelectedCollection(collectionId) {
             var selectedCollection = getCollectionTilesById(collectionId);
             _selectedCollection = selectedCollection;
+            $rootScope.$broadcast('selectedCollectionTilesChange');
         }
 
         /**
@@ -147,7 +148,7 @@
          */
         function setSelectedTiles(selectedTiles) {
             _selectedTiles = selectedTiles;
-            $rootScope.$broadcast('selectedTilesChange')
+            $rootScope.$broadcast('selectedTilesChange');
         }
 
         var service = {
