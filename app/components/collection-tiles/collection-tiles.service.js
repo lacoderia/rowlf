@@ -73,6 +73,10 @@
                                         id: tile.id,
                                         name: tile.name,
                                         url: AUTH_API_URL_BASE + tile.image,
+                                        custom_styles: {
+                                            rotation: 0,
+                                            object_styles: []
+                                        },
                                         xml: tile.xml
                                     });
                                 }

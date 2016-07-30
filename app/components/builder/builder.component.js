@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $scope, collectionGrids, collectionTilesService) {
+    function builderController($mdPanel, $scope, collectionGrids, collectionTilesService, builderService) {
 
         var ctrl = this;
         /*
@@ -17,28 +17,33 @@
         var _selectedGridType;
         var _tableStyle;
         var _mdPanel = undefined;
+        var _colors = [];
+        ctrl._selectedGridType;
 
-        var _colors = [
-            { name: 'white', hex: 'white'},
-            { name: 'red', hex: 'red'},
-            { name: 'blue', hex: 'blue'},
-            { name: 'green', hex: 'green'},
-            { name: 'orange', hex: 'orange'}
-        ];
         ctrl.selectedColor = 0;
-
-        ctrl.setColor = function(indexColor){
-            ctrl.selectedColor = indexColor;
-        };
 
         ctrl.getColors = function(){
             return _colors;
         };
 
         ctrl.getColorStyle = function(color){
-            return {
-                'background-color': color.hex
+            if((color.hex_value).toLowerCase() == '#ffffff'){
+                return {
+                    'background-color': color.hex_value,
+                    'border': '1px solid #212121'
+                }
             }
+            return {
+                'background-color': color.hex_value
+            }
+        };
+
+        ctrl.setColor = function(indexColor){
+            ctrl.selectedColor = indexColor;
+        };
+
+        ctrl.isSelectedColor = function (color) {
+            return (ctrl.selectedColor == color);
         };
 
         $scope.$on('selectedTilesChange', function(){
@@ -48,8 +53,6 @@
         ctrl.refreshSelectedTiles = function() {
             _selectedTiles = collectionTilesService.getSelectedTiles();
         };
-
-        ctrl._selectedGridType;
 
         ctrl.getGridTypes = function () {
             return _gridTypes;
@@ -156,7 +159,13 @@
         }
 
         ctrl.$onInit = function() {
+
             _gridTypes = collectionGrids.getCollectionGrids();
+            _colors = builderService.callColors().then(
+                function () {
+                    _colors = builderService.getColors();
+                }
+            );
 
             var maxCols = 0;
             var maxRows = 0;

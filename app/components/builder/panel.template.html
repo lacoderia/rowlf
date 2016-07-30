@@ -1,23 +1,28 @@
-<div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center">
+<div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill>
         <div layout="row" flex="65" layout-align="center center" layout-fill layout-wrap>
             <tile-canvas flex="50" id="customizer-canvas" tileurl="{{ $ctrl.getTmpTile().url }}" tilexml="{{ $ctrl.getTmpTile().xml }}"></tile-canvas>
         </div>
-        <div class="tile-tools" layout="row" flex="35" layout-fill layout-wrap layout-padding>
-            <div></div>
-            <ul class="color-picker">
-                <li class="color-item" ng-repeat="color in $ctrl.getColors()" ng-style="$ctrl.getColorStyle(color)" ng-click="$ctrl.setColor(color)">
-                    {{ color.name }}
-                </li>
-            </ul>
+        <div class="tile-tools" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
+            <h3>Color pallete</h3>
+            <div class="color-picker" layout="row" layout-wrap layout-align="start center">
+                <div flex="20" class="color-item" ng-repeat="color in $ctrl.getColors()" ng-click="$ctrl.setColor(color)">
+                    <span class="color" ng-style="$ctrl.getColorStyle(color)">
+                        <md-icon class="md-icon selected" ng-if="$ctrl.isSelectedColor(color)">&#xE876;</md-icon>
+                    </span>
+                    <span class="color-name">{{ color.name }}</span>
+                </div>
+            </div>
+            <h3>Tools</h3>
+            <div class="tools" layout="row" layout-wrap layout-align="start center">
+                <md-button>Rotate</md-button>
+            </div>
+            <div class="dialog-actions">
+                <md-button flex md-autofocus class="md-primary" ng-click="$ctrl.saveChanges()">
+                    Save
+                </md-button>
+            </div>
         </div>
     </div>
-    <div layout="row" class="demo-dialog-button">
-        <md-button md-autofocus class="md-primary" ng-click="$ctrl.closeDialog()">
-            Close
-        </md-button>
-        <md-button md-autofocus class="md-primary" ng-click="$ctrl.saveChanges()">
-            Save
-        </md-button>
-    </div>
+    <icon class="material-icons close-button" md-autofocus class="md-primary close-button" ng-click="$ctrl.closeDialog()">&#xE14C;</icon>
 </div>
