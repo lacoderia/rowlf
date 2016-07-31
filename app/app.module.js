@@ -14,7 +14,6 @@ angular.module('tileDesignStudio', [
     'customizer',
     'collectionTiles',
     'collectionGrids',
-    'tileCustomizer',
     'tileCanvas',
     'builder'
 ]);

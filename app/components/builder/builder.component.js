@@ -11,10 +11,9 @@
         */
         var _selectedTiles = [];
         var _tmpTile;
-        var _selectedTile;
+        var _selectedCollectionTiles = [];
         var _gridTypes;
         var _grid = [];
-        var _selectedGridType;
         var _tableStyle;
         var _mdPanel = undefined;
         var _colors = [];
@@ -54,6 +53,22 @@
             _selectedTiles = collectionTilesService.getSelectedTiles();
         };
 
+        $scope.$on('selectedCollectionTilesChange', function(){
+            ctrl.refreshSelectedCollectionTiles();
+        });
+
+        ctrl.refreshSelectedCollectionTiles = function() {
+            _selectedCollectionTiles = collectionTilesService.getSelectedCollectionTiles();
+        };
+
+        /**
+         *
+         * @returns {*}
+         */
+        ctrl.getSelectedCollectionTiles = function() {
+            return _selectedCollectionTiles;
+        };
+
         ctrl.getGridTypes = function () {
             return _gridTypes;
         };
@@ -63,11 +78,11 @@
         };
 
         ctrl.getSelectedGridType = function () {
-            return _selectedGridType;
+            return ctrl._selectedGridType;
         };
 
         ctrl.setSelectedGridType = function (gridType) {
-            _selectedGridType = gridType;
+            ctrl._selectedGridType = gridType;
             paintCanvas();
         };
 

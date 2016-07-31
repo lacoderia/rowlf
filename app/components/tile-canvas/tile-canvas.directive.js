@@ -1,14 +1,6 @@
 (function(angular) {
     'use strict';
 
-    /*function tileCanvasController() {
-
-        var ctrl = this;
-        console.log(ctrl.canvasid)
-        var buttonCanvas = angular.element(document.querySelector(ctrl.canvasid))[0];
-        console.log(buttonCanvas);
-    }*/
-
     angular
         .module('tileCanvas')
         .directive('tileCanvas', function(){
@@ -16,17 +8,18 @@
                 transclude: true,
                 replace: true,
                 scope: {
-                    tileurl: '@',
                     canvasid: '@',
-                    tilexml: '@'
+                    tiledata: '@'
                 },
                 restrict: 'E',
                 link: function (scope, element, attrs) {
+                    var tileData = JSON.parse(scope.tiledata);
                     var tileButton = angular.element(element)[0];
-                    tileButton.innerHTML = scope.tilexml;
-                    scope.$watch('tilexml', function (newValue) {
+                    tileButton.innerHTML = tileData.xml;
+                    scope.$watch('tiledata', function (newValue) {
                         if(newValue){
-                            tileButton.innerHTML = scope.tilexml;
+                            tileData = JSON.parse(newValue);
+                            tileButton.innerHTML = tileData.xml;
                         }
                     }, true);
                 }

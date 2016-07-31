@@ -1,7 +1,7 @@
 <div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill>
         <div layout="row" flex="65" layout-align="center center" layout-fill layout-wrap>
-            <tile-canvas flex="50" id="customizer-canvas" tileurl="{{ $ctrl.getTmpTile().url }}" tilexml="{{ $ctrl.getTmpTile().xml }}"></tile-canvas>
+            <tile-canvas flex="50" id="customizer-canvas" tiledata="{{ item }}></tile-canvas>
         </div>
         <div class="tile-tools" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
             <h3>Color pallete</h3>

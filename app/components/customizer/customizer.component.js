@@ -49,7 +49,7 @@
                     //move to next step when success
                     stepData.completed = true;
                     ctrl.enableNextStep();
-                }, 1000)
+                }, 10)
             } else {
                 ctrl.showBusyText = false;
                 ctrl.enableNextStep();
