@@ -9,8 +9,15 @@
                     <md-icon class="material-icons">&#xE147;</md-icon>
                 </button>
             </li>
-            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.customizeTile(item)">
+            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.selectTile(item)">
                 <tile-canvas id="#canvas" tile-data="{{ item }}" type="button" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
+                <div class="tile-selector-actions">
+                    <md-icon class="material-icons" ng-click="$ctrl.customizeTile(item)">&#xE254;</md-icon>
+                    <md-icon class="material-icons" ng-click="$ctrl.callAction($ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
+                    <md-icon class="material-icons">&#xE92B;</md-icon>
+                </div>
+                <div class="selected-overlay"></div>
+                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
             </li>
         </ul>
     </div>
@@ -53,7 +60,9 @@
         <div class="work-table" flex="65" layout-fill layout-wrap  layout-align="center start">
             <div class="grid">
                 <div class="row" ng-repeat="row in $ctrl.getGrid()" flex>
-                    <span class="cell" ng-style="$ctrl.getTableStyle()" ng-repeat="col in row" ng-if="col.active"></span>
+                    <span class="cell" ng-style="$ctrl.getTableStyle()" ng-repeat="col in row" ng-if="col.active">
+                        <tile-canvas ng-if="cell.tile"></tile-canvas>
+                    </span>
                 </div>
             </div>
         </div>
