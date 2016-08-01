@@ -1,7 +1,7 @@
 <div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill>
         <div layout="row" flex="65" layout-align="center center" layout-fill layout-wrap>
-            <tile-canvas flex="50" id="customizer-canvas" tiledata="{{ item }}></tile-canvas>
+            <tile-canvas flex="50" id="customizer-canvas" tile-data="{{ $ctrl.getTmpTile() }}" type="canvas" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
         </div>
         <div class="tile-tools" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
             <h3>Color pallete</h3>
@@ -15,7 +15,15 @@
             </div>
             <h3>Tools</h3>
             <div class="tools" layout="row" layout-wrap layout-align="start center">
-                <md-button>Rotate</md-button>
+                <md-button class="md-icon-button action-button" ng-class="{ true: 'selected', false: '' }[$ctrl.isColorBucketSelected()]" aria-label="Color fill" ng-click="$ctrl.callAction($ctrl.ACTIONS['COLOR_BUCKET'].code)">
+                    <md-icon ng-style="$ctrl.getBucketIconStyle()">&#xE23A;</md-icon>
+                </md-button>
+                <md-button class="md-icon-button action-button" aria-label="Rotate" ng-click="$ctrl.callAction($ctrl.ACTIONS['ROTATE'].code)">
+                    <md-icon>&#xE41A;</md-icon>
+                </md-button>
+                <md-button class="md-icon-button action-button" aria-label="Delete" ng-click="$ctrl.callAction($ctrl.ACTIONS['DELETE'].code)">
+                    <md-icon>&#xE92B;</md-icon>
+                </md-button>
             </div>
             <div class="dialog-actions">
                 <md-button flex md-autofocus class="md-primary" ng-click="$ctrl.saveChanges()">

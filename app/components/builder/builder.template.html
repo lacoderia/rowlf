@@ -10,7 +10,7 @@
                 </button>
             </li>
             <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-click="$ctrl.customizeTile(item)">
-                <tile-canvas canvasid="#canvas" tiledata="{{ item }}"></tile-canvas>
+                <tile-canvas id="#canvas" tile-data="{{ item }}" type="button" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
             </li>
         </ul>
     </div>

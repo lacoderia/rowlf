@@ -58,6 +58,23 @@
             );
         };
 
+        function parseXML(xml, tileId) {
+            if(xml){
+                var parser = new DOMParser();
+                var svg = parser.parseFromString(xml, "application/xml");
+                var SVGPaths = svg.getElementsByTagName('path');
+                svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
+
+                for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
+                    svg.getElementsByTagName('path')[pathIndex].id = 'tile_' + tileId + '_path_' + (pathIndex+1);
+                }
+
+                return new XMLSerializer().serializeToString(svg);
+            }
+
+            return undefined;
+        }
+
         function callTilesByCollectionId(collectionId) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
             return $http.get(serviceURL, { params: { tile_type: collectionId } }).then(
@@ -75,9 +92,9 @@
                                         url: AUTH_API_URL_BASE + tile.image,
                                         custom_styles: {
                                             rotation: 0,
-                                            object_styles: []
+                                            path_styles: {}
                                         },
-                                        xml: tile.xml
+                                        xml: parseXML(tile.xml, tile.id)
                                     });
                                 }
                             }
