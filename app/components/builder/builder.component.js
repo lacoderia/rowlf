@@ -5,6 +5,7 @@
 
         var ctrl = this;
         var _selectedTiles = [];
+        var _tmpSelectedTiles = [];
         var _tmpTile;
         var _selectedCollectionTiles = [];
         var _gridTypes;
@@ -100,6 +101,64 @@
 
         /**
          *
+         */
+        ctrl.getTmpSelectedTiles = function() {
+            return _tmpSelectedTiles;
+        };
+
+        /**
+         *
+         * @param tile
+         */
+        ctrl.addTile = function(tile) {
+            var tmpTile = angular.copy(tile);
+            tmpTile.tmpId = collectionTilesService.getTileCount();
+            _tmpSelectedTiles.push(tmpTile);
+        };
+
+        /**
+         *
+         */
+        ctrl.openAddTile = function() {
+            _tmpSelectedTiles = angular.copy(_selectedTiles);
+
+            var position = $mdPanel.newPanelPosition()
+                .absolute()
+                .center();
+            var config = {
+                attachTo: angular.element(document.body),
+                controller: builderController,
+                disableParentScroll: true,
+                templateUrl: 'components/builder/add-tile.template.html',
+                hasBackdrop: true,
+                panelClass: 'tile-customizer',
+                position: position,
+                trapFocus: true,
+                zIndex: 150,
+                clickOutsideToClose: true,
+                escapeToClose: true,
+                focusOnOpen: true,
+                scope: $scope,
+                preserveScope: true
+            };
+            _mdPanel = $mdPanel.create(config);
+            _mdPanel.open();
+        };
+
+        ctrl.closeAddTile = function() {
+            _mdPanel.close().then(function() {
+                _mdPanel = undefined;
+                _tmpSelectedTiles = [];
+            });
+        };
+
+        ctrl.saveAddTile = function() {
+            _selectedTiles = angular.copy(_tmpSelectedTiles);
+            ctrl.closeAddTile();
+        };
+
+        /**
+         *
          * @returns {*}
          */
         ctrl.getSelectedCollectionTiles = function() {
@@ -146,15 +205,9 @@
          *
          * @param tile
          */
-        ctrl.customizeTile = function(tile) {
+        ctrl.openCustomizer = function(tile) {
             _tmpTile = angular.copy(tile);
-            ctrl.showDialog();
-        };
 
-        /**
-         *
-         */
-        ctrl.showDialog = function() {
             var position = $mdPanel.newPanelPosition()
                 .absolute()
                 .center();
@@ -178,14 +231,14 @@
             _mdPanel.open();
         };
 
-        ctrl.closeDialog = function() {
+        ctrl.closeCustomizer = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;
                 _tmpTile = undefined;
             });
         };
 
-        ctrl.saveChanges = function() {
+        ctrl.saveCustomizer = function() {
 
             for(var i=0; i<_selectedTiles.length; i++){
                 if(_selectedTiles[i].tmpId == _tmpTile.tmpId){
@@ -193,7 +246,7 @@
                 }
             }
 
-            ctrl.closeDialog();
+            ctrl.closeCustomizer();
         };
 
         var paintCanvas = function() {
