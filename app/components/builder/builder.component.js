@@ -173,16 +173,16 @@
         };
 
         ctrl.selectTile = function (tile) {
-            if(!_selectedTile){
-                _selectedTile = tile;
-            }else{
+            if(ctrl.isSelectedTile(tile)){
                 _selectedTile = undefined;
+            }else{
+                _selectedTile = tile;
             }
         };
 
-        ctrl.isSelectedTile = function (tileId) {
+        ctrl.isSelectedTile = function (tile) {
             if(_selectedTile){
-                return (_selectedTile.id == tileId);
+                return (_selectedTile.tmpId == tile.tmpId);
             }
             return false;
         };

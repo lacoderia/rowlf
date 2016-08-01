@@ -12,10 +12,10 @@
             <li class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
                 <p layout="row">Add tiles to customize</p>
             </li>
-            <li class="tile-selector-item" ng-if="$ctrl.getSelectedTiles().length" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.openCustomizer(item)">
+            <li class="tile-selector-item" ng-if="$ctrl.getSelectedTiles().length" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile(item)">
                 <tile-canvas id="#canvas" tile-data="{{ item }}" type="button" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
                 <div class="tile-selector-actions">
-                    <md-icon class="material-icons" ng-click="$ctrl.customizeTile(item)">&#xE254;</md-icon>
+                    <md-icon class="material-icons" ng-click="$ctrl.openCustomizer(item)">&#xE254;</md-icon>
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
                     <md-icon class="material-icons">&#xE92B;</md-icon>
                 </div>
