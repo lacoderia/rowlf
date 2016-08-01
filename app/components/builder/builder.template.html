@@ -13,7 +13,7 @@
                 <tile-canvas id="#canvas" tile-data="{{ item }}" type="button" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
                 <div class="tile-selector-actions">
                     <md-icon class="material-icons" ng-click="$ctrl.customizeTile(item)">&#xE254;</md-icon>
-                    <md-icon class="material-icons" ng-click="$ctrl.callAction($ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
+                    <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
                     <md-icon class="material-icons">&#xE92B;</md-icon>
                 </div>
                 <div class="selected-overlay"></div>

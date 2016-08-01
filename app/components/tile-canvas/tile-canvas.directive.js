@@ -32,7 +32,11 @@
                         }
                     };
 
-                    scope.$on('rotateTile', rotateTile);
+                    scope.$on('rotateTile', function ($event, tmpId) {
+                        if(tileData.tmpId == tmpId){
+                            rotateTile();
+                        }
+                    });
 
 
                     var initTile = function(newValue) {

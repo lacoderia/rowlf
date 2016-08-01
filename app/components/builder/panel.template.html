@@ -13,18 +13,6 @@
                     <span class="color-name">{{ color.name }}</span>
                 </div>
             </div>
-            <h3>Tools</h3>
-            <div class="tools" layout="row" layout-wrap layout-align="start center">
-                <md-button class="md-icon-button action-button" ng-class="{ true: 'selected', false: '' }[$ctrl.isColorBucketSelected()]" aria-label="Color fill" ng-click="$ctrl.callAction($ctrl.ACTIONS['COLOR_BUCKET'].code)">
-                    <md-icon ng-style="$ctrl.getBucketIconStyle()">&#xE23A;</md-icon>
-                </md-button>
-                <md-button class="md-icon-button action-button" aria-label="Rotate" ng-click="$ctrl.callAction($ctrl.ACTIONS['ROTATE'].code)">
-                    <md-icon>&#xE41A;</md-icon>
-                </md-button>
-                <md-button class="md-icon-button action-button" aria-label="Delete" ng-click="$ctrl.callAction($ctrl.ACTIONS['DELETE'].code)">
-                    <md-icon>&#xE92B;</md-icon>
-                </md-button>
-            </div>
             <div class="dialog-actions">
                 <md-button flex md-autofocus class="md-primary" ng-click="$ctrl.saveChanges()">
                     Save

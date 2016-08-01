@@ -13,7 +13,6 @@
         var _tableStyle;
         var _mdPanel = undefined;
         var _colors = [];
-        var _colorBucketSelected = false;
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
             'COLOR_BUCKET': {code: 'COLOR_BUCKET'},
@@ -23,30 +22,23 @@
         ctrl._selectedGridType =undefined;
         ctrl.selectedColor = undefined;
 
-        ctrl.callAction = function (action) {
+        ctrl.callAction = function ($event, action) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
             switch (action){
                 case ctrl.ACTIONS['EDIT'].code:
-                    _colorBucketSelected = false;
                     break;
                 case ctrl.ACTIONS['COLOR_BUCKET'].code:
-                    _colorBucketSelected = !_colorBucketSelected;
                     break;
                 case ctrl.ACTIONS['ROTATE'].code:
-                    _colorBucketSelected = false;
-                    rotateTile();
+                    if(_selectedTile){
+                        $rootScope.$broadcast('rotateTile', _selectedTile.tmpId);
+                    }
                     break;
                 case ctrl.ACTIONS['DELETE'].code:
-                    _colorBucketSelected = false;
                     break;
             }
-        };
-
-        ctrl.isColorBucketSelected = function () {
-            return _colorBucketSelected;
-        };
-
-        var rotateTile = function () {
-            $rootScope.$broadcast('rotateTile');
         };
 
         ctrl.getColors = function(){
@@ -97,16 +89,6 @@
 
         ctrl.refreshSelectedCollectionTiles = function() {
             _selectedCollectionTiles = collectionTilesService.getSelectedCollectionTiles();
-        };
-
-        /**
-         *
-         * @returns {*}
-         */
-        ctrl.rotateTile = function () {
-            if(_selectedTile){
-                $rootScope.$broadcast('');
-            }
         };
 
         ctrl.getSelectedTile = function () {
