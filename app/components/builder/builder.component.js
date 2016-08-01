@@ -6,6 +6,7 @@
         var ctrl = this;
         var _selectedTiles = [];
         var _tmpSelectedTiles = [];
+        var _selectedTile;
         var _tmpTile;
         var _selectedCollectionTiles = [];
         var _gridTypes;
@@ -161,6 +162,31 @@
          *
          * @returns {*}
          */
+        ctrl.rotateTile = function () {
+            if(_selectedTile){
+                $rootScope.$broadcast('');
+            }
+        };
+
+        ctrl.getSelectedTile = function () {
+            return _selectedTile;
+        };
+
+        ctrl.selectTile = function (tile) {
+            if(!_selectedTile){
+                _selectedTile = tile;
+            }else{
+                _selectedTile = undefined;
+            }
+        };
+
+        ctrl.isSelectedTile = function (tileId) {
+            if(_selectedTile){
+                return (_selectedTile.id == tileId);
+            }
+            return false;
+        };
+
         ctrl.getSelectedCollectionTiles = function() {
             return _selectedCollectionTiles;
         };
