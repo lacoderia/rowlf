@@ -16,21 +16,22 @@
         var _colors = [];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
-            'COLOR_BUCKET': {code: 'COLOR_BUCKET'},
             'ROTATE': {code: 'ROTATE'},
+            'SAVE': {code: 'SAVE'},
             'DELETE': {code: 'DELETE'}
         };
         ctrl._selectedGridType =undefined;
         ctrl.selectedColor = undefined;
 
-        ctrl.callAction = function ($event, action) {
+        ctrl.callAction = function ($event, action, tile) {
             $event.preventDefault();
             $event.stopPropagation();
 
             switch (action){
                 case ctrl.ACTIONS['EDIT'].code:
-                    break;
-                case ctrl.ACTIONS['COLOR_BUCKET'].code:
+                    if(tile) {
+                        ctrl.openCustomizer(tile)
+                    }
                     break;
                 case ctrl.ACTIONS['ROTATE'].code:
                     if(_selectedTile){
@@ -38,6 +39,9 @@
                     }
                     break;
                 case ctrl.ACTIONS['DELETE'].code:
+                    break;
+                case ctrl.ACTIONS['SAVE'].code:
+                    ctrl.saveCustomizer();
                     break;
             }
         };
@@ -257,13 +261,13 @@
         };
 
         ctrl.saveCustomizer = function() {
+            $rootScope.$broadcast('updateTile', _selectedTile.tmpId);
 
             for(var i=0; i<_selectedTiles.length; i++){
-                if(_selectedTiles[i].tmpId == _tmpTile.tmpId){
-                    _selectedTiles[i] = angular.copy(_tmpTile);
+                if(_selectedTiles[i].tmpId == _selectedTile.tmpId){
+                    _selectedTiles[i] = angular.copy(_selectedTile);
                 }
             }
-
             ctrl.closeCustomizer();
         };
 

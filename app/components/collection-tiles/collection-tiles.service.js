@@ -172,6 +172,32 @@
             $rootScope.$broadcast('selectedTilesChange');
         }
 
+        /**
+         *
+         * @param tmpId
+         * @returns {undefined}
+         */
+        function getTileByTmpId(tmpId) {
+            var tiles = _selectedTiles.filter(function(item) {
+                return item.tmpId == tmpId;
+            });
+
+            return (tiles.length > 0)? angular.copy(tiles[0]) : undefined;
+        };
+
+        function updateTileByTmpId(tmpId, customStyles) {
+            var tiles = _selectedTiles.filter(function(item) {
+                return item.tmpId == tmpId;
+            });
+
+            var tile = (tiles.length > 0)? tiles[0] : undefined;
+
+            if(tile){
+                tile.custom_styles = customStyles;
+                $rootScope.$broadcast('updateSelectedTile', tile.tmpId, tile.custom_styles);
+            }
+        }
+
         var service = {
             getTileCount: getTileCount,
             callCollectionTiles: callCollectionTiles,
@@ -181,7 +207,9 @@
             getSelectedCollectionTiles: getSelectedCollectionTiles,
             getSelectedTiles: getSelectedTiles,
             setSelectedTiles: setSelectedTiles,
-            callTilesByCollectionId: callTilesByCollectionId
+            callTilesByCollectionId: callTilesByCollectionId,
+            getTileByTmpId: getTileByTmpId,
+            updateTileByTmpId: updateTileByTmpId
         };
 
         return service;

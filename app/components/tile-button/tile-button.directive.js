@@ -2,48 +2,25 @@
     'use strict';
 
     angular
-        .module('tileCanvas')
-        .directive('tileCanvas', function(){
+        .module('tileButton')
+        .directive('tileButton', function(collectionTilesService){
             return {
                 transclude: true,
                 replace: true,
                 scope: {
-                    tileData: '@',
-                    type: '@',
-                    selectedColor: '@',
-                    save: '='
+                    tmpId: '@',
                 },
                 restrict: 'E',
-                link: function (scope, element, attrs) {
+                link: function (scope, element) {
 
-                    var parser = new DOMParser();
-                    var tileData;
-                    var tileCanvas;
+                    var tileButton;
                     var SVGObject;
                     var SVGPaths;
+                    var tileData = collectionTilesService.getTileByTmpId(scope.tmpId);
 
-                    var save = scope.save;
-
-                    var rotateTile = function () {
-                        if(tileData && SVGObject){
-                            if(tileData.custom_styles.rotation == 270){
-                                SVGObject.style.transform = 'rotate(0deg);';
-                            }
-                            tileData.custom_styles.rotation+= 90;
-                            SVGObject.style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
-                        }
-                    };
-
-                    var initTile = function(newValue) {
-                        // Print SVG
-                        tileCanvas = angular.element(element)[0];
-                        tileData = JSON.parse(newValue);
-                        tileCanvas.innerHTML = tileData.xml;
-
-                        // Transform SVG element
+                    var paintTile = function () {
 
                         SVGObject = (element[0]).getElementsByTagName('svg')[0];
-                        SVGObject.style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
                         SVGPaths = (element[0]).getElementsByTagName('path');
 
                         for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
@@ -56,35 +33,21 @@
                                 }
                             }
                         }
+                    };
 
-                        if(scope.type == 'canvas') {
-                            SVGObject.addEventListener('click', function (event) {
-                                var path = event.toElement;
-                                var selectedColor = JSON.parse(scope.selectedColor);
-                                path.style.fill = selectedColor.hex_value;
-                                path.style.stroke = selectedColor.hex_value;
-                            });
-                        }
+                    if(tileData){
+                        // Print SVG
+                        tileButton = angular.element(element)[0];
+                        tileButton.innerHTML = tileData.xml;
+                        paintTile();
                     }
 
-                    if(scope.tileData && scope.type){
-                        try {
-                            scope.$watch('tileData', function (newValue) {
-                                if(newValue){
-                                    initTile(newValue);
-                                }
-                            }, true);
-                        } catch(error) {
-                            console.log(error);
-                        }
-                    }
-
-                    scope.$on('rotateTile', function ($event, tmpId) {
+                    scope.$on('updateSelectedTile', function($event, tmpId, customStyles) {
                         if(tileData.tmpId == tmpId){
-                            rotateTile();
+                            tileData.custom_styles.path_styles = customStyles.path_styles;
+                            paintTile();
                         }
                     });
-
                 }
             };
         });

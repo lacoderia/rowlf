@@ -1,3 +1,3 @@
-angular.module('tileCanvas', [
+angular.module('tileButton', [
     'ngRoute'
 ]);
