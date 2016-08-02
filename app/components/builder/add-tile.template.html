@@ -1,0 +1,24 @@
+<div role="dialog" aria-label="Add tiles!" layout="column" layout-align="center center" layout-fill>
+    <div class="work-table" layout="row" layout-fill>
+        <div class="customize-tile-display" layout="row" flex="65" layout-align="start start" layout-fill layout-wrap>
+            <div class="customize-tiles-empty" ng-if="!$ctrl.getTmpSelectedTiles().length" ng-click="$ctrl.openAddTile()">
+                <p layout="row">Add tiles to customize</p>
+            </div>
+            <div class="tile-selector-item" ng-if="$ctrl.getTmpSelectedTiles().length" ng-repeat="item in $ctrl.getTmpSelectedTiles()" ng-click="$ctrl.customizeTile(item)" flex="20">
+                <tile-canvas id="#canvas" tile-data="{{ item }}" type="button" selected-color="{{ $ctrl.getSelectedColor() }}"></tile-canvas>
+            </div>
+        </div>
+        <div class="customize-tile-selector" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
+            <div class="customize-tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles()" ng-click="$ctrl.addTile(item)">
+                <img class="tile-image" ng-src="{{ item.url }}"/>
+                <h3 class="tile-title" ng-bind="::item.name"></h3>
+            </div>
+            <div class="dialog-actions">
+                <md-button md-autofocus class="md-primary" ng-click="$ctrl.saveAddTile()">
+                    Save
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <icon class="material-icons close-button" md-autofocus class="md-primary close-button" ng-click="$ctrl.closeAddTile()">&#xE14C;</icon>
+</div>

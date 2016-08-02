@@ -181,7 +181,7 @@
         /**
          * Inits the component
          */
-        ctrl.init = function() {
+        ctrl.$onInit = function() {
             collectionTilesService.callCollectionTiles().then(
                 function (){
                     _collectionTiles = collectionTilesService.getCollectionTiles();

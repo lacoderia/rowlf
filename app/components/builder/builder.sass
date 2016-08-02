@@ -42,7 +42,6 @@ builder
             transform: translate(-50%)
 
           &:focus
-            border: 2px solid $color-light-green-300
             outline: none
 
           &:hover
@@ -50,6 +49,8 @@ builder
               border: 2px solid $color-light-green-400
 
           &.selected
+            border: 2px solid $color-light-green-300
+            
             &:after
               display: block
 
@@ -107,6 +108,7 @@ builder
 
 
         .tile-clone-button
+
           button
             background: transparent !important
             border: 2px dotted $color-gray-400
@@ -115,6 +117,11 @@ builder
 
             md-icon
               color: $color-light-green-500
+
+        .customize-tiles-empty
+          color: $color-gray-400
+          margin-left: 20px
+          cursor: pointer
 
       .selected-tiles
         .tile
@@ -261,3 +268,43 @@ builder
 
   .dialog-actions
     margin-top: auto
+
+  .customize-tile-display
+    background: $color-gray-900
+
+    .tile-selector-item
+      background: white
+      border: 2px solid transparent
+      box-sizing: border-box
+      cursor: pointer
+      height: auto
+      margin: 0 8px
+
+      img
+        width: 100%
+
+  .customize-tile-selector
+
+    display: flex
+    justify-content: space-between
+
+    .customize-tile-item
+      background: white
+      border: 2px solid transparent
+      cursor: pointer
+      padding: 1rem
+      position: relative
+      width: 70px
+
+      &:hover
+        &:not(.selected)
+          border-color: $color-light-green-300
+
+      .tile-image
+        width: 100%
+
+      .tile-title
+        color: $color-gray-900
+        font-size: 0.9rem
+        margin-top: 1rem
+        text-align: center
