@@ -8,7 +8,7 @@
                 transclude: true,
                 replace: true,
                 scope: {
-                   tmpId: '@',
+                    tmpId: '@',
                     getSelectedColor: '='
                 },
                 restrict: 'E',

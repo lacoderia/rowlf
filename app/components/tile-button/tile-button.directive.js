@@ -9,6 +9,8 @@
                 replace: true,
                 scope: {
                     tmpId: '@',
+                    getTileByTempId: '=',
+                    getTileArray: '='
                 },
                 restrict: 'E',
                 link: function (scope, element) {
@@ -16,7 +18,9 @@
                     var tileButton;
                     var SVGObject;
                     var SVGPaths;
-                    var tileData = collectionTilesService.getTileByTmpId(scope.tmpId);
+                    var getTileByTempId = scope.getTileByTempId;
+                    var getTileArray = scope.getTileArray;
+                    var tileData = getTileByTempId(scope.tmpId, getTileArray());
 
                     var paintTile = function () {
 
