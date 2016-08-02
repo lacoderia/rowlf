@@ -39,7 +39,6 @@
                         // Print SVG
                         tileButton = angular.element(element)[0];
                         tileButton.innerHTML = tileData.xml;
-
                         SVGObject = (element[0]).getElementsByTagName('svg')[0];
                         SVGPaths = (element[0]).getElementsByTagName('path');
 
@@ -55,7 +54,7 @@
                         }
 
                         SVGObject.addEventListener('click', function (event) {
-                            var path = event.toElement;
+                            var path = event.target;
                             var selectedColor = getSelectedColor();
                             path.style.fill = selectedColor.hex_value;
                             path.style.stroke = selectedColor.hex_value;
