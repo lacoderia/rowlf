@@ -216,6 +216,22 @@
             };
         };
 
+        ctrl.copyTileToGrid = function(cell) {
+
+            if(_selectedTile) {
+                for(var i=0; i<_grid.length; i++) {
+                    for(var j=0; j<_grid[i].length; j++) {
+                        console.log(_grid[i][j].id);
+                        if(_grid[i][j].id == cell.id) {
+                            cell.tile = angular.copy(_selectedTile);
+                            _grid[i][j] = angular.copy(cell);
+                            return;
+                        }
+                    }
+                }
+            }
+        };
+
         /**
          *
          */
@@ -309,13 +325,16 @@
                 ctrl._selectedGridType = _gridTypes[0]
             }
 
+            var cellId = 0;
             for(var rowIndex=0; rowIndex<maxRows; rowIndex++){
                 _grid[rowIndex] = [];
                 for(var colIndex=0; colIndex<maxCols; colIndex++){
                     _grid[rowIndex][colIndex] = {
+                        id: cellId,
                         active: (rowIndex <= (ctrl._selectedGridType.rows-1) && colIndex <= (ctrl._selectedGridType.cols-1)),
                         tile: {}
                     };
+                    cellId++;
                 }
             }
 

@@ -3,14 +3,12 @@
 
     angular
         .module('tileButton')
-        .directive('tileButton', function(collectionTilesService){
+        .directive('tileButton', function(){
             return {
                 transclude: true,
                 replace: true,
                 scope: {
-                    tile: '@',
-                    getTileByTempId: '=',
-                    getTileArray: '='
+                    tile: '@'
                 },
                 restrict: 'E',
                 link: function (scope, element) {
@@ -18,10 +16,8 @@
                     var tileButton;
                     var SVGObject;
                     var SVGPaths;
-                    var getTileByTempId = scope.getTileByTempId;
-                    var getTileArray = scope.getTileArray;
                     var tileData = JSON.parse(scope.tile);
-
+                    
                     var paintTile = function () {
 
                         SVGObject = (element[0]).getElementsByTagName('svg')[0];
