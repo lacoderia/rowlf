@@ -11,7 +11,8 @@
         var _selectedCollectionTiles = [];
         var _gridTypes;
         var _grid = [];
-        var _tableStyle;
+        var _rowStyle;
+        var _cellStyle;
         var _mdPanel = undefined;
         var _colors = [];
         ctrl.ACTIONS = {
@@ -208,11 +209,20 @@
             return _grid;
         };
 
-        ctrl.getTableStyle = function () {
+        ctrl.getRowStyle = function () {
 
-            return _tableStyle = {
-                'padding-top': (100/ctrl._selectedGridType.cols)+'%',
-                'width': (100/ctrl._selectedGridType.cols)+'%'
+            return _rowStyle = {
+                'height': (100/ctrl._selectedGridType.cols)+'%',
+                'width': '100%'
+            };
+        };
+
+        ctrl.getCellStyle = function () {
+
+            return _cellStyle = {
+                'height': '100%',
+                'width': (100/ctrl._selectedGridType.cols)+'%',
+                'vertical-align': 'top'
             };
         };
 
@@ -322,7 +332,7 @@
             }
 
             if(_gridTypes.length > 0){
-                ctrl._selectedGridType = _gridTypes[0]
+                ctrl._selectedGridType = _gridTypes[0];
             }
 
             var cellId = 0;

@@ -43,10 +43,10 @@
                 </md-list-item>
             </md-list>
         </div>
-        <div class="work-table" flex="65" layout-fill layout-wrap  layout-align="center start">
+        <div class="work-table" flex="65" layout-fill layout-wrap layout-align="center start">
             <div class="grid">
-                <div class="row" ng-repeat="row in $ctrl.getGrid()" flex>
-                    <span class="cell" ng-style="$ctrl.getTableStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.copyTileToGrid(cell)">
+                <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
+                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.copyTileToGrid(cell)">
                         <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
                     </span>
                 </div>
