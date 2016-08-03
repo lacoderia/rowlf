@@ -105,20 +105,6 @@
 
         /**
          *
-         */
-        ctrl.getTileByTempId = function(tempId, array) {
-            var tile = undefined;
-
-            for(var i=0; i<array.length; i++) {
-                if(array[i].tmpId == tempId){
-                    tile = array[i];
-                }
-            }
-            return angular.copy(tile);
-        };
-
-        /**
-         *
          * @param tile
          */
         ctrl.addTile = function(tile) {
@@ -275,7 +261,6 @@
         };
 
         ctrl.saveCustomizer = function() {
-            $rootScope.$broadcast('updateTile', _selectedTile.tmpId);
 
             for(var i=0; i<_selectedTiles.length; i++){
                 if(_selectedTiles[i].tmpId == _selectedTile.tmpId){

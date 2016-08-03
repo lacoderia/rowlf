@@ -13,7 +13,7 @@
                 <p layout="row">Add tiles to customize</p>
             </li>
             <li class="tile-selector-item" ng-if="$ctrl.getSelectedTiles().length" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile(item)">
-                <tile-button tmp-id="{{ item.tmpId }}" get-tile-by-temp-id="$ctrl.getTileByTempId" get-tile-array="$ctrl.getSelectedTiles"></tile-button>
+                <tile-button tile="{{ item }}"></tile-button>
                 <div class="tile-selector-actions" md-whiteframe="1">
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
                     <!--md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon-->

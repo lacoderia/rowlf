@@ -8,7 +8,7 @@
                 transclude: true,
                 replace: true,
                 scope: {
-                    tmpId: '@',
+                    tile: '=',
                     getSelectedColor: '='
                 },
                 restrict: 'E',
@@ -17,12 +17,9 @@
                     var tileButton;
                     var SVGObject;
                     var SVGPaths;
-                    var tileData = collectionTilesService.getTileByTmpId(scope.tmpId);
-                    var getSelectedColor = scope.getSelectedColor;
+                    var tileData = scope.tile;
 
-                    function updateTile() {
-                        collectionTilesService.updateTileByTmpId(tileData.tmpId, tileData.custom_styles);
-                    }
+                    var getSelectedColor = scope.getSelectedColor;
 
                     var rotateTile = function () {
                         if(tileData && SVGObject){
@@ -31,7 +28,6 @@
                             }
                             tileData.custom_styles.rotation+= 90;
                             SVGObject.style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
-                            updateTile();
                         }
                     };
 
@@ -64,17 +60,6 @@
                             };
                         });
 
-                        scope.$on('updateTile', function($event, tmpId) {
-                            if(tileData.tmpId == tmpId){
-                                updateTile();
-                            }
-                        });
-
-                        scope.$on('rotateTile', function($event, tmpId) {
-                            if(tileData.tmpId == tmpId){
-                                rotateTile();
-                            }
-                        });
                     }
 
                    /* var tileData;

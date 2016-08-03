@@ -5,7 +5,7 @@
                 <p layout="row">Add tiles to customize</p>
             </div>
             <div class="tile-selector-item" ng-if="$ctrl.getTmpSelectedTiles().length" ng-repeat="item in $ctrl.getTmpSelectedTiles()" ng-click="$ctrl.customizeTile(item)" flex="20">
-                <tile-button tmp-id="{{ item.tmpId }}" get-tile-by-temp-id="$ctrl.getTileByTempId" get-tile-array="$ctrl.getTmpSelectedTiles"></tile-button>
+                <tile-button tile="{{ item }}"></tile-button>
             </div>
         </div>
         <div class="customize-tile-selector" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">

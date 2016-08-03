@@ -8,7 +8,7 @@
                 transclude: true,
                 replace: true,
                 scope: {
-                    tmpId: '@',
+                    tile: '@',
                     getTileByTempId: '=',
                     getTileArray: '='
                 },
@@ -20,7 +20,7 @@
                     var SVGPaths;
                     var getTileByTempId = scope.getTileByTempId;
                     var getTileArray = scope.getTileArray;
-                    var tileData = getTileByTempId(scope.tmpId, getTileArray());
+                    var tileData = JSON.parse(scope.tile);
 
                     var paintTile = function () {
 
@@ -45,13 +45,6 @@
                         tileButton.innerHTML = tileData.xml;
                         paintTile();
                     }
-
-                    scope.$on('updateSelectedTile', function($event, tmpId, customStyles) {
-                        if(tileData.tmpId == tmpId){
-                            tileData.custom_styles.path_styles = customStyles.path_styles;
-                            paintTile();
-                        }
-                    });
                 }
             };
         });
