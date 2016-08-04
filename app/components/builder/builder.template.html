@@ -16,7 +16,6 @@
                 <tile-button tile="{{ item }}"></tile-button>
                 <div class="tile-selector-actions" md-whiteframe="1">
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
-                    <!--md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['ROTATE'].code)">&#xE41A;</md-icon-->
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
                 </div>
                 <div class="selected-overlay"></div>
@@ -46,8 +45,12 @@
         <div class="work-table" flex="65" layout-fill layout-wrap layout-align="center start">
             <div class="grid">
                 <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
-                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.copyTileToGrid(cell)">
-                        <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
+                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.selectCell(cell)">
+                        <tile-grid tile="{{ cell.tile }}" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
+                        <div class="tile-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedCell(cell.id)">
+                            <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
+                            <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['DELETE'].code)">&#xE92B;</md-icon>
+                        </div>
                     </span>
                 </div>
             </div>
