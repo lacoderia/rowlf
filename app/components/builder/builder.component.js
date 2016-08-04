@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $scope, $rootScope, collectionGrids, collectionTilesService, builderService) {
+    function builderController($mdPanel, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService) {
 
         var ctrl = this;
         var _selectedTiles = [];
@@ -85,10 +85,10 @@
         };
 
         $scope.$on('selectedTilesChange', function(){
-            ctrl.refreshSelectedTiles();
+            refreshSelectedTiles();
         });
 
-        ctrl.refreshSelectedTiles = function() {
+        var refreshSelectedTiles = function() {
             _selectedTiles = collectionTilesService.getSelectedTiles();
         };
 
@@ -207,13 +207,21 @@
             return _selectedTiles;
         };
 
-        ctrl.getSelectedGridType = function () {
-            return ctrl._selectedGridType;
-        };
-
         ctrl.setSelectedGridType = function (gridType) {
             ctrl._selectedGridType = gridType;
-            paintCanvas();
+            collectionGrids.setSelectedGridType(gridType);
+
+            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
+                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
+                    _grid[rowIndex][colIndex].active = false;
+                }
+            }
+
+            for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
+                for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
+                    _grid[rowIndex][colIndex].active = true;
+                }
+            }
         };
 
         ctrl.getGrid = function () {
@@ -306,25 +314,11 @@
             ctrl.closeCustomizer();
         };
 
-        var paintCanvas = function() {
-            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
-                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
-                    _grid[rowIndex][colIndex].active = false;
-                }
-            }
-
-            for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
-                for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
-                    _grid[rowIndex][colIndex].active = true;
-                }
-            }
-        };
-
         /**
          *
          */
         ctrl.completeStep = function() {
-            builderService.setGrid(_grid);
+            summaryService.setGrid(_grid);
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
         };
 
@@ -349,21 +343,21 @@
                 maxRows = (maxRows <= gridType.rows)? gridType.rows : maxRows;
             }
 
-            if(_gridTypes.length > 0){
-                ctrl._selectedGridType = _gridTypes[0];
-            }
-
             var cellId = 0;
             for(var rowIndex=0; rowIndex<maxRows; rowIndex++){
                 _grid[rowIndex] = [];
                 for(var colIndex=0; colIndex<maxCols; colIndex++){
                     _grid[rowIndex][colIndex] = {
                         id: cellId,
-                        active: (rowIndex <= (ctrl._selectedGridType.rows-1) && colIndex <= (ctrl._selectedGridType.cols-1)),
+                        active: false,
                         tile: {}
                     };
                     cellId++;
                 }
+            }
+
+            if(_gridTypes.length > 0){
+                ctrl.setSelectedGridType(_gridTypes[0]);
             }
 
         };
