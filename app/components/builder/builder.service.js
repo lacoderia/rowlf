@@ -4,6 +4,7 @@
     angular.module('tileDesignStudio').factory('builderService', ['$http', 'AUTH_API_URL_BASE', function ($http, AUTH_API_URL_BASE) {
 
         var _colors = [];
+        var _grid = [];
 
         function callColors() {
             var serviceURL = AUTH_API_URL_BASE + '/colors';
@@ -32,9 +33,19 @@
             return _colors;
         }
 
+        function setGrid(grid) {
+            _grid = grid;
+        }
+
+        function getGrid() {
+            return _grid;
+        }
+
         var service = {
             callColors: callColors,
-            getColors: getColors
+            getColors: getColors,
+            setGrid: setGrid,
+            getGrid: getGrid
         };
 
         return service;
