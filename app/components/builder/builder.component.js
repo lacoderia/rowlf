@@ -40,6 +40,9 @@
                     }
                     break;
                 case ctrl.ACTIONS['DELETE'].code:
+                    if(_selectedTile){
+                        ctrl.deleteTile();
+                    }
                     break;
                 case ctrl.ACTIONS['SAVE'].code:
                     ctrl.saveCustomizer();
@@ -155,6 +158,14 @@
             ctrl.closeAddTile();
         };
 
+        ctrl.deleteTile = function() {
+            for(var i=0; i<_selectedTiles.length; i++) {
+                if(_selectedTiles[i].tmpId == _selectedTile.tmpId) {
+                    _selectedTiles.splice(i, 1);
+                }
+            }
+        };
+
         /**
          *
          * @returns {*}
@@ -231,7 +242,6 @@
             if(_selectedTile) {
                 for(var i=0; i<_grid.length; i++) {
                     for(var j=0; j<_grid[i].length; j++) {
-                        console.log(_grid[i][j].id);
                         if(_grid[i][j].id == cell.id) {
                             cell.tile = angular.copy(_selectedTile);
                             _grid[i][j] = angular.copy(cell);
