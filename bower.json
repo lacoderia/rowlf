@@ -17,6 +17,7 @@
     "angular-route": "~1.5.6",
     "html5-boilerplate": "^5.3.0",
     "angular-local-storage": "^0.2.7",
-    "md-steppers": "^0.3.2"
+    "md-steppers": "^0.3.2",
+    "slick": "*"
   }
 }

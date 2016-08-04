@@ -13,12 +13,16 @@
         var _grid = [];
         var _rowStyle;
         var _cellStyle;
+        var _selectedCell;
         var _mdPanel = undefined;
         var _colors = [];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
-            'ROTATE': {code: 'ROTATE'},
             'SAVE': {code: 'SAVE'},
+            'DELETE': {code: 'DELETE'}
+        };
+        ctrl.GRID_ACTIONS = {
+            'ROTATE': {code: 'ROTATE'},
             'DELETE': {code: 'DELETE'}
         };
         ctrl._selectedGridType =undefined;
@@ -34,11 +38,6 @@
                         ctrl.openCustomizer(tile)
                     }
                     break;
-                case ctrl.ACTIONS['ROTATE'].code:
-                    if(_selectedTile){
-                        $rootScope.$broadcast('rotateTile', _selectedTile.tmpId);
-                    }
-                    break;
                 case ctrl.ACTIONS['DELETE'].code:
                     if(_selectedTile){
                         ctrl.deleteTile();
@@ -46,6 +45,25 @@
                     break;
                 case ctrl.ACTIONS['SAVE'].code:
                     ctrl.saveCustomizer();
+                    break;
+            }
+        };
+
+        ctrl.callGridAction = function($event, action) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            switch (action){
+                case ctrl.GRID_ACTIONS['ROTATE'].code:
+                    if(_selectedCell){
+                        $rootScope.$broadcast('rotateTile', _selectedCell.id);
+                    }
+                    break;
+                case ctrl.GRID_ACTIONS['DELETE'].code:
+                    if(_selectedCell){
+                        _selectedCell.tile = undefined;
+                        _selectedCell = undefined;
+                    }
                     break;
             }
         };
@@ -237,6 +255,23 @@
             };
         };
 
+        ctrl.selectCell = function(cell) {
+            if(cell.tile){
+                if(!_selectedCell){
+                    _selectedCell = cell;
+                }else{
+                    _selectedCell = undefined;
+                }
+            }else{
+                _selectedCell = undefined;
+                ctrl.copyTileToGrid(cell);
+            }
+        };
+
+        ctrl.isSelectedCell = function(cellId) {
+            return (_selectedCell)? (_selectedCell.id == cellId): false;
+        };
+
         ctrl.copyTileToGrid = function(cell) {
 
             if(_selectedTile) {
@@ -352,7 +387,7 @@
                     _grid[rowIndex][colIndex] = {
                         id: cellId,
                         active: (rowIndex <= (ctrl._selectedGridType.rows-1) && colIndex <= (ctrl._selectedGridType.cols-1)),
-                        tile: {}
+                        tile: undefined
                     };
                     cellId++;
                 }

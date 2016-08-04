@@ -16,6 +16,7 @@ angular.module('tileDesignStudio', [
     'collectionGrids',
     'tileCanvas',
     'tileButton',
+    'tileGrid',
     'builder'
 ]);
 
