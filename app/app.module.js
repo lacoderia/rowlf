@@ -13,7 +13,6 @@ angular.module('tileDesignStudio', [
     'navigation',
     'customizer',
     'collectionTiles',
-    'collectionGrids',
     'tileCanvas',
     'tileButton',
     'builder'

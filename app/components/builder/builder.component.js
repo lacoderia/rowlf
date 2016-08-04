@@ -318,7 +318,15 @@
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
-        }
+        };
+
+        /**
+         *
+         */
+        ctrl.completeStep = function() {
+            builderService.setGrid(_grid);
+            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
+        };
 
         ctrl.$onInit = function() {
 
@@ -369,6 +377,9 @@
             controller: builderController,
             bindings: {
 
+            },
+            require: {
+                customizerCtrl: '^customizer'
             }
         });
 
