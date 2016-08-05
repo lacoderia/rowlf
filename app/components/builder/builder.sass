@@ -8,22 +8,24 @@ builder
 
     .tile-selector
       background: $color-gray-900
+      display: flex
       margin: 0 0 1rem
       padding: 8px
 
-      ul
-        align-items: center
-        display: flex
-        justify-content: start
+      ul.tile-list
+        display: block
         list-style: none
         margin: 0
         padding: 0
+        white-space: nowrap
+        width: 100%
 
         .tile-selector-item
           background: white
           border: 2px solid transparent
           box-sizing: border-box
           cursor: pointer
+          display: inline-block
           height: auto
           margin: 0 8px
           max-width: 60px
@@ -108,26 +110,28 @@ builder
               color: white
 
 
-        .tile-clone-button
-
-          button
-            background: transparent !important
-            border: 2px dotted $color-gray-400
-            padding: 1rem
-            width: 100%
-
-            md-icon
-              color: $color-light-green-500
-
-        .customize-tiles-empty
-          color: $color-gray-400
-          margin-left: 20px
-          cursor: pointer
+      .customize-tiles-empty
+        color: $color-gray-400
+        margin-left: 20px
+        cursor: pointer
 
       .selected-tiles
         .tile
           border: 1px solid $color-gray-400
 
+      .tile-clone-button
+        display: inline-block
+        max-width: 60px
+        width: 100%
+
+        button
+          background: transparent !important
+          border: 2px dotted $color-gray-400
+          padding: 1rem
+          width: 100%
+
+          md-icon
+            color: $color-light-green-500
 
     .work-table
       .grid
@@ -302,7 +306,7 @@ builder
     margin-top: auto
 
   .customize-tile-display
-    background: $color-gray-900
+    background: $color-gray-400
 
     .tile-selector-item
       background: white

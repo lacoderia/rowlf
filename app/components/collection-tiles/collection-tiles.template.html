@@ -1,4 +1,3 @@
-<h2 layout="row" class="md-display-1">1. Size selector</h2>
 <p layout="row">Select one of the following sizes to see the tiles available:</p>
 <div layout="row" class="tile-collection" layout-align="center start" layout-margin layout-wrap>
     <div class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1" flex="15" flex-xs="70" flex-sm="45" flex-md="30">

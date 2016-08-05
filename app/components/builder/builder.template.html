@@ -1,25 +1,24 @@
-<h2 layout="row" class="md-display-1">2. Build</h2>
 <p layout="row">Select and customize your tile patter:</p>
 <div layout="column" class="builder" layout-align="center start" layout-margin layout-wrap flex>
     <div class="tile-selector" flex layout-fill>
-        <ul>
-            <li class="tile-clone-button" ng-click="$ctrl.openAddTile()">
-                <button>
-                    <md-tooltip>Add more tiles</md-tooltip>
-                    <md-icon class="material-icons">&#xE147;</md-icon>
-                </button>
-            </li>
-            <li class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
-                <p layout="row">Add tiles to customize</p>
-            </li>
-            <li class="tile-selector-item" ng-if="$ctrl.getSelectedTiles().length" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile(item)">
+        <span class="tile-clone-button" ng-click="$ctrl.openAddTile()">
+            <button>
+                <md-tooltip>Add more tiles</md-tooltip>
+                <md-icon class="material-icons">&#xE147;</md-icon>
+            </button>
+        </span>
+        <span class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
+            <p layout="row">Add tiles to customize</p>
+        </span>
+        <ul class="tile-list" ng-if="$ctrl.getSelectedTiles().length">
+            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile(item)">
                 <tile-button tile="{{ item }}"></tile-button>
                 <div class="tile-selector-actions" md-whiteframe="1">
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
                 </div>
                 <div class="selected-overlay"></div>
-                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                <!--md-icon class="material-icons selected-icon">&#xE86C;</md-icon-->
             </li>
         </ul>
     </div>
