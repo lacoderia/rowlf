@@ -2,7 +2,7 @@
     <md-step label="Select the tile size collection" md-complete="$ctrl.stepData[0].data.completed" ng-disabled="$ctrl.stepProgress < 1">
         <md-content flex md-scroll-y layout-fill class="tile-set-content">
             <div class="step-content">
-                <collection-tiles></collection-tiles>
+                <collection-tiles layout="column"></collection-tiles>
             </div>
         </md-content>
     </md-step>

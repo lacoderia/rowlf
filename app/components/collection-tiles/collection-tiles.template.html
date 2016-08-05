@@ -1,38 +1,79 @@
-<h2 layout="row" class="md-display-1" hide-gt-sm>1. Size selector</h2>
-<p layout="row">Select one of the following sizes to see the tiles available:</p>
-<div layout="row" class="tile-collection" layout-align="center start" layout-margin layout-wrap>
-    <div class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1" flex="15" flex-xs="70" flex-sm="45" flex-md="30">
-        <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
-            <div class="tile-body">
-                <div class="tile-size size-{{ ::item.inches }}"></div>
+<div layout="column">
+    <h2 layout="row" class="md-display-1" hide-gt-sm>1. Size selector</h2>
+    <p layout="row">Select one of the following sizes to see the tiles available:</p>
+    <div layout="row" class="tile-collection" layout-align="center start" layout-wrap>
+        <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
+            <div layout="row" layout-fill>
+                <div layout="row" flex="15">
+                    <ul class="tile-collection-list">
+                        <li class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1">
+                            <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
+                                <div class="tile-body">
+                                    <div>
+                                        <div class="tile-size size-{{ ::item.inches }}"></div>
+                                    </div>
+                                </div>
+                                <h3 class="tile-title" ng-bind="::item.title"></h3>
+                                <div class="selected-overlay"></div>
+                                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div layout="row" flex="85" class="tile-bottom-sheet" layout-fill>
+                    <p ng-if="!$ctrl.getSelectedCollectionTiles().tiles.length > 0">Select one size</p>
+                    <div ng-if="$ctrl.getSelectedCollectionTiles().tiles.length > 0">
+                        <h3>Size: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
+                        <p>Select all the tile designs you like:</p>
+                    </div>
+                    <div layout-align="center center" ng-if="$ctrl.loading">
+                        <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+                    </div>
+                    <div class="tile-selector" layout-fill>
+                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)">
+                            <img class="tile-image" ng-src="{{ item.url }}"/>
+                            <h3 class="tile-title" ng-bind="::item.name"></h3>
+                            <div class="selected-overlay"></div>
+                            <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3 class="tile-title" ng-bind="::item.title"></h3>
-            <div class="selected-overlay"></div>
-            <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
-        </a>
-    </div>
-    <div layout-margin layout="column" class="tile-bottom-sheet" ng-class="{ true: 'collection-tile-selected', false: ''}[!$ctrl.areSelectedCollections()]">
-        <div layout="column" layout-align="start start">
-            <h3>Size: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
-            <p layout="row">Select all the tile designs you like:</p>
         </div>
-        <div layout="row" layout-align="center center" ng-if="$ctrl.loading">
-            <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
-        </div>
-        <div class="tile-selector" layout="row" layout-align="center center" layout-margin layout-wrap>
-            <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)">
-                <img class="tile-image" ng-src="{{ item.url }}"/>
-                <h3 class="tile-title" ng-bind="::item.name"></h3>
+
+        <!--div class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1" flex="15" flex-xs="70" flex-sm="45" flex-md="30">
+            <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
+                <div class="tile-body">
+                    <div class="tile-size size-{{ ::item.inches }}"></div>
+                </div>
+                <h3 class="tile-title" ng-bind="::item.title"></h3>
                 <div class="selected-overlay"></div>
                 <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
-            </div>
+            </a>
         </div>
+        <div layout-margin layout="column" class="tile-bottom-sheet" ng-class="{ true: 'collection-tile-selected', false: ''}[!$ctrl.areSelectedCollections()]">
+            <div layout="column" layout-align="start start">
+                <h3>Size: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
+                <p layout="row">Select all the tile designs you like:</p>
+            </div>
+            <div layout="row" layout-align="center center" ng-if="$ctrl.loading">
+                <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+            </div>
+            <div class="tile-selector" layout="row" layout-align="center center" layout-margin layout-wrap>
+                <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)">
+                    <img class="tile-image" ng-src="{{ item.url }}"/>
+                    <h3 class="tile-title" ng-bind="::item.name"></h3>
+                    <div class="selected-overlay"></div>
+                    <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                </div>
+            </div>
+        </div-->
     </div>
+    <md-toolbar class="bottom-navigation">
+        <div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
+            <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.areSelectedCollections()">
+                Next <md-icon class="material-icons">&#xE409;</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
 </div>
-<md-toolbar class="bottom-navigation">
-    <div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
-        <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.areSelectedCollections()">
-            Next <md-icon class="material-icons">&#xE409;</md-icon>
-        </md-button>
-    </div>
-</md-toolbar>
