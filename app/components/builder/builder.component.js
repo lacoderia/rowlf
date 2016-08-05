@@ -354,7 +354,7 @@
          */
         ctrl.completeStep = function() {
             summaryService.setSummary(_grid);
-            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
+            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[1].data);
         };
 
         ctrl.$onInit = function() {

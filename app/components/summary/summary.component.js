@@ -59,7 +59,7 @@
          *
          */
         ctrl.completeStep = function() {
-            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[3].data);
+            ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
         };
 
         ctrl.$onInit = function() {
