@@ -13,7 +13,7 @@
         /**
          * Selected collection
          */
-        var _selectedCollection;
+        var _selectedGridType;
 
         /**
          * Gets collection grids
@@ -32,13 +32,26 @@
         }
 
         /**
+         *
+         */
+        function getSelectedGridType() {
+            return angular.copy(_selectedGridType);
+        }
+
+        function setSelectedGridType(gridType) {
+            _selectedGridType = gridType;
+        }
+
+        /**
          * Provider "collectionGrids" definition
          * @returns {{getCollectionGrids: getCollectionGrids, setCollectionGrids: setCollectionGrids, setSelectedCollectionGrids: setSelectedCollectionGrids}}
          */
         this.$get = function() {
             return {
                 getCollectionGrids: getCollectionGrids,
-                setCollectionGrids: setCollectionGrids
+                setCollectionGrids: setCollectionGrids,
+                getSelectedGridType: getSelectedGridType,
+                setSelectedGridType: setSelectedGridType
             }
         };
 

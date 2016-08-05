@@ -22,13 +22,13 @@
          *
          */
         $scope.$on('selectedTilesChange', function(){
-            ctrl.refreshSelectedTiles();
+            refreshSelectedTiles();
         });
 
         /**
          *
          */
-        ctrl.refreshSelectedTiles = function() {
+        var refreshSelectedTiles = function() {
             _selectedTiles = collectionTilesService.getSelectedTiles();
         };
 
