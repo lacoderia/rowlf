@@ -3,26 +3,75 @@
 
     angular.module('tileDesignStudio').factory('summaryService', ['$rootScope', '$http', 'AUTH_API_URL_BASE', function ($rootScope, $http, AUTH_API_URL_BASE) {
 
-        var _project = [];
         var _grid = [];
+        var _tileDetails = [];
 
-        function saveProject() {
-            _project = _project;
+        function setSummary(grid) {
+            setGrid(grid);
+            setTileDetails();
+            $rootScope.$broadcast('summaryChange');
         }
 
         function setGrid(grid) {
-            _grid = grid;
-            $rootScope.$broadcast('gridChange');
+            _grid = angular.copy(grid);
         }
 
         function getGrid() {
             return _grid;
         }
 
+        function setTileDetails() {
+            _tileDetails = [];
+            var index;
+
+            for(var i=0; i<_grid.length; i++) {
+                for(var j=0; j<_grid[i].length; j++) {
+                    if(_grid[i][j].tile){
+                        index = getTileIndex(_grid[i][j].tile);
+                        if( index == -1){
+                            var tile = _grid[i][j].tile;
+                            tile.count = 1;
+                            tile.colors = [];
+
+                            if(tile.custom_styles) {
+                                for(var key in tile.custom_styles.path_styles) {
+                                    var color = tile.custom_styles.path_styles[key].fill;
+                                    tile.colors.push(color);
+                                }
+                            }
+
+                            _tileDetails.push(tile);
+                        } else {
+                            _tileDetails[index].count++;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        function getTileIndex(tile) {
+            var index = -1;
+            var tmpCustomStyles;
+            for(var k=0; k<_tileDetails.length; k++) {
+                tmpCustomStyles = _tileDetails[k].custom_styles;
+                if(tmpCustomStyles && tile.custom_styles && JSON.stringify(tmpCustomStyles.path_styles) == JSON.stringify(tile.custom_styles.path_styles)){
+                    index = k;
+                    return index;
+                }
+            }
+
+            return index;
+        }
+
+        function getTileDetails() {
+            return _tileDetails;
+        }
+
         var service = {
-            saveProject: saveProject,
-            setGrid: setGrid,
-            getGrid: getGrid
+            setSummary: setSummary,
+            getGrid: getGrid,
+            getTileDetails: getTileDetails
         };
 
         return service;

@@ -353,7 +353,7 @@
          *
          */
         ctrl.completeStep = function() {
-            summaryService.setGrid(_grid);
+            summaryService.setSummary(_grid);
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
         };
 

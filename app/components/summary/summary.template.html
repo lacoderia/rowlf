@@ -11,8 +11,12 @@
                 </div>
             </div>
         </div>
-        <div layout="row" flex="50">
-            Right side
+        <div layout="column" flex="50">
+            <div ng-repeat="tile in $ctrl.getTileDetails()" layout="row" flex>
+                <tile-button tile="{{ tile }}" ng-if="tile.id" flex="20"></tile-button>
+                {{ tile.count }}
+                {{ tile.colors }}
+            </div>
         </div>
     </div>
 </div>

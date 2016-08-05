@@ -7,9 +7,11 @@
         var _grid = [];
         var _rowStyle;
         var _cellStyle;
+        var _tileDetails = [];
 
-        $scope.$on('gridChange', function(){
+        $scope.$on('summaryChange', function(){
             refreshGrid();
+            refreshTileDetails();
         });
 
         var refreshGrid = function() {
@@ -43,6 +45,14 @@
             }
 
             return _cellStyle;
+        };
+
+        var refreshTileDetails = function() {
+            _tileDetails = summaryService.getTileDetails();
+        };
+
+        ctrl.getTileDetails = function() {
+            return _tileDetails;
         };
 
         /**
