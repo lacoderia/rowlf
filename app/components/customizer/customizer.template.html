@@ -1,5 +1,5 @@
 <md-steppers flex layout-fill md-stretch-steppers="always" md-selected="$ctrl.selectedStep" md-busy-text="'Processing...'" md-busy="$ctrl.showBusyText">
-    <md-step label="Select the tile size collection" md-complete="$ctrl.stepData[0].data.completed" ng-disabled="$ctrl.stepProgress < 1">
+    <md-step label="Select the tile size collection" md-complete="$ctrl.stepData[0].data.completed" ng-disabled="$ctrl.stepProgress > 1">
         <md-content flex md-scroll-y layout-fill class="tile-set-content">
             <div class="step-content">
                 <collection-tiles layout="column"></collection-tiles>
@@ -10,7 +10,6 @@
         <md-content flex md-scroll-y layout-fill class="tile-set-content">
             <div class="step-content">
                 <builder></builder>
-                <!--tile-customizer></tile-customizer-->
             </div>
         </md-content>
     </md-step>
