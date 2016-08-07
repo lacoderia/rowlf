@@ -5,3 +5,57 @@
 
 summary
   .summary
+
+    .tile-list
+      background: white
+      width: 100%
+
+      ul
+        list-style: none
+        margin: 0
+        padding: 0
+
+        li
+          box-sizing: border-box
+          border-bottom: 1px solid $color-gray-400
+          display: flex
+          padding: 8px 0
+          width: 100%
+
+          .tile
+            border: 1px solid $color-gray-200
+            width: 15%
+
+          .info
+            align-items: center
+            display: flex
+            justify-content: flex-start
+            padding: 0 16px
+            width: 85%
+
+            .count
+              font-size: 2rem
+              color: $color-gray-900
+              margin-right: 32px
+
+            .color-item
+              margin-left: 8px
+              overflow: hidden
+              text-align: center
+
+              .color
+                border-radius: 50%
+                display: inline-block
+                cursor: pointer
+                margin-top: 2px
+                position: relative
+                height: 30px
+                width: 30px
+
+              .color-name
+                color: $color-gray-600
+                display: block
+                font-size: 0.5rem
+
+          &:last-child
+            border-bottom: none

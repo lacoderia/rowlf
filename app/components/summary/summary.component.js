@@ -55,6 +55,26 @@
             return _tileDetails;
         };
 
+        ctrl.getColor = function(hexValue){
+            var color = summaryService.getColorByHexValue(hexValue);
+            if((color.hex_value).toLowerCase() == '#ffffff'){
+                color.style = {
+                    'background-color': color.hex_value,
+                    'border': '1px solid #212121'
+                };
+            }
+            color.style = {
+                'background-color': color.hex_value
+            };
+            console.log(color);
+            return color;
+        };
+
+        ctrl.getColorTitle = function(hexValue) {
+            var color = summaryService.getColorByHexValue(hexValue);
+            return (color)? color.title: '';
+        };
+
         /**
          *
          */

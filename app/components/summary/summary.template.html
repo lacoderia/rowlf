@@ -11,12 +11,25 @@
                 </div>
             </div>
         </div>
-        <div layout="column" flex="50">
-            <div ng-repeat="tile in $ctrl.getTileDetails()" layout="row" flex>
+        <div class="tile-list" layout="column" flex="50" md-whiteframe="1" layout-fill layout-padding>
+            <h3>List of tiles</h3>
+            <ul>
+                <li ng-repeat="tile in $ctrl.getTileDetails()" >
+                    <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
+                    <div class="info">
+                        <span class="count">x{{ tile.count }}</span>
+                        <h5>Colors:</h5>
+                        <span class="color-item" ng-repeat="hexValue in tile.colors">
+                            <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
+                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).name }}</span>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <!--div class="tile-list" ng-repeat="tile in $ctrl.getTileDetails()" layout="row" layout-align="start center" layout-wrap flex="100" md-whiteframe="1">
                 <tile-button tile="{{ tile }}" ng-if="tile.id" flex="20"></tile-button>
-                {{ tile.count }}
-                {{ tile.colors }}
-            </div>
+
+            </div-->
         </div>
     </div>
 </div>

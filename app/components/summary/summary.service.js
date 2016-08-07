@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('summaryService', ['$rootScope', '$http', 'AUTH_API_URL_BASE', function ($rootScope, $http, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('summaryService', ['$rootScope', '$http', 'builderService', 'AUTH_API_URL_BASE', function ($rootScope, $http, builderService, AUTH_API_URL_BASE) {
 
         var _grid = [];
         var _tileDetails = [];
@@ -18,6 +18,17 @@
 
         function getGrid() {
             return _grid;
+        }
+
+        function getColorByHexValue(hexValue) {
+            var colors = builderService.getColors();
+            for(var colorIndex=0; colorIndex<colors.length; colorIndex++){
+                var color = colors[colorIndex];
+                if(color.hex_value == hexValue){
+                    return color;
+                }
+            }
+            return undefined;
         }
 
         function setTileDetails() {
@@ -71,7 +82,8 @@
         var service = {
             setSummary: setSummary,
             getGrid: getGrid,
-            getTileDetails: getTileDetails
+            getTileDetails: getTileDetails,
+            getColorByHexValue: getColorByHexValue
         };
 
         return service;
