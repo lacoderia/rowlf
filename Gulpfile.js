@@ -74,7 +74,7 @@ gulp.task('prod', ['sassdoc'], function () {
         .pipe(autoprefixer(autoprefixerOptions));
 
     return merge(sassStream)
-        .pipe(concat('styles.css'))
+        .pipe(concat('app.css'))
         .pipe(gulp.dest(output));
 });
 
