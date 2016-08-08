@@ -55,6 +55,7 @@
                 ctrl.enableNextStep();
             }
         };
+
     }
 
     angular
