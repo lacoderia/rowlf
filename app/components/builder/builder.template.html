@@ -12,14 +12,13 @@
             <p layout="row">Add tiles to customize</p>
         </span>
         <ul class="tile-list" ng-if="$ctrl.getSelectedTiles().length">
-            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile(item)">
+            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile($event, item)">
                 <tile-button tile="{{ item }}"></tile-button>
-                <div class="tile-selector-actions" md-whiteframe="1">
+                <div class="tile-selector-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedTile(item)">
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
                     <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
                 </div>
                 <div class="selected-overlay"></div>
-                <!--md-icon class="material-icons selected-icon">&#xE86C;</md-icon-->
             </li>
         </ul>
     </div>

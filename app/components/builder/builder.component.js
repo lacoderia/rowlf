@@ -198,7 +198,7 @@
             return _selectedTile;
         };
 
-        ctrl.selectTile = function (tile) {
+        ctrl.selectTile = function ($event, tile) {
             if(ctrl.isSelectedTile(tile)){
                 _selectedTile = undefined;
             }else{

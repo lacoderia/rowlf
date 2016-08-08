@@ -10,6 +10,7 @@ builder
       background: $color-gray-900
       display: flex
       margin: 0 0 1rem
+      overflow-x: auto
       padding: 8px
 
       ul.tile-list
@@ -32,17 +33,6 @@ builder
           position: relative
           width: 100%
 
-          &:after
-            border-left: 6px solid transparent
-            border-right: 6px solid transparent
-            border-top: 6px solid $color-light-green-600
-            content: ''
-            display: none
-            position: absolute
-            top: -8px
-            left: 50%
-            transform: translate(-50%)
-
           &:focus
             outline: none
 
@@ -52,17 +42,10 @@ builder
 
           &.selected
             border: 2px solid $color-light-green-300
-            
-            &:after
-              display: block
 
             .selected-overlay
               display: block
               opacity: 0.1
-
-            .tile-selector-actions
-              display: block
-              opacity: 1
 
             .selected-icon
               opacity: 1
@@ -91,23 +74,6 @@ builder
             right: 0
             top: 0
             transition: opacity 0.2s
-
-
-          .tile-selector-actions
-            background-color: $color-light-green-600
-            border-radius: 2px
-            display: none
-            left: 50%
-            opacity: 0
-            padding: 4px
-            position: absolute
-            top: 0
-            transform: translate(-50%, -40px)
-            transition: opacity 0.2s
-            width: 100%
-
-            md-icon
-              color: white
 
 
       .customize-tiles-empty
@@ -344,3 +310,31 @@ builder
         font-size: 0.9rem
         margin-top: 1rem
         text-align: center
+
+
+.tile-selector-actions
+  background-color: $color-light-green-600
+  border-radius: 2px
+  display: block
+  max-width: 26px
+  opacity: 1
+  padding: 4px
+  position: absolute
+  right: 0
+  top: 0
+  transform: translateX(-60px)
+  width: 100%
+
+  &:after
+    border-bottom: 6px solid transparent
+    border-left: 6px solid $color-light-green-600
+    border-top: 6px solid transparent
+    content: ''
+    position: absolute
+    right: -6px
+    top: 50%
+    transform: translateY(-50%)
+
+  md-icon
+    color: white
+    display: block
