@@ -67,7 +67,7 @@ gulp.task('nodemon', function (cb) {
     });
 });
 
-gulp.task('prod', ['sassdoc'], function () {
+gulp.task('prod', function () {
     var sassStream = gulp
         .src(input)
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
