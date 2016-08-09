@@ -162,14 +162,6 @@
 
         /**
          *
-         * @returns {boolean}
-         */
-        ctrl.areSelectedCollections = function() {
-            return (_selectedCollectionTiles)? false : true;
-        };
-
-        /**
-         *
          * @returns {*}
          */
         ctrl.getSelectedTiles = function () {
@@ -182,6 +174,14 @@
         ctrl.completeStep = function() {
             collectionTilesService.setSelectedTiles(_selectedTiles);
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[0].data);
+        };
+
+        /**
+         *
+         * @returns {boolean}
+         */
+        ctrl.isDisabled = function() {
+            return (_selectedCollectionTiles)? false : true;
         };
 
         /**
