@@ -23,14 +23,17 @@
                 <div layout="row" flex="85" class="tile-bottom-sheet" layout-fill>
                     <p ng-if="!$ctrl.getSelectedCollectionTiles().tiles.length > 0">Select one size</p>
                     <div ng-if="$ctrl.getSelectedCollectionTiles().tiles.length > 0">
+                        <md-input-container class="md-icon-float md-block">
+                            <label>Search by name</label>
+                            <input ng-model="$ctrl.tileQuery" type="text">
+                        </md-input-container>
                         <h3>Size: {{ $ctrl.getSelectedCollectionTiles().title }}</h3>
-                        <p>Select all the tile designs you like:</p>
                     </div>
                     <div layout-align="center center" ng-if="$ctrl.loading">
                         <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
                     </div>
                     <div class="tile-selector" layout-fill>
-                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column">
+                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | filter: { name: $ctrl.tileQuery}" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column">
                             <img class="tile-image" ng-src="{{ item.url }}"/>
                             <h3 class="tile-title" ng-bind="item.name"></h3>
                             <div class="selected-overlay"></div>

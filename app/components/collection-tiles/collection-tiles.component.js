@@ -20,6 +20,12 @@
 
         /**
          *
+         * @type {string}
+         */
+        ctrl.tileQuery = '';
+
+        /**
+         *
          */
         $scope.$on('selectedTilesChange', function(){
             refreshSelectedTiles();
