@@ -23,7 +23,7 @@
                 <div layout="row" flex="85" class="tile-bottom-sheet" layout-fill>
                     <p ng-if="!$ctrl.getSelectedCollectionTiles().tiles.length > 0">Select one size</p>
                     <div ng-if="$ctrl.getSelectedCollectionTiles().tiles.length > 0">
-                        <h3>Size: {{ ::$ctrl.getSelectedCollectionTiles().title }}</h3>
+                        <h3>Size: {{ $ctrl.getSelectedCollectionTiles().title }}</h3>
                         <p>Select all the tile designs you like:</p>
                     </div>
                     <div layout-align="center center" ng-if="$ctrl.loading">
@@ -32,7 +32,7 @@
                     <div class="tile-selector" layout-fill>
                         <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column">
                             <img class="tile-image" ng-src="{{ item.url }}"/>
-                            <h3 class="tile-title" ng-bind="::item.name"></h3>
+                            <h3 class="tile-title" ng-bind="item.name"></h3>
                             <div class="selected-overlay"></div>
                             <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
                         </div>
@@ -42,7 +42,6 @@
         </div>
     </div>
 </div>
-
 <md-toolbar class="bottom-navigation">
     <div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
         <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
