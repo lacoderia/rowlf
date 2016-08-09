@@ -89,8 +89,8 @@
     }
 
     angular
-        .module('summary')
-        .component('summary', {
+        .module('summaryComponent')
+        .component('summaryComponent', {
             templateUrl: 'components/summary/summary.template.html',
             controller: summaryController,
             bindings: {

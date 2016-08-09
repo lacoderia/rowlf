@@ -1,3 +1,3 @@
-angular.module('summary', [
+angular.module('summaryComponent', [
     'ngRoute'
 ]);

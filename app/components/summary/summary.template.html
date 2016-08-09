@@ -1,35 +1,33 @@
-<h2 layout="row" class="md-display-1" hide-gt-sm>3. Summary</h2>
-<p layout="row">This is a summary of your design:</p>
-<div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
-    <div layout="row" layout-fill>
-        <div layout="row" flex="50">
-            <div class="grid">
-                <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
+<div class="step-container-wrapper">
+    <h2 layout="row" class="md-display-1" hide-gt-sm>3. Summary</h2>
+    <p layout="row">This is a summary of your design:</p>
+    <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
+        <div layout="row" layout-fill>
+            <div layout="row" flex="50">
+                <div class="grid">
+                    <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active">
                         <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
                     </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tile-list" layout="column" flex="50" md-whiteframe="1" layout-fill layout-padding>
-            <h3>List of tiles</h3>
-            <ul>
-                <li ng-repeat="tile in $ctrl.getTileDetails()" >
-                    <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
-                    <div class="info">
-                        <span class="count">x{{ tile.count }}</span>
-                        <h5>Colors:</h5>
+            <div class="tile-list" layout="column" flex="50" md-whiteframe="1" layout-fill layout-padding>
+                <h3>List of tiles</h3>
+                <ul>
+                    <li ng-repeat="tile in $ctrl.getTileDetails()" >
+                        <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
+                        <div class="info">
+                            <span class="count">x{{ tile.count }}</span>
+                            <h5>Colors:</h5>
                         <span class="color-item" ng-repeat="hexValue in tile.colors">
                             <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
                             <span class="color-name">{{ ::$ctrl.getColor(hexValue).name }}</span>
                         </span>
-                    </div>
-                </li>
-            </ul>
-            <!--div class="tile-list" ng-repeat="tile in $ctrl.getTileDetails()" layout="row" layout-align="start center" layout-wrap flex="100" md-whiteframe="1">
-                <tile-button tile="{{ tile }}" ng-if="tile.id" flex="20"></tile-button>
-
-            </div-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

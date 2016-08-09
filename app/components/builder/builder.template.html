@@ -1,7 +1,8 @@
-<h2 layout="row" class="md-display-1" hide-gt-sm>2. Build</h2>
-<p layout="row">Select and customize your tile pattern:</p>
-<div layout="column" class="builder" layout-align="center start" layout-margin layout-wrap flex>
-    <div class="tile-selector" flex layout-fill>
+<div class="step-container-wrapper">
+    <h2 layout="row" class="md-display-1" hide-gt-sm>2. Build</h2>
+    <p layout="row">Select and customize your tile pattern:</p>
+    <div layout="column" class="builder" layout-align="center start" layout-margin layout-wrap flex>
+        <div class="tile-selector" flex layout-fill>
         <span class="tile-clone-button" ng-click="$ctrl.openAddTile()">
             <button>
                 <md-tooltip>Add more tiles</md-tooltip>
@@ -11,39 +12,39 @@
         <span class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
             <p layout="row">Add tiles to customize</p>
         </span>
-        <ul class="tile-list" ng-if="$ctrl.getSelectedTiles().length">
-            <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile($event, item)">
-                <tile-button tile="{{ item }}"></tile-button>
-                <div class="tile-selector-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedTile(item)">
-                    <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
-                    <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
-                </div>
-                <div class="selected-overlay"></div>
-            </li>
-        </ul>
-    </div>
-    <div layout="row" layout-fill layout-wrap layout-align="center start">
-        <div class="worktable-tools" flex="35" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
-            <md-list ng-cloak>
-                <md-subheader class="md-no-sticky">Grid actions</md-subheader>
-                <md-list-item>
-                    <div class="md-list-item-text">
-                        <h4>Grid size</h4>
+            <ul class="tile-list" ng-if="$ctrl.getSelectedTiles().length">
+                <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile($event, item)">
+                    <tile-button tile="{{ item }}"></tile-button>
+                    <div class="tile-selector-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedTile(item)">
+                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
+                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
                     </div>
-                    <div class="md-secondary">
-                        <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()">
-                            <input type="radio" ng-model="$ctrl._selectedGridType" ng-value="type" ng-change="$ctrl.setSelectedGridType(type)">
-                            <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
-                            <span class="grid-size-selector-text" ng-bind="::type.title"></span>
-                        </label>
-                    </div>
-                    <md-divider></md-divider>
-                </md-list-item>
-            </md-list>
+                    <div class="selected-overlay"></div>
+                </li>
+            </ul>
         </div>
-        <div class="work-table" flex="65" layout-fill layout-wrap layout-align="center start">
-            <div class="grid">
-                <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
+        <div layout="row" layout-fill layout-wrap layout-align="center start">
+            <div class="worktable-tools" flex="35" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
+                <md-list ng-cloak>
+                    <md-subheader class="md-no-sticky">Grid actions</md-subheader>
+                    <md-list-item>
+                        <div class="md-list-item-text">
+                            <h4>Grid size</h4>
+                        </div>
+                        <div class="md-secondary">
+                            <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()">
+                                <input type="radio" ng-model="$ctrl._selectedGridType" ng-value="type" ng-change="$ctrl.setSelectedGridType(type)">
+                                <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
+                                <span class="grid-size-selector-text" ng-bind="::type.title"></span>
+                            </label>
+                        </div>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </div>
+            <div class="work-table" flex="65" layout-fill layout-wrap layout-align="center start">
+                <div class="grid">
+                    <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.selectCell(cell)" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedCell(cell.id) || cell.tile]">
                         <tile-grid tile="{{ cell.tile }}" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
                         <div class="tile-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedCell(cell.id)">
@@ -51,6 +52,7 @@
                             <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['DELETE'].code)">&#xE92B;</md-icon>
                         </div>
                     </span>
+                    </div>
                 </div>
             </div>
         </div>

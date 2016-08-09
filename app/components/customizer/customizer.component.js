@@ -17,7 +17,7 @@
             { step: 1, completed: false, optional: false, data: {} },
             { step: 2, completed: false, optional: false, data: {} },
             { step: 3, completed: false, optional: false, data: {} },
-            { step: 4, completed: false, optional: false, data: {} },
+            { step: 4, completed: false, optional: false, data: {} }
         ];
 
         ctrl.enableNextStep = function() {
