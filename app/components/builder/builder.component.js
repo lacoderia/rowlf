@@ -357,6 +357,25 @@
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[1].data);
         };
 
+        /**
+         *
+         * @returns {boolean}
+         */
+        ctrl.isDisabled = function() {
+            var disabled = true;
+
+            for(var i=0; i<_grid.length; i++){
+                for(var j=0; j<_grid.length; j++){
+                    if(_grid[i][j].tile){
+                        disabled = false;
+                        break;
+                    }
+                }
+            }
+
+            return disabled;
+        };
+
         ctrl.$onInit = function() {
 
             _gridTypes = collectionGrids.getCollectionGrids();
