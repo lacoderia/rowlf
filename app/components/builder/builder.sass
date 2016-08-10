@@ -131,6 +131,21 @@ builder
             padding: 0
             position: relative
 
+            &.no-tile-selected
+              background: $color-gray-200
+              color: $color-gray-600
+              font-size: 0.8rem
+              font-weight: bold
+              text-align: center
+
+              .no-tile-selected-title
+                display: block
+                left: 50%
+                position: absolute
+                top: 50%
+                transform: translate(-50%, -50%)
+                width: 100%
+
             .tile-actions
               background-color: $color-light-green-600
               border-radius: 2px
