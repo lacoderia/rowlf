@@ -11,6 +11,7 @@
                 function (response) {
                     try {
                         if (response.data) {
+                            _colors = [];
                             for (var colorIndex = 0; colorIndex<response.data.colors.length; colorIndex++){
                                 var color = response.data.colors[colorIndex];
                                 if(color.active){

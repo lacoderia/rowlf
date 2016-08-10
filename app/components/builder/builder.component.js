@@ -382,14 +382,16 @@
         ctrl.$onInit = function() {
 
             _gridTypes = collectionGrids.getCollectionGrids();
-            _colors = builderService.callColors().then(
-                function () {
-                    _colors = builderService.getColors();
-                    if(_colors.length > 0){
-                        ctrl.setColor(_colors[0]);
+            if(!_colors.length > 0){
+                _colors = builderService.callColors().then(
+                    function () {
+                        _colors = builderService.getColors();
+                        if(_colors.length > 0){
+                            ctrl.setColor(_colors[0]);
+                        }
                     }
-                }
-            );
+                );
+            }
 
             var maxCols = 0;
             var maxRows = 0;
