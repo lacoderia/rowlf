@@ -1,6 +1,6 @@
 <div class="step-container-wrapper">
     <h2 layout="row" class="md-display-1" hide-gt-sm>2. Build</h2>
-    <p layout="row">Select and customize your tile pattern:</p>
+    <p layout="row">Select your tile pattern from the design bar and paste it inside the grid:</p>
     <div layout="column" class="builder" layout-align="center start" layout-margin layout-wrap flex>
         <div class="tile-selector" flex layout-fill>
         <span class="tile-clone-button" ng-click="$ctrl.openAddTile()">
@@ -46,7 +46,8 @@
                 <div class="grid">
                     <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.selectCell(cell)" ng-class="{ 'no-tile-selected': (!$ctrl.getSelectedTile() && !cell.tile), 'tile-selected':  ($ctrl.getSelectedTile() && !cell.tile), 'tile-cloned': (cell.tile)}">
-                        <div ng-if="!$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Select a tile <br> from the design bar</div>
+                        <div ng-if="!$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Select a design</div>
+                        <div ng-if="$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Place a design</div>
                         <tile-grid tile="{{ cell.tile }}" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
                         <div class="tile-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedCell(cell.id)">
                             <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>

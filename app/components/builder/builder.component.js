@@ -27,6 +27,7 @@
         };
         ctrl._selectedGridType =undefined;
         ctrl.selectedColor = undefined;
+        ctrl.tileQuery = '';
 
         ctrl.callAction = function ($event, action, tile) {
             $event.preventDefault();

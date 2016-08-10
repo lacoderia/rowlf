@@ -133,18 +133,18 @@ builder
 
             &.no-tile-selected
               background: $color-gray-200
+
+            .no-tile-selected-title
               color: $color-gray-600
+              display: block
               font-size: 0.8rem
               font-weight: bold
+              left: 50%
+              position: absolute
               text-align: center
-
-              .no-tile-selected-title
-                display: block
-                left: 50%
-                position: absolute
-                top: 50%
-                transform: translate(-50%, -50%)
-                width: 100%
+              top: 50%
+              transform: translate(-50%, -50%)
+              width: 100%
 
             &.tile-selected
               cursor: url('/assets/images/stamp_cursor.png'), default
@@ -310,20 +310,34 @@ builder
       img
         width: 100%
 
-  .customize-tile-selector
+  md-input-container
+    margin: 1.6rem 0 0
+    padding: 0 1rem
+
+    label
+      margin-left: 1rem
+
+  .customize-tile
+    align-content: center
     display: flex
-    justify-content: space-between
-    padding-top: 40px
-    padding-bottom: 40px
+    justify-content: flex-start
+    flex-wrap: wrap
+
+    .customize-tile-selector
+      display: flex
+      justify-content: center
+      flex-wrap: wrap
 
     .customize-tile-item
       background: white
       border: 2px solid transparent
       cursor: pointer
+      display: inline-block
+      margin: 1.5%
       outline: none
       padding: 1rem
       position: relative
-      width: 70px
+      width: 36%
 
       &:hover
         &:not(.selected)
@@ -335,7 +349,7 @@ builder
       .tile-title
         color: $color-gray-900
         font-size: 0.9rem
-        margin-top: 1rem
+        margin: 0 0 0.5rem
         text-align: center
 
 

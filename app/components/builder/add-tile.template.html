@@ -4,14 +4,21 @@
             <div class="customize-tiles-empty" ng-if="!$ctrl.getTmpSelectedTiles().length" ng-click="$ctrl.openAddTile()">
                 <p layout="row">Add tiles to customize</p>
             </div>
+            <h3 layout="column" flex="100">Selected tiles:</h3>
             <div class="tile-selector-item" ng-if="$ctrl.getTmpSelectedTiles().length" ng-repeat="item in $ctrl.getTmpSelectedTiles()" ng-click="$ctrl.customizeTile(item)" flex="20">
                 <tile-button tile="{{ item }}"></tile-button>
             </div>
         </div>
-        <div class="customize-tile-selector" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
-            <div class="customize-tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles()" ng-click="$ctrl.addTile(item)">
-                <img class="tile-image" ng-src="{{ item.url }}"/>
-                <h3 class="tile-title" ng-bind="::item.name"></h3>
+        <div class="customize-tile-selector" layout="column" flex="35" layout-fill layout-padding md-whiteframe="1">
+            <md-input-container class="md-icon-float md-block">
+                <label>Search tile by name</label>
+                <input ng-model="$ctrl.tileQuery" type="text">
+            </md-input-container>
+            <div class="customize-tile">
+                <div class="customize-tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
+                    <img class="tile-image" ng-src="{{ item.url }}"/>
+                    <h3 class="tile-title" ng-bind="::item.name"></h3>
+                </div>
             </div>
             <div class="dialog-actions">
                 <md-button md-autofocus class="md-primary" ng-click="$ctrl.saveAddTile()">
