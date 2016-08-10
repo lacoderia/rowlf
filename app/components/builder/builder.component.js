@@ -181,6 +181,8 @@
             for(var i=0; i<_selectedTiles.length; i++) {
                 if(_selectedTiles[i].tmpId == _selectedTile.tmpId) {
                     _selectedTiles.splice(i, 1);
+                    _selectedTile = undefined;
+                    break;
                 }
             }
         };
