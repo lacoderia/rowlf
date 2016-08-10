@@ -149,7 +149,7 @@
          * @returns {boolean}
          */
         ctrl.isSelectedTile = function (tileId){
-            return utilsService.existItem(_selectedTiles, tileId);
+            return utilsService.existItem(_selectedTiles, 'id', tileId);
         };
 
         /**
