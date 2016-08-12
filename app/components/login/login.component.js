@@ -391,42 +391,59 @@
         // Function to register a new user
         ctrl.signUp = function() {
 
-            ctrl.loading = true;
+            loginService.getIpInfo().then(function (location) {
+                var location = location;
+                ctrl.loading = true;
 
-            var user = {
-                name: ctrl.newUser.name,
-                city: ctrl.newUser.city,
-                state: ctrl.newUser.state,
-                country: ctrl.selectedItem.display,
-                email: ctrl.newUser.email,
-                password: ctrl.newUser.password,
-                password_confirmation: ctrl.newUser.confirmation,
-                reference: ctrl.newUser.reference
-            };
+                var user = {
+                    name: ctrl.newUser.name,
+                    city: ctrl.newUser.city,
+                    state: ctrl.newUser.state,
+                    country: ctrl.selectedItem.display,
+                    email: ctrl.newUser.email,
+                    password: ctrl.newUser.password,
+                    password_confirmation: ctrl.newUser.confirmation,
+                    reference: ctrl.newUser.reference,
+                    location: location
+                };
 
-            var internal = true;
+                var internal = true;
 
-            if(ctrl.signupForm.$valid) {
+                if(ctrl.signupForm.$valid) {
 
-                loginService.signUp(user, internal)
-                    .then(function(data) {
-                        ctrl.changeView(ctrl.VIEWS.WAIT);
-                        ctrl.loading = false;
-                    }, function(error) {
-                        var errorText = 'An error occured, please try again later...';
-                        if(error && error.errors){
-                            errorText = error.errors[0].title;
-                        }
+                    loginService.signUp(user, internal)
+                        .then(function(data) {
+                            ctrl.changeView(ctrl.VIEWS.WAIT);
+                            ctrl.loading = false;
+                        }, function(error) {
+                            var errorText = 'An error occured, please try again later...';
+                            if(error && error.errors){
+                                errorText = error.errors[0].title;
+                            }
 
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(errorText)
-                                .position('top right')
-                        );
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(errorText)
+                                    .position('top right')
+                            );
 
-                        ctrl.loading = false;
-                    });
-            }
+                            ctrl.loading = false;
+                        });
+                }
+            }, function(error) {
+                var errorText = 'An error occured, please try again later...';
+                if(error && error.errors){
+                    errorText = error.errors[0].title;
+                }
+
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent(errorText)
+                        .position('top right')
+                );
+
+                ctrl.loading = false;
+            });
         };
 
         // Function to recover user password

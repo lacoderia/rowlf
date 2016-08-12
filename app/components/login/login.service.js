@@ -34,11 +34,10 @@
                 });
         };
 
-        var signUp = function(user, internal){
+        var signUp = function(user, internal, ipInfo){
             var registerServiceURL = AUTH_API_URL_BASE + '/users/sign_up';
             return $http.post(registerServiceURL, { user: user, internal: internal })
                 .then(function(response) {
-                    console.log(response);
                     var data = response.data;
                     if (typeof data === 'object') {
                         return data;
@@ -125,12 +124,29 @@
                 });
         };
 
+        var getIpInfo = function () {
+            var serviceURL = 'http://ipinfo.io';
+            return $http.get(serviceURL, {})
+                .then(function(response) {
+                    if(response.data){
+                        var location = response.data.city + ', ' + response.data.country
+                        return location;
+                    }
+                    return '';
+                },function(error){
+                    return $q.reject(error.data);
+                });
+
+
+        };
+
         var service = {
             login: login,
             signUp: signUp,
             recoverPassword: recoverPassword,
             resetPassword: resetPassword,
-            getCurrentSession: getCurrentSession
+            getCurrentSession: getCurrentSession,
+            getIpInfo: getIpInfo
         };
 
         return service;

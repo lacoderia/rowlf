@@ -4,8 +4,9 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "prestart": "gulp prod",
-    "start": "nodemon ./bin/www",
+    "prestart": "npm install && gulp prod",
+    "start": "node ./bin/www",
+    "postinstall": "bower install",
     "dev": "concurrently --kill-others 'gulp default'"
   },
   "dependencies": {

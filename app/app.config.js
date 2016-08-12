@@ -3,7 +3,7 @@
 angular.module('tileDesignStudio')
     .constant('COLLECTION_GRID_ITEMS', [
         { id: 1, title: '2x2', url: '/assets/images/grid 2x2.svg', cols: 2, rows: 2},
-        { id: 2, title: '4x4', url: '/assets/images/grid 4x4.svg', cols: 4, rows: 4 }
+        { id: 2, title: '5x5', url: '/assets/images/grid 5x5.svg', cols: 5, rows: 5 }
     ]);
 
 angular.
