@@ -62,11 +62,16 @@
             if(xml){
                 var parser = new DOMParser();
                 var svg = parser.parseFromString(xml, "application/xml");
+                var SVGPolygons = svg.getElementsByTagName('polygon');
                 var SVGPaths = svg.getElementsByTagName('path');
                 svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
 
                 for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
                     svg.getElementsByTagName('path')[pathIndex].id = 'tile_' + tileId + '_path_' + (pathIndex+1);
+                }
+
+                for(var pathIndex=0; pathIndex<SVGPolygons.length; pathIndex++){
+                    svg.getElementsByTagName('polygon')[pathIndex].id = 'tile_' + tileId + '_polygon_' + (pathIndex+1);
                 }
 
                 return new XMLSerializer().serializeToString(svg);
