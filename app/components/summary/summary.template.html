@@ -19,10 +19,9 @@
                         <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
                         <div class="info">
                             <span class="count">x{{ tile.count }}</span>
-                            <h5>Colors:</h5>
                         <span class="color-item" ng-repeat="hexValue in tile.colors">
                             <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
-                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).name }}</span>
+                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).hex_value }}</span>
                         </span>
                         </div>
                     </li>
