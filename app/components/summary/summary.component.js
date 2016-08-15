@@ -66,7 +66,6 @@
             color.style = {
                 'background-color': color.hex_value
             };
-            console.log(color);
             return color;
         };
 
@@ -80,6 +79,10 @@
          */
         ctrl.completeStep = function() {
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[2].data);
+        };
+
+        ctrl.prevStep = function ($event) {
+            ctrl.customizerCtrl.moveToPreviousStep();
         };
 
         ctrl.$onInit = function() {
