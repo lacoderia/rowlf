@@ -5,3 +5,16 @@
 
 .tile-selector-list
   overflow-x: scroll
+
+.md-step.md-disabled md-step-label-wrapper:before
+  background: #106cc8
+
+.md-step.md-complete.md-disabled md-step-label-wrapper:before
+  content: '\7'
+  background: #106cc8 url("data:image/svg+xml;charset=utf8,%3Csvg fill='rgba(255,255,255,0.87)' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center center
+
+.md-step.md-active md-step-label-wrapper::before
+  background: rgb(139,195,74)
+
+.md-step.md-disabled md-step-label-wrapper
+  opacity: 1
