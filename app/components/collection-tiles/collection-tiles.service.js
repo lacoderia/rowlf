@@ -62,18 +62,40 @@
             if(xml){
                 var parser = new DOMParser();
                 var svg = parser.parseFromString(xml, "application/xml");
+                var SVGPolygons = svg.getElementsByTagName('polygon');
                 var SVGPaths = svg.getElementsByTagName('path');
-                svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
+                var pathStyles = {};
 
+                svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
                 for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                    svg.getElementsByTagName('path')[pathIndex].id = 'tile_' + tileId + '_path_' + (pathIndex+1);
+                    var id = 'tile_' + tileId + '_path_' + (pathIndex+1);
+                    svg.getElementsByTagName('path')[pathIndex].id = id;
+                    pathStyles[id] = {
+                        fill: '#FFFFFF',
+                        stroke: '#000000'
+                    };
                 }
 
-                return new XMLSerializer().serializeToString(svg);
+                for(var pathIndex=0; pathIndex<SVGPolygons.length; pathIndex++){
+                    var id = 'tile_' + tileId + '_polygon_' + (pathIndex+1);
+                    svg.getElementsByTagName('polygon')[pathIndex].id = 'tile_' + tileId + '_polygon_' + (pathIndex+1);
+                    pathStyles[id] = {
+                        fill: '#FFFFFF',
+                        stroke: '#000000'
+                    };
+                }
+                return {
+                    xmlString: new XMLSerializer().serializeToString(svg),
+                    pathStyles: pathStyles
+                };
             }
 
-            return undefined;
+            return {
+                xmlString: undefined,
+                pathStyles: {}
+            };
         }
+
 
         function callTilesByCollectionId(collectionId) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
@@ -85,6 +107,7 @@
                             collectionTiles.tiles = [];
                             for(var itemIndex=0; itemIndex<response.data.tiles.length; itemIndex++){
                                 var tile = response.data.tiles[itemIndex];
+                                var xmlParsed = parseXML(tile.xml, tile.id);
                                 if(tile.active && tile.image){
                                     collectionTiles.tiles.push({
                                         id: tile.id,
@@ -92,12 +115,13 @@
                                         url: AUTH_API_URL_BASE + tile.image,
                                         custom_styles: {
                                             rotation: 0,
-                                            path_styles: {}
+                                            path_styles: xmlParsed.pathStyles
                                         },
-                                        xml: parseXML(tile.xml, tile.id)
+                                        xml: xmlParsed.xmlString
                                     });
                                 }
                             }
+                            console.log(collectionTiles)
                         }
                     } catch(error){
                         console.log(error)

@@ -47,7 +47,10 @@
                             if(tile.custom_styles) {
                                 for(var key in tile.custom_styles.path_styles) {
                                     var color = tile.custom_styles.path_styles[key].fill;
-                                    tile.colors.push(color);
+                                    var exists = tile.colors.indexOf(color);
+                                    if(exists < 0){
+                                        tile.colors.push(color);
+                                    }
                                 }
                             }
 
@@ -58,7 +61,6 @@
                     }
                 }
             }
-
         }
 
         function getTileIndex(tile) {

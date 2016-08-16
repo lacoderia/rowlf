@@ -1,26 +1,23 @@
 <md-steppers flex layout-fill md-stretch-steppers="always" md-selected="$ctrl.selectedStep" md-busy-text="'Processing...'" md-busy="$ctrl.showBusyText">
-    <md-step label="Select the tile size collection" md-complete="$ctrl.stepData[0].data.completed" ng-disabled="$ctrl.stepProgress > 1">
+    <md-step label="Select the tile size collection" md-complete="$ctrl.stepData[0].data.completed" ng-disabled="true">
         <md-content flex layout-fill class="tile-set-content">
             <div class="step-content">
                 <collection-tiles></collection-tiles>
             </div>
         </md-content>
     </md-step>
-    <md-step label="Customize" md-complete="$ctrl.stepData[1].data.completed" ng-disabled="$ctrl.stepProgress < 2">
+    <md-step label="Customize" md-complete="$ctrl.stepData[1].data.completed" ng-disabled="true">
         <md-content flex layout-fill class="tile-set-content">
             <div class="step-content">
                 <builder></builder>
             </div>
         </md-content>
     </md-step>
-    <md-step label="Summary" md-complete="$ctrl.stepData[2].data.completed" ng-disabled="$ctrl.stepProgress < 3">
+    <md-step label="Summary" md-complete="$ctrl.stepData[2].data.completed" ng-disabled="true">
         <md-content flex layout-fill class="tile-set-content">
             <div class="step-content">
                 <summary-component></summary-component>
             </div>
         </md-content>
     </md-step>
-    <!--md-step label="Build" md-complete="$ctrl.stepData[3].data.completed" ng-disabled="$ctrl.stepProgress < 4">
-        <md-content>PASO 4</md-content>
-    </md-step-->
 </md-steppers>

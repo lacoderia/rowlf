@@ -61,9 +61,16 @@
     </div>
 </div>
 <md-toolbar class="bottom-navigation">
-    <div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
-        <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
-            Next <md-icon class="material-icons">&#xE409;</md-icon>
-        </md-button>
+    <div layout="row" layout-align="center center" layout-wrap>
+        <div flex="49" layout="row" layout-align="start center" layout-wrap layout-margin>
+            <md-button ng-click="$ctrl.startOver($event)">
+                <md-icon class="material-icons">&#xE314;</md-icon> Previous
+            </md-button>
+        </div>
+        <div flex="49" layout="row" layout-align="end center" layout-wrap layout-margin>
+            <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
+                Next <md-icon class="material-icons">&#xE409;</md-icon>
+            </md-button>
+        </div>
     </div>
 </md-toolbar>

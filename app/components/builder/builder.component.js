@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService) {
+    function builderController($mdPanel, $mdDialog, $location, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService) {
 
         var ctrl = this;
         var _selectedTiles = [];
@@ -358,6 +358,24 @@
         ctrl.completeStep = function() {
             summaryService.setSummary(_grid);
             ctrl.customizerCtrl.submitCurrentStep(ctrl.customizerCtrl.stepData[1].data);
+        };
+
+        /**
+         *
+         */
+        ctrl.startOver = function($event) {
+            var confirm = $mdDialog.confirm()
+                .title('Do you want to go back to the previous step?')
+                .textContent('All your changes will be lost, and you will have to start over again')
+                .ariaLabel('Previous step')
+                .targetEvent($event)
+                .ok('Yes, take me back!')
+                .cancel('No, keep me here');
+            $mdDialog.show(confirm).then(function() {
+                $location.path('/');
+            }, function() {
+
+            });
         };
 
         /**

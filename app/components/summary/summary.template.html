@@ -19,10 +19,9 @@
                         <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
                         <div class="info">
                             <span class="count">x{{ tile.count }}</span>
-                            <h5>Colors:</h5>
                         <span class="color-item" ng-repeat="hexValue in tile.colors">
                             <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
-                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).name }}</span>
+                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).hex_value }}</span>
                         </span>
                         </div>
                     </li>
@@ -32,9 +31,16 @@
     </div>
 </div>
 <md-toolbar class="bottom-navigation">
-    <!--div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
-        <md-button ng-click="$ctrl.completeStep()">
-            Next <md-icon class="material-icons">&#xE409;</md-icon>
-        </md-button>
-    </div-->
+    <div layout="row" layout-align="center center" layout-wrap>
+        <div flex="49" layout="row" layout-align="start center" layout-wrap layout-margin>
+            <md-button ng-click="$ctrl.prevStep($event)">
+                <md-icon class="material-icons">&#xE314;</md-icon> Previous
+            </md-button>
+        </div>
+        <!--div flex="49" layout="row" layout-align="end center" layout-wrap layout-margin>
+            <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
+                Next <md-icon class="material-icons">&#xE409;</md-icon>
+            </md-button>
+        </div-->
+    </div>
 </md-toolbar>
