@@ -127,7 +127,7 @@ collection-tiles
   background: $color-gray-900
   box-sizing: border-box
   display: block
-  margin: 0 0 0 1rem
+  margin: 0rem
   padding: 2rem
   width: 100%
   transition: 1s ease
@@ -164,9 +164,8 @@ collection-tiles
       display: flex
       outline: none
       margin: 1.5%
-      padding: 0.5rem 1rem
+      padding: 1rem
       position: relative
-      width: 15%
 
       &:hover
         &:not(.selected)
@@ -212,3 +211,26 @@ collection-tiles
 
         .selected-icon
           opacity: 1
+
+@media (max-width: 599px)
+
+  collection-tiles
+
+    .tile-collection
+
+      .tile-collection-item
+        margin-bottom: 0.5rem
+
+        a.tile-content
+
+          .tile-body
+            display: none !important
+
+          .tile-title
+            margin: 0rem
+            width: 100%
+
+    .tile-bottom-sheet
+
+      h3
+        font-size: 14px

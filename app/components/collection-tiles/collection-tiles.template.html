@@ -3,9 +3,9 @@
     <p layout="row">Select one of the following sizes to see the tiles available:</p>
     <div layout="row" class="tile-collection" layout-align="center start" layout-wrap>
         <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
-            <div layout="row" layout-fill>
-                <div layout="row" flex="15">
-                    <ul class="tile-collection-list">
+            <div layout="row" layout-fill layout-wrap layout-margin>
+                <div layout="row" flex="15" flex-xs="100">
+                    <ul class="tile-collection-list" layout="column" flex-xs="100">
                         <li class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1">
                             <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
                                 <div class="tile-body">
@@ -20,7 +20,7 @@
                         </li>
                     </ul>
                 </div>
-                <div layout="row" flex="85" class="tile-bottom-sheet" layout-fill>
+                <div layout="row" class="tile-bottom-sheet" layout-fill flex="80" flex-xs="100">
                     <p ng-if="!$ctrl.getSelectedCollectionTiles().tiles.length > 0">Select one size</p>
                     <div ng-if="$ctrl.getSelectedCollectionTiles().tiles.length > 0">
                         <md-input-container class="md-icon-float md-block">
@@ -33,7 +33,7 @@
                         <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
                     </div>
                     <div class="tile-selector" layout-fill>
-                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | filter: { name: $ctrl.tileQuery }" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column">
+                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | filter: { name: $ctrl.tileQuery }" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" flex="15" flex-xs="100">
                             <img class="tile-image" ng-src="{{ item.url }}"/>
                             <h3 class="tile-title" ng-bind="item.name"></h3>
                             <div class="selected-overlay"></div>
