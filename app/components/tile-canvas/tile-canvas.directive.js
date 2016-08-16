@@ -51,6 +51,30 @@
                             }
                         }
 
+                        SVGObject.addEventListener('mouseover', function (event) {
+                            var path = event.target;
+                            if(path){
+                                var pathStyle = tileData.custom_styles.path_styles[path.id];
+                                if(pathStyle){
+                                    path.style.fill = '#FF0000';
+                                    path.style.fillOpacity= 0.1;
+                                    path.style.stroke = '#FF0000';
+                                }
+                            }
+                        });
+
+                        SVGObject.addEventListener('mouseout', function (event) {
+                            var path = event.target;
+                            if(path){
+                                var pathStyle = tileData.custom_styles.path_styles[path.id];
+                                if(pathStyle){
+                                    path.style.fill = pathStyle.fill;
+                                    path.style.fillOpacity= 1;
+                                    path.style.stroke = pathStyle.stroke;
+                                }
+                            }
+                        });
+
                         SVGObject.addEventListener('click', function (event) {
                             var path = event.target;
                             var selectedColor = getSelectedColor();
