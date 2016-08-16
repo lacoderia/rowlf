@@ -2,16 +2,16 @@
     <h2 layout="row" class="md-display-1" hide-gt-sm>2. Build</h2>
     <p layout="row">Select your tile pattern from the design bar and paste it inside the grid:</p>
     <div layout="column" class="builder" layout-align="center start" layout-margin layout-wrap flex>
-        <div class="tile-selector" flex layout-fill>
-        <span class="tile-clone-button" ng-click="$ctrl.openAddTile()">
-            <button>
-                <md-tooltip>Add more tiles</md-tooltip>
-                <md-icon class="material-icons">&#xE147;</md-icon>
-            </button>
-        </span>
-        <span class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
-            <p layout="row">Add tiles to customize</p>
-        </span>
+        <div class="tile-selector" layout="row"layout-align="start center" flex layout-fill>
+            <span class="tile-clone-button" ng-click="$ctrl.openAddTile()">
+                <button>
+                    <md-tooltip>Add more tiles</md-tooltip>
+                    <md-icon class="material-icons">&#xE147;</md-icon>
+                </button>
+            </span>
+            <span class="customize-tiles-empty" ng-if="!$ctrl.getSelectedTiles().length" ng-click="$ctrl.openAddTile()">
+                <p layout="row">Add tiles to customize</p>
+            </span>
             <ul class="tile-list" ng-if="$ctrl.getSelectedTiles().length">
                 <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile($event, item)">
                     <tile-button tile="{{ item }}"></tile-button>
@@ -24,27 +24,26 @@
             </ul>
         </div>
         <div layout="row" layout-fill layout-wrap layout-align="center start">
-            <div class="worktable-tools" flex="35" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
+            <div class="worktable-tools" flex="35" flex-xs="100" layout-fill layout-wrap ayout-align="center start" md-whiteframe="1">
                 <md-list ng-cloak>
-                    <md-subheader class="md-no-sticky">Grid actions</md-subheader>
+                    <md-subheader class="md-no-sticky" hide-xs>Grid actions</md-subheader>
                     <md-list-item>
                         <div class="md-list-item-text">
                             <h4>Grid size</h4>
                         </div>
                         <div class="md-secondary">
-                            <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()">
-                                <input type="radio" ng-model="$ctrl._selectedGridType" ng-value="type" ng-change="$ctrl.setSelectedGridType(type)">
+                            <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()" ng-click="$ctrl.setSelectedGridType(type)">
+                                <input type="radio" ng-model="$ctrl._selectedGridType" ng-value="type">
                                 <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
                                 <span class="grid-size-selector-text" ng-bind="::type.title"></span>
                             </label>
                         </div>
-                        <md-divider></md-divider>
                     </md-list-item>
                 </md-list>
             </div>
-            <div class="work-table" flex="65" layout-fill layout-wrap layout-align="center start">
+            <div class="work-table" flex="65" flex-xs="100" layout-fill layout-wrap layout-align="center start">
                 <div class="grid">
-                    <div class="row" ng-style="$ctrl.getRowStyle()" ng-repeat="row in $ctrl.getGrid()" flex>
+                    <div class="row" ng-style="$ctrl.getRowStyle(row)" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.selectCell(cell)" ng-class="{ 'no-tile-selected': (!$ctrl.getSelectedTile() && !cell.tile), 'tile-selected':  ($ctrl.getSelectedTile() && !cell.tile), 'tile-cloned': (cell.tile)}">
                         <div ng-if="!$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Select a design</div>
                         <div ng-if="$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Place a design</div>

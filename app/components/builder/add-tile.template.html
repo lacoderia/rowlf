@@ -1,6 +1,6 @@
 <div role="dialog" aria-label="Add tiles!" layout="column" layout-align="center center" layout-fill>
-    <div class="work-table" layout="row" layout-fill>
-        <div class="customize-tile-display" layout="row" flex="65" layout-align="start start" layout-fill layout-wrap>
+    <div class="work-table" layout="row" layout-xs="column" layout-fill>
+        <div class="customize-tile-display" layout="row" layout-align="start start" flex="65" flex-xs="50" layout-fill layout-wrap>
             <div class="customize-tiles-empty" ng-if="!$ctrl.getTmpSelectedTiles().length" ng-click="$ctrl.openAddTile()">
                 <p layout="row">Add tiles to customize</p>
             </div>
@@ -9,7 +9,7 @@
                 <tile-button tile="{{ item }}"></tile-button>
             </div>
         </div>
-        <div class="customize-tile-selector" layout="column" flex="35" layout-fill layout-padding md-whiteframe="1">
+        <div class="customize-tile-selector" layout="column" flex="35" flex-xs="50" layout-fill layout-padding md-whiteframe="1">
             <md-input-container class="md-icon-float md-block">
                 <label>Search tile by name</label>
                 <input ng-model="$ctrl.tileQuery" type="text">

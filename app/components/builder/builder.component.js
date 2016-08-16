@@ -249,12 +249,20 @@
             return _grid;
         };
 
-        ctrl.getRowStyle = function () {
-
-            return _rowStyle = {
-                'height': (100/ctrl._selectedGridType.cols)+'%',
+        ctrl.getRowStyle = function (row) {
+            var _rowStyle = {
+                'height': '0px',
                 'width': '100%'
             };
+
+            for(var i=0; i<row.length; i++){
+                if(row[i].active){
+                    _rowStyle.height = (100 / ctrl._selectedGridType.cols) + '%';
+                    break;
+                }
+            }
+
+            return _rowStyle;
         };
 
         ctrl.getCellStyle = function () {
