@@ -6,9 +6,39 @@
 summary-component
   .summary
 
+    .grid
+      border: 1px solid $color-gray-600
+      box-sizing: border-box
+      display: block
+      font-size: 0px
+      height: 100vw
+      margin: 0 auto
+      max-height: 400px
+      max-width: 400px
+      text-align: center
+      width: 100vw
+
+      div.row
+        box-sizing: border-box
+        display: inline-block
+        font-size: 0px
+        margin: 0
+        padding: 0
+        width: 100%
+
+        span.cell
+          background-color: white
+          box-sizing: border-box
+          border: 1px solid $color-gray-600
+          display: inline-block
+          font-size: 16px
+          margin: 0
+          outline: none
+          padding: 0
+          position: relative
+
     .tile-list
       background: white
-      width: 100%
 
       ul
         list-style: none
@@ -59,3 +89,13 @@ summary-component
 
           &:last-child
             border-bottom: none
+
+@media (max-width: 599px)
+  .summary
+    .grid
+      margin-top: 1rem !important
+      max-height: 75vw !important
+      max-width: 75vw !important
+
+    .tile-list
+      margin-top: 1rem
