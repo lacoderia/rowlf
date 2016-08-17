@@ -1,13 +1,12 @@
 <div class="step-container-wrapper">
     <h2 class="md-display-1" hide-gt-sm>3. Summary</h2>
     <p>This is a summary of your design:</p>
-    <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
+    <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap flex>
         <div layout="row" layout-fill layout-wrap>
             <div layout="row" flex="50" flex-xs="100">
                 <div class="grid">
                     <div class="row" ng-style="$ctrl.getRowStyle(row)" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active">
-                        <div ng-if="!cell.tile.id" class="no-tile-selected-title">Select a design</div>
                         <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
                     </span>
                     </div>

@@ -30,7 +30,7 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    _rowStyle.height = (100/collectionGrids.getSelectedGridType()) + '%';
+                    _rowStyle.height = (100/collectionGrids.getSelectedGridType().cols) + '%';
                     break;
                 }
             }
