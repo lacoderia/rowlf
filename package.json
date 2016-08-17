@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prestart": "npm install && gulp prod",
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "postinstall": "bower install",
     "dev": "concurrently --kill-others 'gulp default'"
   },

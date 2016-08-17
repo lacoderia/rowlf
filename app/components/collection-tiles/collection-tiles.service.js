@@ -65,8 +65,9 @@
                 var SVGPolygons = svg.getElementsByTagName('polygon');
                 var SVGPaths = svg.getElementsByTagName('path');
                 var pathStyles = {};
-
                 svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
+
+
                 for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
                     var id = 'tile_' + tileId + '_path_' + (pathIndex+1);
                     svg.getElementsByTagName('path')[pathIndex].id = id;
