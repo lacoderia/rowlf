@@ -1,19 +1,21 @@
 <div role="dialog" aria-label="Customize your tile!" layout="column" layout-align="center center" layout-fill>
-    <div class="work-table" layout="row" layout-fill>
-        <div layout="row" flex="65" layout-align="center center" layout-fill layout-wrap>
-            <tile-canvas flex="50" id="customizer-canvas" tile="$ctrl.getSelectedTile()" get-selected-color="$ctrl.getSelectedColor"></tile-canvas>
+    <div class="work-table" layout="row" layout-xs="column" layout-fill>
+        <div class="tile-preview" layout="row" flex-gt-xs="65" layout-align="center center" layout-wrap>
+            <tile-canvas flex="50" flex-xs="70" id="customizer-canvas" tile="$ctrl.getSelectedTile()" get-selected-color="$ctrl.getSelectedColor"></tile-canvas>
         </div>
-        <div class="tile-tools" layout="column" flex="35" layout-fill layout-wrap layout-padding md-whiteframe="1" layout-align="start start">
-            <h3>Color pallete</h3>
-            <div class="color-picker" layout="row" layout-wrap layout-align="start center">
-                <div flex="20" class="color-item" ng-repeat="color in $ctrl.getColors()" ng-click="$ctrl.setColor(color)">
-                    <span class="color" ng-style="$ctrl.getColorStyle(color)">
-                        <md-icon class="md-icon selected" ng-if="$ctrl.isSelectedColor(color)">&#xE876;</md-icon>
-                    </span>
-                    <span class="color-name">{{ color.name }}</span>
+        <div class="tile-tools" layout="row" flex-gt-xs="35" layout-wrap md-whiteframe="1" layout-align="start start">
+            <div class="tile-tools-wrapper" layout-wrap flex="100">
+                <h3>Color pallete</h3>
+                <div class="color-picker" layout="row" layout-wrap layout-align="start center">
+                    <div flex="20" class="color-item" ng-repeat="color in $ctrl.getColors()" ng-click="$ctrl.setColor(color)">
+                        <span class="color" ng-style="$ctrl.getColorStyle(color)">
+                            <md-icon class="md-icon selected" ng-if="$ctrl.isSelectedColor(color)">&#xE876;</md-icon>
+                        </span>
+                        <span class="color-name">{{ color.name }}</span>
+                    </div>
                 </div>
             </div>
-            <div class="dialog-actions">
+            <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
                 <md-button md-autofocus class="md-primary" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['SAVE'].code)">
                     Save
                 </md-button>

@@ -22,18 +22,6 @@
                         <img class="tile-image" ng-src="{{ item.url }}"/>
                         <h3 class="tile-title" ng-bind="::item.name"></h3>
                     </div>
-                    <div class="customize-tile-item" flex="30" flex-xs="45" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
-                        <img class="tile-image" ng-src="{{ item.url }}"/>
-                        <h3 class="tile-title" ng-bind="::item.name"></h3>
-                    </div>
-                    <div class="customize-tile-item" flex="30" flex-xs="45" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
-                        <img class="tile-image" ng-src="{{ item.url }}"/>
-                        <h3 class="tile-title" ng-bind="::item.name"></h3>
-                    </div>
-                    <div class="customize-tile-item" flex="30" flex-xs="45" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
-                        <img class="tile-image" ng-src="{{ item.url }}"/>
-                        <h3 class="tile-title" ng-bind="::item.name"></h3>
-                    </div>
                 </div>
             </div>
             <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">

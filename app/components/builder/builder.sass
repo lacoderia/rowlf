@@ -229,49 +229,55 @@ builder
 
   .tile-tools
     background: white
+    height: 100%
     overflow: hidden
+    box-sizing: content-box
 
-    .action-button
-      &.selected
-          background-color: $color-gray-400
+    .tile-tools-wrapper
+      box-sizing: border-box
+      height: calc(100% - 48px)
+      overflow: auto
+      padding: 8px
 
-    .color-picker
-      padding: 0
-      text-align: center
-      width: 100%
+      h3
+        padding: 8px
 
-      .color-item
-        margin-bottom: 16px
-        overflow: hidden
+      .color-picker
+        padding: 0
+        text-align: center
 
-        &:focus
-          border: 0
-          outline: none
+        .color-item
+          margin-bottom: 16px
+          overflow: hidden
 
-        .color
-          border-radius: 50%
-          display: inline-block
-          cursor: pointer
-          margin-top: 2px
-          position: relative
-          height: 40px
-          width: 40px
+          &:focus
+            border: 0
+            outline: none
 
-          &:hover
-            box-shadow: 0px 0px 3px 0px rgba(50, 50, 50, 0.5)
-
-          .selected
-            color: $color-gray-300
+          .color
+            border-radius: 50%
             display: inline-block
-            left: 50%
-            position: absolute
-            top: 50%
-            transform: translate(-50%, -50%)
+            cursor: pointer
+            margin-top: 2px
+            position: relative
+            height: 40px
+            width: 40px
 
-        .color-name
-          color: $color-gray-600
-          display: block
-          font-size: 0.5rem
+            &:hover
+              box-shadow: 0px 0px 3px 0px rgba(50, 50, 50, 0.5)
+
+            .selected
+              color: $color-gray-300
+              display: inline-block
+              left: 50%
+              position: absolute
+              top: 50%
+              transform: translate(-50%, -50%)
+
+          .color-name
+            color: $color-gray-600
+            display: block
+            font-size: 0.5rem
 
   .close-button
     background: $color-gray-300
@@ -288,8 +294,6 @@ builder
       border: none
       outline: none
 
-  .dialog-actions
-    margin-top: auto
 
   .customize-tile-display
     background: $color-gray-400
@@ -354,6 +358,9 @@ builder
             margin: 0 0 0.5rem
             text-align: center
 
+  .dialog-actions
+    margin-top: auto
+
 .tile-selector-actions
   background-color: $color-light-green-600
   border-radius: 2px
@@ -412,10 +419,17 @@ md-step-content
               font-size: 0.6rem !important
 
   .tile-customizer
-    md-input-container
-      margin: 0px
-      margin-top: 4px
-      padding: 0 1rem
+
+    .tile-preview
+      height: 50%
+
+    .tile-tools
+      height: 50%
+      overflow: hidden
+
+      .tile-tools-wrapper
+        h3
+          font-size: 14px
 
     .customize-tile-display
       height: 35%
@@ -433,7 +447,11 @@ md-step-content
         height: calc(100% - 48px)
         overflow: auto
 
-        .customize-tile
+        .search
+          md-input-container
+            margin: 1rem 0 0
+            padding: 0 1rem
 
+        .customize-tile
           .customize-tile-item
             padding: 0.5rem
