@@ -317,41 +317,42 @@ builder
       height: calc(100% - 48px)
       overflow: auto
 
-  md-input-container
-    margin: 1.6rem 0 0
-    padding: 0 1rem
+      .search
 
-    label
-      margin-left: 1rem
+        md-input-container
+          margin: 1.6rem 0 0
+          padding: 0 1rem
 
-    .md-errors-spacer
-      min-height: 8px
+          label
+            margin-left: 1rem
 
-  .customize-tile
+          .md-errors-spacer
+            min-height: 8px
 
-    .customize-tile-item
-      background: white
-      border: 2px solid transparent
-      cursor: pointer
-      display: inline-block
-      margin: 1.5%
-      outline: none
-      padding: 1rem
-      position: relative
+      .customize-tile
 
-      &:hover
-        &:not(.selected)
-          border-color: $color-light-green-300
+        .customize-tile-item
+          background: white
+          border: 2px solid transparent
+          cursor: pointer
+          display: inline-block
+          margin: 1.5%
+          outline: none
+          padding: 1rem
+          position: relative
 
-      .tile-image
-        width: 100%
+          &:hover
+            &:not(.selected)
+              border-color: $color-light-green-300
 
-      .tile-title
-        color: $color-gray-900
-        font-size: 0.9rem
-        margin: 0 0 0.5rem
-        text-align: center
+          .tile-image
+            width: 100%
 
+          .tile-title
+            color: $color-gray-900
+            font-size: 0.9rem
+            margin: 0 0 0.5rem
+            text-align: center
 
 .tile-selector-actions
   background-color: $color-light-green-600
