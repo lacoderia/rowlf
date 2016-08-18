@@ -337,7 +337,6 @@ builder
       outline: none
       padding: 1rem
       position: relative
-      width: 36%
 
       &:hover
         &:not(.selected)
@@ -409,3 +408,37 @@ md-step-content
           span.cell
             .no-tile-selected-title
               font-size: 0.6rem !important
+
+  .tile-customizer
+    md-input-container
+      margin: 0px
+      margin-top: 4px
+      padding: 0 1rem
+
+      .md-errors-spacer
+        min-height: 0px
+
+    .customize-tile-display
+      height: 35%
+      overflow: none
+      padding-bottom: 0px
+
+      h3
+        font-size: 14px
+
+    .customize-tile-selector
+      height: 65%
+      overflow: none
+
+      .customize-tile-collection
+        height: calc(100% - 30px)
+        overflow: auto
+
+        .customize-tile
+          overflow: auto
+
+          .customize-tile-item
+            padding: 0.5rem
+
+      .dialog-actions
+        height: 30px
