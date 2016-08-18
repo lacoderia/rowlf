@@ -17,7 +17,7 @@
                         <input ng-model="$ctrl.tileQuery" type="text">
                     </md-input-container>
                 </div>
-                <div class="customize-tile" layout="row" flex="100" layout-wrap>
+                <div class="customize-tile" layout="row" flex="100" layout-wrap layout-padding>
                     <div class="customize-tile-item" flex="30" flex-xs="45" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
                         <img class="tile-image" ng-src="{{ item.url }}"/>
                         <h3 class="tile-title" ng-bind="::item.name"></h3>
