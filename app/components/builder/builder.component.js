@@ -372,18 +372,40 @@
          *
          */
         ctrl.startOver = function($event) {
-            var confirm = $mdDialog.confirm()
-                .title('Do you want to go back to the previous step?')
-                .textContent('All your changes will be lost, and you will have to start over again')
-                .ariaLabel('Previous step')
-                .targetEvent($event)
-                .ok('Yes, take me back!')
-                .cancel('No, keep me here');
-            $mdDialog.show(confirm).then(function() {
-                $location.path('/');
-            }, function() {
 
+            var parentEl = angular.element(document.body);
+            $mdDialog.show({
+                parent: parentEl,
+                targetEvent: $event,
+                template:
+                '<md-dialog aria-label="Previous step" class="start-over-dialog">' +
+                '  <md-dialog-content class="md-dialog-content">'+
+                '    <h2 class="md-title">Do you want to go back to the previous step?</h2>' +
+                '    <div class="md-dialog-content-body">' +
+                '      <p>All your changes will be lost, and you will have to start over again</p>' +
+                '    </div>' +
+                '  </md-dialog-content>' +
+                '  <md-dialog-actions>' +
+                '    <md-button ng-click="$ctrl.resetBuilder()">' +
+                '      Yes, take me back!' +
+                '    </md-button>' +
+                '    <md-button ng-click="$ctrl.closeDialog()" class="md-primary">' +
+                '      No, keep me here' +
+                '    </md-button>' +
+                '  </md-dialog-actions>' +
+                '</md-dialog>',
+                scope: $scope,
+                preserveScope: true
             });
+
+        };
+
+        ctrl.closeDialog = function() {
+            $mdDialog.hide();
+        };
+
+        ctrl.resetBuilder = function() {
+            $location.path('/');
         };
 
         /**
