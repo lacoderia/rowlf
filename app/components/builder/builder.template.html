@@ -16,8 +16,8 @@
                 <li class="tile-selector-item" ng-repeat="item in $ctrl.getSelectedTiles()" ng-class="{ true: 'selected', false: '' }[$ctrl.isSelectedTile(item)]" ng-click="$ctrl.selectTile($event, item)">
                     <tile-button tile="{{ item }}"></tile-button>
                     <div class="tile-selector-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedTile(item)">
-                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)">&#xE254;</md-icon>
-                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)">&#xE92B;</md-icon>
+                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['EDIT'].code, item)"><md-tooltip>Change color</md-tooltip>&#xE3B7;</md-icon>
+                        <md-icon class="material-icons" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['DELETE'].code, item)"><md-tooltip>Delete tile design</md-tooltip>&#xE92B;</md-icon>
                     </div>
                     <div class="selected-overlay"></div>
                 </li>
