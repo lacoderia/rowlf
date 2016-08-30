@@ -36,8 +36,8 @@ angular.module('tileDesignStudio')
         });
 
         if ( window.location !== window.parent.location ) {
-            alert('You\'re using an iframe');
+            $rootScope.iframe = true;
         } else {
-            // The page is not in an iframe
+            $rootScope.iframe = false;
         }
     }]);

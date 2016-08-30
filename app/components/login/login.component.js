@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function loginController($q, $timeout, $location, $mdToast, loginService, routingService) {
+    function loginController($rootScope, $q, $timeout, $location, $mdToast, loginService, routingService) {
 
         /**
          *
@@ -359,6 +359,8 @@
 
         // Function to authenticate a user
         ctrl.login = function() {
+
+            console.log($rootScope.iframe);
 
             ctrl.loading = true;
 
