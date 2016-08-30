@@ -2,7 +2,7 @@
     <div layout="row" layout-fill layout-align="center center">
         <div class="login-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.LOGIN)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="35" flex-sm="60" flex-xs="85" class="form-wrapper">
-                <form name="$ctrl.loginForm" ng-submit="$ctrl.login()">
+                <form novalidate name="$ctrl.loginForm" ng-submit="$ctrl.login()">
                     <hgroup>
                         <h1>
                             Sign in
@@ -36,7 +36,7 @@
         </div>
         <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="60" flex-sm="60" flex-xs="75" class="form-wrapper">
-                <form name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
+                <form novalidate name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <hgroup>
                         <h1>
                             Create an account
@@ -110,6 +110,7 @@
                                 <label>Distributor reference</label>
                                 <input type="text" name="reference" ng-model="$ctrl.newUser.reference" ng-required="iframe">
                                 <div class="hint">Who recommended our tool?</div>
+                                iframe: {{ iframe }}
                                 <div ng-messages="$ctrl.signupForm.reference.$error" md-auto-hide="false">
                                     <div ng-message="required">Distributor reference is required</div>
                                 </div>
@@ -128,7 +129,7 @@
         </div>
         <div class="forgot-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.FORGOT)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="35" flex-sm="60" flex-xs="85">
-                <form name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
+                <form novalidate name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
                     <hgroup>
                         <h1>
                             Password recovery
@@ -154,7 +155,7 @@
         </div>
         <div class="reset-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.RESET)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="25" flex-sm="50" flex-xs="75">
-                <form name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
+                <form novalidate name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
                     <hgroup>
                         <h1>
                             Create new password
