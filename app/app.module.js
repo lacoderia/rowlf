@@ -34,4 +34,10 @@ angular.module('tileDesignStudio')
         $rootScope.$on('$routeChangeSuccess', function() {
             routingService.setView($route.current.view);
         });
+
+        if ( window.location !== window.parent.location ) {
+            alert('You\'re using an iframe');
+        } else {
+            // The page is not in an iframe
+        }
     }]);
