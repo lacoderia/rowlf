@@ -7,7 +7,7 @@
                         Sign in
                     </h1>
                 </hgroup>
-                <form name="$ctrl.loginForm" ng-submit="$ctrl.login()">
+                <form novalidate name="$ctrl.loginForm" ng-submit="$ctrl.login()">
                     <md-input-container class="md-block">
                         <label>Email</label>
                         <input type="email" name="email" ng-model="$ctrl.credentials.email" required>
@@ -41,7 +41,7 @@
                         Create account
                     </h1>
                 </hgroup>
-                <form name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
+                <form novalidate name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <div layout="row" layout-sm="column" layout-xs="column" layout-padding>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
@@ -133,7 +133,7 @@
                         Password recovery
                     </h1>
                 </hgroup>
-                <form name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
+                <form novalidate name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
                     <md-input-container class="md-block">
                         <label>Email</label>
                         <input type="email" name="email" ng-model="$ctrl.forgot.email" required>
@@ -159,7 +159,7 @@
                         Create new password
                     </h1>
                 </hgroup>
-                <form name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
+                <form novalidate name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
                     <md-input-container class="md-block">
                         <label>New password</label>
                         <input type="password" name="password" ng-model="$ctrl.reset.password" minlength="8" required>
