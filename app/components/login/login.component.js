@@ -362,9 +362,9 @@
 
             console.log($rootScope.iframe);
 
-            ctrl.loading = true;
-
             if(ctrl.loginForm.$valid) {
+
+                ctrl.loading = true;
 
                 loginService.login(ctrl.credentials)
                     .then(function(data) {
@@ -395,7 +395,6 @@
 
             loginService.getIpInfo().then(function (location) {
                 var location = location;
-                ctrl.loading = true;
 
                 var user = {
                     name: ctrl.newUser.name,
@@ -412,6 +411,8 @@
                 var internal = true;
 
                 if(ctrl.signupForm.$valid) {
+
+                    ctrl.loading = true;
 
                     loginService.signUp(user, internal)
                         .then(function(data) {
@@ -451,9 +452,9 @@
         // Function to recover user password
         ctrl.recoverPassword = function() {
 
-            ctrl.loading = true;
-
             if(ctrl.forgotForm.$valid) {
+
+                ctrl.loading = true;
 
                 loginService.recoverPassword(ctrl.forgot)
                     .then(function(data) {
@@ -483,8 +484,6 @@
         // Function to reset user password
         ctrl.resetPassword = function() {
 
-            ctrl.loading = true;
-
             var reset = {
                 reset_password_token: resetToken,
                 password: ctrl.reset.password,
@@ -492,6 +491,8 @@
             };
 
             if(ctrl.resetForm.$valid) {
+
+                ctrl.loading = true;
 
                 loginService.resetPassword(reset)
                     .then(function(data) {

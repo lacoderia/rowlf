@@ -108,9 +108,8 @@
                             </md-input-container>
                             <md-input-container class="md-block">
                                 <label>Distributor reference</label>
-                                <input type="text" name="reference" ng-model="$ctrl.newUser.reference" ng-required="iframe">
+                                <input type="text" name="reference" ng-model="$ctrl.newUser.reference" ng-required="$root.iframe">
                                 <div class="hint">Who recommended our tool?</div>
-                                iframe: {{ iframe }}
                                 <div ng-messages="$ctrl.signupForm.reference.$error" md-auto-hide="false">
                                     <div ng-message="required">Distributor reference is required</div>
                                 </div>
