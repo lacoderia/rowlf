@@ -37,6 +37,8 @@
         var configHttpHeaders = function(){
             var headers = getHttpHeaders();
 
+            console.log(headers);
+
             $http.defaults.headers.common['access-token'] = headers.accessToken;
             $http.defaults.headers.common['expiry'] = headers.expiry;
             $http.defaults.headers.common['token-type'] = headers.tokenType;
