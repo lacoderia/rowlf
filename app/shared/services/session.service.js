@@ -34,10 +34,10 @@
             return localStorageService.cookie.get('rowlf-headers');
         };
 
-        var configHttpHeaders = function(){
-            var headers = getHttpHeaders();
-
-            console.log(headers);
+        var configHttpHeaders = function(headers){
+            if (headers === undefined) {
+                headers = getHttpHeaders();
+            }
 
             $http.defaults.headers.common['access-token'] = headers.accessToken;
             $http.defaults.headers.common['expiry'] = headers.expiry;
