@@ -35,7 +35,7 @@ angular.module('tileDesignStudio')
             routingService.setView($route.current.view);
         });
 
-        if(routingService.getParam('embed')){
+        if(routingService.getParam('embed') == 'yes'){
             $rootScope.iframe = true;
         } else {
             if ( window.location !== window.parent.location ) {
