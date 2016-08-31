@@ -22,6 +22,8 @@
                                 'client': response.headers('client')
                             };
 
+                            console.log(headers);
+
                             sessionService.setHttpHeaders(headers);
 
                         }
