@@ -5,6 +5,8 @@
 
         var Session = undefined;
 
+        var _headers = undefined;
+
         var broadcast = function(msg, data) {
             $rootScope.$broadcast(msg, data);
         };
@@ -31,7 +33,7 @@
         };
 
         var getHttpHeaders = function(){
-            return localStorageService.cookie.get('rowlf-headers');
+            return _headers || localStorageService.cookie.get('rowlf-headers');
         };
 
         var configHttpHeaders = function(headers){
@@ -48,11 +50,13 @@
 
         var setHttpHeaders = function(headers){
             localStorageService.cookie.set('rowlf-headers', headers);
+            _headers = headers;
             configHttpHeaders(headers);
         };
 
         var unsetHttpHeaders = function(){
             localStorageService.cookie.remove('rowlf-headers');
+            _headers = undefined;
 
             $http.defaults.headers.common['access-token'] = undefined;
             $http.defaults.headers.common['expiry'] = undefined;
