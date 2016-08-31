@@ -391,60 +391,63 @@
         // Function to register a new user
         ctrl.signUp = function() {
 
-            loginService.getIpInfo().then(function (location) {
-                var location = location;
+            if(ctrl.signupForm.$valid) {
+                ctrl.loading = true;
 
-                var user = {
-                    name: ctrl.newUser.name,
-                    city: ctrl.newUser.city,
-                    state: ctrl.newUser.state,
-                    country: ctrl.selectedItem.display,
-                    email: ctrl.newUser.email,
-                    password: ctrl.newUser.password,
-                    password_confirmation: ctrl.newUser.confirmation,
-                    reference: ctrl.newUser.reference,
-                    location: location
-                };
+                loginService.getIpInfo()
+                    .then(function (location) {
+                        var location = location;
 
-                var internal = $rootScope.iframe;
+                        var user = {
+                            name: ctrl.newUser.name,
+                            city: ctrl.newUser.city,
+                            state: ctrl.newUser.state,
+                            country: ctrl.selectedItem.display,
+                            email: ctrl.newUser.email,
+                            password: ctrl.newUser.password,
+                            password_confirmation: ctrl.newUser.confirmation,
+                            reference: ctrl.newUser.reference,
+                            location: location
+                        };
 
-                if(ctrl.signupForm.$valid) {
+                        var internal = $rootScope.iframe;
 
-                    ctrl.loading = true;
+                        loginService.signUp(user, internal)
+                            .then(function(data) {
+                                ctrl.changeView(ctrl.VIEWS.WAIT);
+                                ctrl.loading = false;
+                            }, function(error) {
+                                var errorText = 'An error occured, please try again later...';
+                                if(error && error.errors){
+                                    errorText = error.errors[0].title;
+                                }
 
-                    loginService.signUp(user, internal)
-                        .then(function(data) {
-                            ctrl.changeView(ctrl.VIEWS.WAIT);
-                            ctrl.loading = false;
-                        }, function(error) {
-                            var errorText = 'An error occured, please try again later...';
-                            if(error && error.errors){
-                                errorText = error.errors[0].title;
-                            }
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                        .textContent(errorText)
+                                        .position('top right')
+                                );
 
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent(errorText)
-                                    .position('top right')
-                            );
+                                ctrl.loading = false;
+                            });
 
-                            ctrl.loading = false;
-                        });
-                }
-            }, function(error) {
-                var errorText = 'An error occured, please try again later...';
-                if(error && error.errors){
-                    errorText = error.errors[0].title;
-                }
+                    }, function(error) {
+                        var errorText = 'An error occured, please try again later...';
+                        if(error && error.errors){
+                            errorText = error.errors[0].title;
+                        }
 
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent(errorText)
-                        .position('top right')
-                );
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(errorText)
+                                .position('top right')
+                        );
 
-                ctrl.loading = false;
-            });
+                        ctrl.loading = false;
+                    });
+            }
+
+
         };
 
         // Function to recover user password
