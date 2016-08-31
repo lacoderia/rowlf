@@ -410,7 +410,7 @@
                             location: location
                         };
 
-                        var internal = $rootScope.iframe;
+                        var internal = !$rootScope.iframe;
 
                         loginService.signUp(user, internal)
                             .then(function(data) {
