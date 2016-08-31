@@ -39,7 +39,7 @@ angular.module('tileDesignStudio')
             $rootScope.iframe = true;
         } else {
             if ( window.location !== window.parent.location ) {
-                //$rootScope.iframe = true;
+                $rootScope.iframe = true;
             } else {
                 $rootScope.iframe = false;
             }
