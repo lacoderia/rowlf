@@ -10,6 +10,8 @@
                     var data = response.data;
                     if (typeof data === 'object') {
 
+                        console.log(data);
+
                         if(data.user){
 
                             var headers = {
