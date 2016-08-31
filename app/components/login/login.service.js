@@ -34,7 +34,7 @@
                 });
         };
 
-        var signUp = function(user, internal, ipInfo){
+        var signUp = function(user, internal){
             var registerServiceURL = AUTH_API_URL_BASE + '/users/sign_up';
             return $http.post(registerServiceURL, { user: user, internal: internal })
                 .then(function(response) {

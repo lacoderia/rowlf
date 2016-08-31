@@ -360,8 +360,6 @@
         // Function to authenticate a user
         ctrl.login = function() {
 
-            console.log($rootScope.iframe);
-
             if(ctrl.loginForm.$valid) {
 
                 ctrl.loading = true;
@@ -408,7 +406,7 @@
                     location: location
                 };
 
-                var internal = true;
+                var internal = $rootScope.iframe;
 
                 if(ctrl.signupForm.$valid) {
 
