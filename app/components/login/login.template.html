@@ -1,7 +1,7 @@
-<section class="login-component" layout-gt-sm="column" layout="column" layout-align="center center" flex layout-padding layout-fill>
-    <div layout="row" layout-fill layout-align="center center">
+<div class="login-component" flex layout-padding>
+    <div class="login-component-wrapper" layout="row">
         <div class="login-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.LOGIN)" layout="row" layout-align="center center" flex="100" layout-fill>
-            <div layout="column" flex="35" flex-sm="60" flex-xs="85" class="form-wrapper">
+            <div layout="column" flex="35" flex-sm="60" flex-xs="85">
                 <form novalidate name="$ctrl.loginForm" ng-submit="$ctrl.login()">
                     <hgroup>
                         <h1>
@@ -34,15 +34,15 @@
                 </form>
             </div>
         </div>
-        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100" layout-fill>
-            <div layout="column" flex="60" flex-sm="60" flex-xs="75" class="form-wrapper">
+        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center start" flex="100" layout-fill>
+            <div layout="column" flex="60" flex-sm="60" flex-xs="85">
                 <form novalidate name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <hgroup>
                         <h1>
                             Create an account
                         </h1>
                     </hgroup>
-                    <div layout="row" layout-sm="column" layout-xs="column" layout-padding>
+                    <div layout="row" layout-padding layout-wrap>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
                                 <label>Your name</label>
@@ -146,7 +146,7 @@
                         <md-button type='submit' class="md-raised md-primary">Recover password</md-button>
                         <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                     </md-input-container>
-                    <div layout="colum">
+                    <div layout="colum" layout-align="center center">
                         <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Go back</md-button>
                     </div>
                 </form>
@@ -180,7 +180,7 @@
                         <md-button type='submit' class="md-raised md-primary">Create password</md-button>
                         <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
                     </md-input-container>
-                    <div layout="colum">
+                    <div layout="colum" layout-align="center center">
                         <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Go back</md-button>
                     </div>
                 </form>
@@ -198,4 +198,4 @@
             </div>
         </div>
     </div>
-</section>
+</div>
