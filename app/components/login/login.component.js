@@ -411,6 +411,7 @@
                         };
 
                         var internal = !$rootScope.iframe;
+                        console.log(internal);
 
                         loginService.signUp(user, internal)
                             .then(function(data) {
