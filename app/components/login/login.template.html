@@ -1,8 +1,8 @@
-<div class="login-component" flex layout-padding>
-    <div class="login-component-wrapper" layout="row">
+<div class="login-component" flex layout-padding layout-fill>
+    <div class="login-component-wrapper" layout="row" layout-align="center center" layout-fill>
         <div class="login-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.LOGIN)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="35" flex-sm="60" flex-xs="85">
-                <form novalidate name="$ctrl.loginForm" ng-submit="$ctrl.login()">
+                <form novalidate class="form" name="$ctrl.loginForm" ng-submit="$ctrl.login()">
                     <hgroup>
                         <h1>
                             Sign in
@@ -34,9 +34,9 @@
                 </form>
             </div>
         </div>
-        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center start" flex="100" layout-fill>
+        <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="60" flex-sm="60" flex-xs="85">
-                <form novalidate name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
+                <form novalidate class="form" name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <hgroup>
                         <h1>
                             Create an account
@@ -68,7 +68,7 @@
                             <md-autocomplete flex required
                                              md-input-name="country"
                                              md-no-cache="$ctrl.noCache"
-                                             md-selected-item="$ctrl.selectedItem"
+                                             md-selected-item="$ctrl.selectedCountry"
                                              md-search-text="$ctrl.searchText"
                                              md-items="item in $ctrl.querySearch($ctrl.searchText)"
                                              md-item-text="item.display"
@@ -76,8 +76,8 @@
                                 <md-item-template>
                                     <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
                                 </md-item-template>
-                                <div ng-messages="$ctrl.signupForm.country.$error" ng-if="$ctrl.signupForm.country.$touched">
-                                    <div ng-message="required">Country is required</div>
+                                <div ng-messages="$ctrl.signupForm.country.$error" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">Country is required</div>
                                 </div>
                             </md-autocomplete>
                         </div>
@@ -128,7 +128,7 @@
         </div>
         <div class="forgot-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.FORGOT)" layout="row" layout-align="center center" flex="100" layout-fill>
             <div layout="column" flex="35" flex-sm="60" flex-xs="85">
-                <form novalidate name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
+                <form novalidate class="form" name="$ctrl.forgotForm" ng-submit="$ctrl.recoverPassword()">
                     <hgroup>
                         <h1>
                             Password recovery
@@ -153,8 +153,8 @@
             </div>
         </div>
         <div class="reset-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.RESET)" layout="row" layout-align="center center" flex="100" layout-fill>
-            <div layout="column" flex="25" flex-sm="50" flex-xs="75">
-                <form novalidate name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
+            <div layout="column" flex="25" flex-sm="60" flex-xs="85">
+                <form novalidate class="form" name="$ctrl.resetForm" ng-submit="$ctrl.resetPassword()">
                     <hgroup>
                         <h1>
                             Create new password
@@ -186,15 +186,19 @@
                 </form>
             </div>
         </div>
-        <div class="wait-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.WAIT)">
-            <hgroup>
-                <h1>
-                    We are almost there!
-                </h1>
-            </hgroup>
-            <p>We'll validate your information and send you an email when your account is ready.</p>
-            <div layout="row" layout-align="end center">
-                <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Got it!</md-button>
+        <div class="wait-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.WAIT)" layout="row" layout-align="center center" flex="100" layout-fill>
+            <div layout="column" flex="25" flex-sm="60" flex-xs="85">
+                <div class="form">
+                    <hgroup>
+                        <h1>
+                            We are almost there!
+                        </h1>
+                    </hgroup>
+                    <p>We'll validate your information and send you an email when your account is ready.</p>
+                    <div layout="row" layout-align="end center">
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Got it!</md-button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

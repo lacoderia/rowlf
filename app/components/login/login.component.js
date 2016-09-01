@@ -392,60 +392,69 @@
         ctrl.signUp = function() {
 
             if(ctrl.signupForm.$valid) {
-                ctrl.loading = true;
 
-                loginService.getIpInfo()
-                    .then(function (location) {
-                        var location = location;
+                if(ctrl.selectedCountry) {
+                    ctrl.loading = true;
 
-                        var user = {
-                            name: ctrl.newUser.name,
-                            city: ctrl.newUser.city,
-                            state: ctrl.newUser.state,
-                            country: ctrl.selectedItem.display,
-                            email: ctrl.newUser.email,
-                            password: ctrl.newUser.password,
-                            password_confirmation: ctrl.newUser.confirmation,
-                            reference: ctrl.newUser.reference,
-                            location: location
-                        };
+                    loginService.getIpInfo()
+                        .then(function (location) {
+                            var location = location;
 
-                        var internal = !$rootScope.iframe;
-                        console.log(internal);
+                            var user = {
+                                name: ctrl.newUser.name,
+                                city: ctrl.newUser.city,
+                                state: ctrl.newUser.state,
+                                country: ctrl.selectedCountry.display,
+                                email: ctrl.newUser.email,
+                                password: ctrl.newUser.password,
+                                password_confirmation: ctrl.newUser.confirmation,
+                                reference: ctrl.newUser.reference,
+                                location: location
+                            };
 
-                        loginService.signUp(user, internal)
-                            .then(function(data) {
-                                ctrl.changeView(ctrl.VIEWS.WAIT);
-                                ctrl.loading = false;
-                            }, function(error) {
-                                var errorText = 'An error occured, please try again later...';
-                                if(error && error.errors){
-                                    errorText = error.errors[0].title;
-                                }
+                            var internal = !$rootScope.iframe;
 
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                        .textContent(errorText)
-                                        .position('top right')
-                                );
+                            loginService.signUp(user, internal)
+                                .then(function(data) {
+                                    ctrl.changeView(ctrl.VIEWS.WAIT);
+                                    ctrl.loading = false;
+                                }, function(error) {
+                                    var errorText = 'An error occured, please try again later...';
+                                    if(error && error.errors){
+                                        errorText = error.errors[0].title;
+                                    }
 
-                                ctrl.loading = false;
-                            });
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                            .textContent(errorText)
+                                            .position('top right')
+                                    );
 
-                    }, function(error) {
-                        var errorText = 'An error occured, please try again later...';
-                        if(error && error.errors){
-                            errorText = error.errors[0].title;
-                        }
+                                    ctrl.loading = false;
+                                });
 
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(errorText)
-                                .position('top right')
-                        );
+                        }, function(error) {
+                            var errorText = 'An error occured, please try again later...';
+                            if(error && error.errors){
+                                errorText = error.errors[0].title;
+                            }
 
-                        ctrl.loading = false;
-                    });
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(errorText)
+                                    .position('top right')
+                            );
+
+                            ctrl.loading = false;
+                        });
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('You must select a country from the country list')
+                            .position('top right')
+                    );
+                }
+
             }
 
 
