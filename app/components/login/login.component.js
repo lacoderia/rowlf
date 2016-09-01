@@ -288,7 +288,7 @@
             WAIT: 'wait'
         };
 
-        var currentView = ctrl.VIEWS.SIGNUP;
+        var currentView = ctrl.VIEWS.LOGIN;
 
         // Object that holds the username and password values
         ctrl.credentials = {
