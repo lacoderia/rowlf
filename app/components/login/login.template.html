@@ -42,7 +42,7 @@
                             Create an account
                         </h1>
                     </hgroup>
-                    <div layout="row" layout-padding layout-wrap>
+                    <div layout="row" layout-wrap>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
                                 <label>Your name</label>
@@ -65,7 +65,21 @@
                                     <div ng-message="required">State/Province/Region is required</div>
                                 </div>
                             </md-input-container>
-                            
+                            <md-autocomplete flex required
+                                             md-input-name="country"
+                                             md-no-cache="$ctrl.noCache"
+                                             md-selected-item="$ctrl.selectedCountry"
+                                             md-search-text="$ctrl.searchText"
+                                             md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                                             md-item-text="item.display"
+                                             md-floating-label="Country">
+                                <md-item-template>
+                                    <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
+                                </md-item-template>
+                                <div ng-messages="$ctrl.signupForm.country.$error" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">Country is required</div>
+                                </div>
+                            </md-autocomplete>
                         </div>
                         <div layout="column" flex="50" flex-sm="100" flex-xs="100">
                             <md-input-container class="md-block">
