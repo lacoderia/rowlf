@@ -42,6 +42,15 @@
                             Create an account
                         </h1>
                     </hgroup>
+                    <div layout="row" layout-padding layout-wrap>
+                    </div>
+                    <md-input-container layout="row" layout-align="start center" layout-align-sm="center center" layout-align-xs="center center">
+                        <md-button type='submit' class="md-raised md-primary">Create account</md-button>
+                        <md-progress-circular md-mode="indeterminate" md-diameter="40" ng-if="$ctrl.loading"></md-progress-circular>
+                    </md-input-container>
+                    <div layout="column" layout-align="center center">
+                        <md-button ng-click="$ctrl.changeView($ctrl.VIEWS.LOGIN)">Already have an account?</md-button>
+                    </div>
                 </form>
             </div>
         </div>
