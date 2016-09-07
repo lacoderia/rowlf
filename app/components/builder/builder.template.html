@@ -39,6 +39,14 @@
                             </label>
                         </div>
                     </md-list-item>
+                    <md-list-item>
+                        <div class="md-list-item-text">
+                            <h4>Preview</h4>
+                        </div>
+                        <div class="md-secondary">
+                            <md-icon class="material-icons preview" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip>&#xE417;</md-icon>
+                        </div>
+                    </md-list-item>
                 </md-list>
             </div>
             <div class="work-table" flex="65" flex-xs="100" layout-fill layout-wrap layout-align="center start">
@@ -47,7 +55,7 @@
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active" ng-click="$ctrl.selectCell(cell)" ng-class="{ 'no-tile-selected': (!$ctrl.getSelectedTile() && !cell.tile), 'tile-selected':  ($ctrl.getSelectedTile() && !cell.tile), 'tile-cloned': (cell.tile)}">
                         <div ng-if="!$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Select a design</div>
                         <div ng-if="$ctrl.getSelectedTile() && !cell.tile" class="no-tile-selected-title">Place a design</div>
-                        <tile-grid tile="{{ cell.tile }}" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
+                        <tile-grid tile="cell.tile" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
                         <div class="tile-actions" md-whiteframe="1" ng-if="$ctrl.isSelectedCell(cell.id)">
                             <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['ROTATE'].code)">&#xE41A;</md-icon>
                             <md-icon class="material-icons" ng-click="$ctrl.callGridAction($event, $ctrl.GRID_ACTIONS['DELETE'].code)">&#xE92B;</md-icon>

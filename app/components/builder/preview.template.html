@@ -1,0 +1,25 @@
+<div role="dialog" aria-label="Preview" layout="column" layout-align="center center" layout-fill>
+    <div class="work-table" layout="row" layout-xs="column" layout-fill>
+        <div class="tile-preview" layout="row" flex-gt-xs="65" layout-align="center center" layout-wrap>
+            <previewer data="$ctrl.getGrid()" size="{{ $ctrl.getSelectedCollection().inches }}"></previewer>
+        </div>
+        <div class="tile-tools" layout="row" flex-gt-xs="35" layout-wrap md-whiteframe="1" layout-align="start start">
+            <div class="tile-tools-wrapper" layout-wrap flex="100">
+                <h3>Preview images examples</h3>
+                <div class="example-images" layout="row" layout-wrap layout-align="start center">
+                    <span md-whiteframe="1" ng-repeat="image in $ctrl.EXAMPLE_IMAGES" ng-click="$ctrl.setSelectedImage(image)" ng-class="{ true: 'selected', false: '' }[$ctrl.isImageSelected(image)]">
+                        <img ng-src="{{ image.url }}" title="{{ image.title }}">
+                        <h3 ng-bind="image.title"></h3>
+                        <div class="selected-overlay"></div>
+                        <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                    </span>
+                </div>
+            </div>
+            <!--div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
+                <md-button md-autofocus class="md-primary" ng-click="$ctrl.callAction($event, $ctrl.ACTIONS['SAVE'].code)">
+                </md-button>
+            </div-->
+        </div>
+    </div>
+    <icon class="material-icons close-button" md-autofocus class="md-primary close-button" ng-click="$ctrl.closePreview()">&#xE14C;</icon>
+</div>

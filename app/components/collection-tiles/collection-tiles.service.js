@@ -150,6 +150,14 @@
 
         /**
          *
+         * @returns {undefined}
+         */
+        function getSelectedCollection() {
+            return _selectedCollection
+        };
+
+        /**
+         *
          * @returns {*}
          */
         function getSelectedCollectionTiles() {
@@ -227,6 +235,7 @@
             callCollectionTiles: callCollectionTiles,
             getCollectionTiles: getCollectionTiles,
             setCollectionTiles: setCollectionTiles,
+            getSelectedCollection: getSelectedCollection,
             setSelectedCollection: setSelectedCollection,
             getSelectedCollectionTiles: getSelectedCollectionTiles,
             getSelectedTiles: getSelectedTiles,

@@ -17,7 +17,8 @@ angular.module('tileDesignStudio', [
     'tileButton',
     'builder',
     'tileGrid',
-    'summaryComponent'
+    'summaryComponent',
+    'previewer'
 ]);
 
 angular.module('tileDesignStudio')
