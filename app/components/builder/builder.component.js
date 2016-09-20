@@ -11,11 +11,16 @@
         var _selectedCollectionTiles = [];
         var _gridTypes;
         var _grid = [];
-        var _rowStyle;
         var _cellStyle;
         var _selectedCell;
         var _mdPanel = undefined;
         var _colors = [];
+        var _selectedImage = undefined;
+        ctrl.EXAMPLE_IMAGES = [
+            { title: 'Bathroom', url: 'http://owenator.mx/bathroom.png'},
+            { title: 'Kitchen', url: 'http://owenator.mx/bathroom.png'},
+            { title: 'Lounge', url: 'http://owenator.mx/bathroom.png'}
+        ];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
             'SAVE': {code: 'SAVE'},
@@ -67,6 +72,19 @@
                     }
                     break;
             }
+        };
+
+        ctrl.getSelectedImage = function () {
+            return _selectedImage;
+        };
+
+        ctrl.setSelectedImage = function (image) {
+            _selectedImage = image;
+            $rootScope.$broadcast('imageChanged', _selectedImage);
+        };
+
+        ctrl.isImageSelected = function (image) {
+            return (_selectedImage == image);
         };
 
         ctrl.getColors = function(){
@@ -343,6 +361,41 @@
             _mdPanel.open();
         };
 
+        /**
+         *
+         * @param tile
+         */
+        ctrl.openPreview = function(tile) {
+            var position = $mdPanel.newPanelPosition()
+                .absolute()
+                .center();
+            var config = {
+                attachTo: angular.element(document.body),
+                controller: builderController,
+                disableParentScroll: true,
+                templateUrl: 'components/builder/preview.template.html',
+                hasBackdrop: true,
+                panelClass: 'tile-customizer',
+                position: position,
+                trapFocus: true,
+                zIndex: 150,
+                clickOutsideToClose: true,
+                escapeToClose: true,
+                focusOnOpen: true,
+                scope: $scope,
+                preserveScope: true
+            };
+            _mdPanel = $mdPanel.create(config);
+            _mdPanel.open();
+        };
+
+        ctrl.closePreview = function() {
+            _mdPanel.close().then(function() {
+                _mdPanel = undefined;
+                ctrl.setSelectedImage(undefined);
+            });
+        };
+
         ctrl.closeCustomizer = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;
@@ -427,8 +480,11 @@
             return disabled;
         };
 
-        ctrl.$onInit = function() {
+        ctrl.getSelectedCollection = function () {
+            return collectionTilesService.getSelectedCollection();
+        };
 
+        ctrl.$onInit = function() {
             _gridTypes = collectionGrids.getCollectionGrids();
             if(!_colors.length > 0){
                 _colors = builderService.callColors().then(

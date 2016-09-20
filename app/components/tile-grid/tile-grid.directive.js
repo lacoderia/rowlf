@@ -9,7 +9,7 @@
                 replace: true,
                 scope: {
                     cellId: '=',
-                    tile: '@'
+                    tile: '='
                 },
                 restrict: 'E',
                 link: function (scope, element) {
@@ -18,7 +18,8 @@
                     var SVGObject;
                     var SVGPaths;
                     var SVGPolygons;
-                    var tileData = JSON.parse(scope.tile);
+                    var tileData = scope.tile;
+
 
                     var paintTile = function () {
 

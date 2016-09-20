@@ -3,7 +3,7 @@
 
     angular
         .module('tileCanvas')
-        .directive('tileCanvas', function(collectionTilesService){
+        .directive('tileCanvas', function(){
             return {
                 transclude: true,
                 replace: true,

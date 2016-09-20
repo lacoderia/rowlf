@@ -40,6 +40,7 @@ jspm_packages
 
 # IDE files
 .idea
+.DS_Store
 
 # Bower dependencies
 app/bower_components
