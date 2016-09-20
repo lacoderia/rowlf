@@ -17,9 +17,11 @@
         var _colors = [];
         var _selectedImage = undefined;
         ctrl.EXAMPLE_IMAGES = [
-            { title: 'Bathroom', url: 'http://owenator.mx/bathroom.png'},
-            { title: 'Kitchen', url: 'http://owenator.mx/bathroom.png'},
-            { title: 'Lounge', url: 'http://owenator.mx/bathroom.png'}
+            { code: 'hallway', title: 'Hallway', url: '/assets/images/preview/preview_1.png'},
+            { code: 'dinner-room',title: 'Dinner Room', url: '/assets/images/preview/preview_2.png'},
+            { code: 'bathroom',title: 'Bathroom', url: '/assets/images/preview/preview_3.png'},
+            { code: 'kitchen',title: 'Kitchen', url: '/assets/images/preview/preview_4.png'},
+            { code: 'living-room',title: 'Living Room', url: '/assets/images/preview/preview_5.png'}
         ];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
