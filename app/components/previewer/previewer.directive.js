@@ -16,8 +16,7 @@
                 link: function (scope, element) {
                     var GRID_FACTOR = 4;
                     var TILE_FACTOR = 6;
-                    var canvasWidth = 0;
-                    var canvasHeight = 0;
+                    var TILE_SPACE = 2;
                     var currentWidth = 0;
                     var currentHeight = 0;
                     var tileWidth = 50;
@@ -45,7 +44,7 @@
                         return loading;
                     };
 
-                    function processXML(tileData, tmpWidth, tmpHeight) {
+                    function processXML(tileData) {
 
                         if(tileData){
                             if(tileData.xml) {
@@ -53,17 +52,10 @@
                                 var svg = parser.parseFromString(tileData.xml, "application/xml");
                                 var SVGPolygons = svg.getElementsByTagName('polygon');
                                 var SVGPaths = svg.getElementsByTagName('path');
-                                var SVGObject =svg.getElementsByTagName('svg')[0];
+                                var SVGObject = svg.getElementsByTagName('svg');
                                 var rotation = tileData.custom_styles.rotation;
 
-                                //GObject.setAttribute('style', 'transform-origin: center; transform: rotate(' + rotation + 'deg)');
-
-                                d3.select(SVGObject)
-                                    .attr('width', tileWidth)
-                                    .attr('height', tileHeight)
-                                    .attr('x', tmpWidth)
-                                    .attr('y', tmpHeight);
-
+                                SVGObject[0].style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
 
                                 for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
                                     var path = SVGPaths[pathIndex];
@@ -87,8 +79,7 @@
                         d3.select(GObject)
                             .attr('width', tileWidth)
                             .attr('height', tileHeight)
-                            .attr('transform-origin', 'right bottom')
-                            .attr('transform', 'translate(' + tmpWidth + ', ' + tmpHeight + ')');
+                            .attr('transform-origin', 'right bottom').
 
                         d3.select(GObject).append('rect')
                             .attr('x', 0)
@@ -106,27 +97,27 @@
                     function createPreview(image) {
                         var _grid = angular.copy(scope.data);
                         var _svgString = '';
-                        var tmpWidth = 0;
-                        var tmpHeight = 0;
-                        var SVGContainer = undefined;
-                        var SVGElement = undefined;
-                        var bbox = undefined;
+                        var tmpWidth = TILE_SPACE;
+                        var tmpHeight = TILE_SPACE;
+                        //var SVGElement = undefined;
+                        //var bbox = undefined;
+
+                        if(!d3.select('#previewer-image').empty()) {
+                            !d3.select('#previewer-image').remove();
+                        }
 
                         var bgImage = d3.select(element[0]).append('img')
+                            .attr('id', 'previewer-image')
                             .style('height', '100%')
                             .style('width', 'auto')
                             .node();
 
                         bgImage.onload = function () {
-                            this.id = 'previewer-image';
                             var gridElement = (element[0]).querySelector('#grid');
                             gridElement.setAttribute('style', 'width: ' + this.width + 'px; height: ' + this.height + 'px;')
                         };
 
                         bgImage.src = image.url;
-
-                        canvasWidth = element[0].clientWidth * GRID_FACTOR;
-                        canvasHeight = element[0].clientHeight * GRID_FACTOR;
 
                         if(scope.size){
                             tileWidth = scope.size * TILE_FACTOR;
@@ -134,78 +125,150 @@
                         }
 
                         if(_grid) {
-                            var _gridWidthLength = 0;
-                            var _gridHeightLength = 0;
-                            _svgString = '<svg>';
+                            var _gridWidthLength = TILE_SPACE;
+                            var _gridHeightLength = TILE_SPACE;
+
                             for(var row=0; row<_grid.length; row++) {
-                                tmpWidth = 0;
+                                tmpWidth = TILE_SPACE;
                                 for(var cellIndex=0; cellIndex<_grid[row].length; cellIndex++) {
                                     if(_grid[row][cellIndex].active) {
-                                        _svgString+= processXML(_grid[row][cellIndex].tile, tmpWidth, tmpHeight);
-                                        _gridHeightLength = row+1;
-                                        _gridWidthLength = cellIndex+1;
-                                        tmpWidth+= tileWidth + 1;
+
+                                        var tileId = _grid[row][cellIndex].id;
+                                        var SVGContainer = document.createElement('div');
+
+                                        SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
+                                        SVGContainer.setAttribute('class', 'svg-tile');
+                                        SVGContainer.setAttribute('style', 'width: ' + tileWidth + 'px; height: ' + tileHeight + 'px;');
+                                        SVGContainer.setAttribute('x', tmpWidth + 'px');
+                                        SVGContainer.setAttribute('y', tmpHeight + 'px');
+
+                                        _svgString= processXML(_grid[row][cellIndex].tile);
+                                        SVGContainer.innerHTML = _svgString;
+
+                                        (element[0]).appendChild(SVGContainer);
+
+                                        _gridHeightLength = row + TILE_SPACE;
+                                        _gridWidthLength = cellIndex + TILE_SPACE;
+                                        tmpWidth+= tileWidth + TILE_SPACE;
                                     }
                                 }
-                                tmpHeight+= tileHeight + 1;
+                                tmpHeight+= tileHeight + TILE_SPACE;
                             }
-                            _svgString+= '</svg>';
-
-                            SVGContainer = element[0].querySelector('#svg-container');
-                            SVGContainer.innerHTML = _svgString;
-
-                            SVGElement = element[0].querySelector('#svg-container > svg');
-                            bbox = SVGElement.getBBox();
-
-                            SVGContainer.setAttribute('style', 'display: inline-block; width: ' + bbox.width + 'px; height: ' + bbox.height + 'px;');
-                            SVGElement.setAttribute('viewBox', bbox.x + " " + bbox.y + " " + bbox.width + " " + bbox.height);
-                            SVGElement.setAttribute('width', bbox.width +'');
-                            SVGElement.setAttribute('height', bbox.height +'');
 
                             $timeout(function () {
-                                generateImgFromSVGSting(bbox.width, bbox.height, image);
-                            },0)
+                                generateImgFromSVGSting();
+                                console.log('GENERAR IMAGEN');
+                                html2canvas(element[0], {
+                                    onrendered: function(canvas) {
+                                        console.log('ENTRE AQUI')
+                                        document.body.appendChild(canvas);
 
+                                        // Convert and download as image
+                                        Canvas2Image.saveAsPNG(canvas);
+                                        (element[0]).appendChild(canvas);
+                                        //$("#img-out").append(canvas);
+                                        // Clean up
+                                        //document.body.removeChild(canvas);
+                                    }
+                                });
+                            },0)
 
                         }
 
                     }
 
-                    function generateImgFromSVGSting(width, height, image) {
+                    function generateImgFromSVGSting() {
 
+                        var SVGElements = d3.selectAll('.svg-tile');
+                        var ImageContainer = document.createElement('div');
+                        ImageContainer.setAttribute('id', 'image-container');
+                        ImageContainer.setAttribute('style', 'position: relative;');
+                        (element[0]).appendChild(ImageContainer);
+
+                        SVGElements.each(function () {
+                            var doctype = '<?xml version="1.0" standalone="no"?>'
+                                + '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
+                            var source = (new XMLSerializer()).serializeToString(d3.select(this).node());
+                            var blob = new Blob([ doctype + source], { type: 'image/svg+xml;charset=utf-8' });
+                            var url = window.URL.createObjectURL(blob);
+                            var img = d3.select('#image-container').append('img')
+                                .attr('width', tileWidth)
+                                .attr('height', tileHeight)
+                                .style('position', 'absolute')
+                                .style('left', this.getAttribute('x'))
+                                .style('top', this.getAttribute('y'))
+                                .style('background', 'red')
+                                .node();
+
+                            img.onload = function () {
+                                console.log('ENTRE AQUI')
+                                //img.setAttribute('style', 'position: absolute; background: red;')
+                            };
+
+                            img.src = url;
+
+                        });
+
+                        /*
                         var doctype = '<?xml version="1.0" standalone="no"?>'
                             + '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
                         var source = (new XMLSerializer()).serializeToString(d3.select('#svg-container > svg').node());
                         var blob = new Blob([ doctype + source], { type: 'image/svg+xml;charset=utf-8' });
                         var url = window.URL.createObjectURL(blob);
                         var img = d3.select(element[0]).append('img')
-                            .attr('width', width)
-                            .attr('height', height)
+                            .attr('width', tileWidth)
+                            .attr('height', tileHeight)
+                            .attr('id', 'pattern-' + tileId)
                             .node();
 
-                        img.onload = function () {
-                            d3.select('#grid-inner-wrapper')
-                                .style('background', 'transparent url(' + url + ') repeat top left');
-                        };
-
-                        img.src = url;
 
                         switch(image.code) {
                             case ('hallway'):
-                                d3.select('#grid-inner-wrapper')
-                                    .style('background-size', 45 + 'px ' + 45 + 'px');
+                                img.onload = function () {
+                                    d3.select('#grid')
+                                        .style('perspective', '100px');
+
+                                    d3.select('#grid-inner-wrapper')
+                                        .style('background', 'transparent url(' + url + ') repeat top left')
+                                        .style('background-size', 40 + 'px ' + 40 + 'px')
+                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) translate(0%, 0%)');
+                                };
                                 break;
                             case ('dinner-room'):
-                                d3.select('#grid-inner-wrapper')
-                                    .style('background-size', 45 + 'px ' + 45 + 'px');
+                                img.onload = function () {
+                                    d3.select('#grid-inner-wrapper')
+                                        .style('background', 'transparent url(' + url + ') repeat top left')
+                                        .style('background-size', 45 + 'px ' + 45 + 'px')
+                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
+                                };
                                 break;
                             case ('bathroom'):
+                                img.onload = function () {
+                                    d3.select('#grid-inner-wrapper')
+                                        .style('background', 'transparent url(' + url + ') repeat top left')
+                                        .style('background-size', 45 + 'px ' + 45 + 'px')
+                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
+                                };
                                 break;
                             case ('kitchen'):
+                                img.onload = function () {
+                                    d3.select('#grid-inner-wrapper')
+                                        .style('background', 'transparent url(' + url + ') repeat top left')
+                                        .style('background-size', 45 + 'px ' + 45 + 'px')
+                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
+                                };
                                 break;
                             case ('living-room'):
+                                img.onload = function () {
+                                    d3.select('#grid-inner-wrapper')
+                                        .style('background', 'transparent url(' + url + ') repeat top left')
+                                        .style('background-size', 45 + 'px ' + 45 + 'px')
+                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
+                                };
                                 break;
                         }
+
+                        img.src = url;*/
                     }
 
                    /* function processXML(tileData) {
