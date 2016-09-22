@@ -21,6 +21,7 @@
     "d3": "^4.2.2",
     "jspdf": "^1.2.61",
     "html2canvas": "^0.4.1",
-    "canvas2image": "*"
+    "canvas2image": "*",
+    "dom-to-image": "^2.5.1"
   }
 }
