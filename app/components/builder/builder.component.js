@@ -18,7 +18,7 @@
         var _selectedImage = undefined;
         ctrl.EXAMPLE_IMAGES = [
             { code: 'hallway', title: 'Hallway', url: '/assets/images/preview/preview_1.png'},
-            { code: 'dinner-room',title: 'Dinner Room', url: '/assets/images/preview/preview_2.png'},
+            { code: 'dining-room',title: 'Dining Room', url: '/assets/images/preview/preview_2.png'},
             { code: 'bathroom',title: 'Bathroom', url: '/assets/images/preview/preview_3.png'},
             { code: 'kitchen',title: 'Kitchen', url: '/assets/images/preview/preview_4.png'},
             { code: 'living-room',title: 'Living Room', url: '/assets/images/preview/preview_5.png'}
@@ -378,6 +378,22 @@
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
+        };
+
+        /**
+         *
+         */
+        ctrl.isPreviewReady = function() {
+            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
+                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
+
+                    if(_grid[rowIndex][colIndex].active && _grid[rowIndex][colIndex].tile === undefined) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         };
 
         /**
