@@ -12,16 +12,16 @@
                 </md-button>
                 <md-menu-content width="4" >
                     <md-menu-item>
-                        <md-button ng-click="ctrl.announceClick($index)">
+                        <md-button ng-click="$ctrl.openProjectsView()">
                             <div layout="row" flex>
                                 <p flex class="menu-item">Mis proyectos</p>
                             </div>
                         </md-button>
                     </md-menu-item>
                     <md-menu-item>
-                        <md-button ng-click="ctrl.announceClick($index)">
+                        <md-button ng-click="$ctrl.logout()">
                             <div layout="row" flex>
-                                <p flex class="menu-item" ng-click="$ctrl.logout()">Salir</p>
+                                <p flex class="menu-item">Salir</p>
                             </div>
                         </md-button>
                     </md-menu-item>
