@@ -38,7 +38,6 @@
         ctrl.tileQuery = '';
 
         $scope.$on('openProjectsView', function(){
-            console.log('listener');
             ctrl.openProjectsView();
         });
 
@@ -190,7 +189,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/add-tile.template.html',
                 hasBackdrop: true,
@@ -200,9 +202,7 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -368,7 +368,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/panel.template.html',
                 hasBackdrop: true,
@@ -378,9 +381,7 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -412,7 +413,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/preview.template.html',
                 hasBackdrop: true,
@@ -420,11 +424,9 @@
                 position: position,
                 trapFocus: true,
                 zIndex: 150,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -460,14 +462,15 @@
          */
         ctrl.openProjectsView = function() {
 
-            console.log('open projects');
-
             var position = $mdPanel.newPanelPosition()
                 .absolute()
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/projects.template.html',
                 hasBackdrop: true,
@@ -477,10 +480,9 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
+
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
 
@@ -503,7 +505,6 @@
         ctrl.closeProjectsView = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;
-                console.log('close projects');
             });
         };
 
