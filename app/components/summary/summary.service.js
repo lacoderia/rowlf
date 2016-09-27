@@ -31,6 +31,25 @@
             return undefined;
         }
 
+        function convert2Pdf(htmlString) {
+            var serviceURL = '/api/converter';
+            return $http.post(serviceURL, { 'htmlString': htmlString, 'projectName': 'MI PROYECTO' }).then(
+                function (response) {
+                    try{
+                        console.log(response);
+                        /*if(response.data){
+
+                        }*/
+                    } catch(error){
+                        console.log(error)
+                    }
+                },
+                function(error) {
+                    console.log(error);
+                }
+            );
+        }
+
         function setTileDetails() {
             _tileDetails = [];
             var index;
@@ -85,7 +104,8 @@
             setSummary: setSummary,
             getGrid: getGrid,
             getTileDetails: getTileDetails,
-            getColorByHexValue: getColorByHexValue
+            getColorByHexValue: getColorByHexValue,
+            convert2Pdf: convert2Pdf
         };
 
         return service;

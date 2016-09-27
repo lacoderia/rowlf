@@ -4,7 +4,7 @@
     <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap flex>
         <div layout="row" layout-fill layout-wrap>
             <div layout="row" flex="50" flex-xs="100">
-                <div class="grid">
+                <div id="summary-grid" class="grid">
                     <div class="row" ng-style="$ctrl.getRowStyle(row)" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active">
                         <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
@@ -12,20 +12,28 @@
                     </div>
                 </div>
             </div>
-            <div class="tile-list" layout="column" flex="50" flex-xs="100" layout-fill layout-padding>
+            <div id="tile-list" class="tile-list" layout="column" flex="50" flex-xs="100" layout-fill layout-padding>
                 <h3>List of tiles</h3>
                 <ul>
                     <li ng-repeat="tile in $ctrl.getTileDetails()" >
                         <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
                         <div class="info">
                             <span class="count">x{{ tile.count }}</span>
-                        <span class="color-item" ng-repeat="hexValue in tile.colors">
-                            <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
-                            <span class="color-name">{{ ::$ctrl.getColor(hexValue).hex_value }}</span>
-                        </span>
+                            <span class="color-item" ng-repeat="hexValue in tile.colors">
+                                <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
+                                <span class="color-name">{{ ::$ctrl.getColor(hexValue).hex_value }}</span>
+                            </span>
+                            <!--span class="no-color">
+                                No selected colors
+                            </span-->
                         </div>
                     </li>
                 </ul>
+                <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
+                    <md-button md-autofocus class="md-primary" ng-click="$ctrl.exportAsPDF()">
+                        Save design
+                    </md-button>
+                </div>
             </div>
         </div>
     </div>
