@@ -46,52 +46,54 @@
 
                     function processXML(tileData) {
 
-                        if(tileData){
-                            if(tileData.xml) {
-                                var parser = new DOMParser();
-                                var svg = parser.parseFromString(tileData.xml, "application/xml");
-                                var SVGPolygons = svg.getElementsByTagName('polygon');
-                                var SVGPaths = svg.getElementsByTagName('path');
-                                var SVGObject = svg.getElementsByTagName('svg');
+                        if(tileData && tileData.xml){
+                            var parser = new DOMParser();
+                            var svg = parser.parseFromString(tileData.xml, "application/xml");
+                            var SVGPolygons = svg.getElementsByTagName('polygon');
+                            var SVGPaths = svg.getElementsByTagName('path');
 
-                                for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                                    var path = SVGPaths[pathIndex];
-                                    path.style.fill = tileData.custom_styles.path_styles[path.id].fill;
-                                    path.style.stroke = tileData.custom_styles.path_styles[path.id].stroke;
-                                }
-
-                                for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
-                                    var polygon = SVGPolygons[polygonIndex];
-                                    polygon.style.fill = tileData.custom_styles.path_styles[polygon.id].fill;
-                                    polygon.style.stroke = tileData.custom_styles.path_styles[polygon.id].stroke;
-                                }
-
-                                return new XMLSerializer().serializeToString(svg);
+                            for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
+                                var path = SVGPaths[pathIndex];
+                                path.style.fill = tileData.custom_styles.path_styles[path.id].fill;
+                                path.style.stroke = tileData.custom_styles.path_styles[path.id].stroke;
                             }
+
+                            for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
+                                var polygon = SVGPolygons[polygonIndex];
+                                polygon.style.fill = tileData.custom_styles.path_styles[polygon.id].fill;
+                                polygon.style.stroke = tileData.custom_styles.path_styles[polygon.id].stroke;
+                            }
+
+                            return new XMLSerializer().serializeToString(svg);
+
+                        } else {
+
+                            var SVGObject = document.createElement('svg');
+                            var GObject = document.createElement('g');
+
+                            d3.select(GObject)
+                                .attr('width', tileWidth)
+                                .attr('height', tileHeight)
+                                .attr('transform-origin', 'right bottom');
+
+                            d3.select(GObject).append('rect')
+                                .attr('x', 0)
+                                .attr('y', 0)
+                                .attr('width', tileWidth)
+                                .attr('height', tileHeight)
+                                .attr('fill', '#FFFFFF')
+                                .attr('stroke', '#E5E5E5');
+
+                            SVGObject.appendChild(GObject);
+
+                            return SVGObject.outerHTML;
+
                         }
 
-                        var SVGObject = document.createElement('svg');
-                        var GObject = document.createElement('g');
-
-                        d3.select(GObject)
-                            .attr('width', tileWidth)
-                            .attr('height', tileHeight)
-                            .attr('transform-origin', 'right bottom').
-
-                        d3.select(GObject).append('rect')
-                            .attr('x', 0)
-                            .attr('y', 0)
-                            .attr('width', tileWidth)
-                            .attr('height', tileHeight)
-                            .attr('fill', '#FFFFFF')
-                            .attr('stroke', '#E5E5E5');
-
-                        SVGObject.appendChild(GObject);
-
-                        return SVGObject.outerHTML;
                     }
 
                     function createPreview(image) {
+
                         var _grid = angular.copy(scope.data);
                         var containerElement = (element[0].querySelector('#image-container'));
                         var _svgString = '';
@@ -141,7 +143,12 @@
                                         html.setAttribute('version', '1.1');
                                         html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-                                        var rotation = 'rotate(' + _grid[row][cellIndex].tile.custom_styles.rotation + 'deg)'
+                                        var degrees = '0';
+
+                                        if (_grid[row][cellIndex].tile) {
+                                            degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
+                                        }
+                                        var rotation = 'rotate(' + degrees + 'deg)';
                                         var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
                                         var img = '<img src="' + imgsrc + '" style="width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + '" >';
 
@@ -156,14 +163,14 @@
                             var maxHeight = 0;
                             var maxWidth = 0;
                             for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
-                                var image = images[imageIndex];
+                                var tmpImage = images[imageIndex];
 
-                                if (image.offsetTop > maxHeight) {
-                                    maxHeight = image.offsetTop + tileHeight;
+                                if (tmpImage.offsetTop > maxHeight) {
+                                    maxHeight = tmpImage.offsetTop + tileHeight;
                                 }
 
-                                if(image.offsetLeft > maxWidth) {
-                                    maxWidth = image.offsetLeft + tileWidth;
+                                if(tmpImage.offsetLeft > maxWidth) {
+                                    maxWidth = tmpImage.offsetLeft + tileWidth;
                                 }
                             }
                             containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
@@ -171,13 +178,50 @@
                             $timeout(function () {
                                 domtoimage.toPng(containerElement)
                                     .then(function(url) {
-                                        d3.select('#grid')
-                                            .style('transform-style', 'preserve-3d');
 
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + url + ') repeat top left')
-                                            .style('background-size', 40 + 'px ' + 40 + 'px')
-                                            .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) translate(0%, 0%)');
+                                        switch(image.code) {
+                                            case ('hallway'):
+                                                d3.select('#grid')
+                                                    .style('perspective', '187px')
+                                                    .style('perspective-origin', '0% 0%');
+
+                                                d3.select('#grid-inner-wrapper')
+                                                    .style('background', 'transparent url(' + url + ') repeat top left')
+                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
+                                                    .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
+                                                    .style('height', '120%')
+                                                    .style('width', '100%');
+
+                                                d3.select('#previewer-image')
+                                                    .style('height', '477px')
+                                                    .style('width', '358px');
+
+                                                break;
+                                            case ('dining-room'):
+
+                                                d3.select('#grid')
+                                                    .style('perspective', '400px')
+                                                    .style('perspective-origin', '87% 25%');
+
+                                                d3.select('#grid-inner-wrapper')
+                                                    .style('background', 'transparent url(' + url + ') repeat top left')
+                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
+                                                    .style('transform', 'rotateX(0deg) rotateY(-24deg) rotateZ(0deg) translate(17%, 0%)')
+                                                    .style('height', '120%')
+                                                    .style('width', '100%');
+
+                                                break;
+                                            case ('bathroom'):
+
+                                                break;
+                                            case ('kitchen'):
+
+                                                break;
+                                            case ('living-room'):
+
+                                                break;
+                                        }
+
                                     })
                                     .catch(function(error) {
                                         console.log(error);

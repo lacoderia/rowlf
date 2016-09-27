@@ -6,7 +6,27 @@
             </a>
         </div>
         <div flex="20" layout="row" layout-align="end" >
-            <span class="menu-item" ng-click="$ctrl.logout()" ng-show="$ctrl.isAuthenticated()">Salir</span>
+            <md-menu class="menu-icon" md-position-mode="target-right target" ng-show="$ctrl.isAuthenticated()">
+                <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                    <md-icon md-menu-origin class="material-icons preview" style="margin: auto 3px auto 0;">&#xE5D2;</md-icon>
+                </md-button>
+                <md-menu-content width="4" >
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.openProjectsView()">
+                            <div layout="row" flex>
+                                <p flex class="menu-item">Mis proyectos</p>
+                            </div>
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.logout()">
+                            <div layout="row" flex>
+                                <p flex class="menu-item">Salir</p>
+                            </div>
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
         </div>
     </div>
 </md-toolbar>

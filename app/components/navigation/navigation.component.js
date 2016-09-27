@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function navigationController($location, navigationService, sessionService, routingService) {
+    function navigationController($rootScope, $location, navigationService, sessionService, routingService) {
 
         /**
          *
@@ -15,6 +15,14 @@
          */
         ctrl.isAuthenticated = function() {
             return sessionService.isAuthenticated();
+        };
+
+        /**
+         * Opens user's projects
+         */
+        ctrl.openProjectsView = function(){
+            console.log('broadcast')
+            $rootScope.$broadcast('openProjectsView');
         };
 
         /**
