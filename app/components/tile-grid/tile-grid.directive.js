@@ -16,35 +16,31 @@
 
                     var tileButton;
                     var SVGObject;
-                    var SVGPaths;
-                    var SVGPolygons;
                     var tileData = scope.tile;
-
+                    var svg = (element[0]).getElementsByTagName('svg');
 
                     var paintTile = function () {
+                        SVGObject = svg[0];
 
-                        SVGObject = (element[0]).getElementsByTagName('svg')[0];
-                        SVGPaths = (element[0]).getElementsByTagName('path');
-                        SVGPolygons = (element[0]).getElementsByTagName('polygon');
+                        var SVGTypes = {
+                            'path': SVGObject.getElementsByTagName('path'),
+                            'polygons': SVGObject.getElementsByTagName('polygon'),
+                            'rect': SVGObject.getElementsByTagName('rect'),
+                            'polylines': SVGObject.getElementsByTagName('polyline')
+                        };
+                        var SVGTypesKeys = Object.keys(SVGTypes);
+                        for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
+                            var SVGType = SVGTypesKeys[typeIndex];
+                            var SVGArray = SVGTypes[SVGType];
 
-                        for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                            var path = SVGPaths[pathIndex];
-                            if(path.id){
-                                if(tileData.custom_styles.path_styles[path.id]) {
-                                    var pathStyle = tileData.custom_styles.path_styles[path.id];
-                                    path.style.fill = pathStyle.fill;
-                                    path.style.stroke = pathStyle.stroke;
-                                }
-                            }
-                        }
-
-                        for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
-                            var polygon = SVGPolygons[polygonIndex];
-                            if(polygon.id){
-                                if(tileData.custom_styles.path_styles[polygon.id]) {
-                                    var polygonStyle = tileData.custom_styles.path_styles[polygon.id];
-                                    polygon.style.fill = polygonStyle.fill;
-                                    polygon.style.stroke = polygonStyle.stroke;
+                            for(var elementIndex=0; elementIndex<SVGArray.length; elementIndex++){
+                                var element = SVGArray[elementIndex];
+                                if(element.id){
+                                    if(tileData.custom_styles.path_styles[element.id]) {
+                                        var pathStyle = tileData.custom_styles.path_styles[element.id];
+                                        element.style.fill = pathStyle.fill;
+                                        element.style.stroke = pathStyle.stroke;
+                                    }
                                 }
                             }
                         }

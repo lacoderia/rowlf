@@ -62,29 +62,30 @@
             if(xml){
                 var parser = new DOMParser();
                 var svg = parser.parseFromString(xml, "application/xml");
-                var SVGPolygons = svg.getElementsByTagName('polygon');
-                var SVGPaths = svg.getElementsByTagName('path');
                 var pathStyles = {};
+                var SVGTypes = {
+                    'path': svg.getElementsByTagName('path'),
+                    'polygons': svg.getElementsByTagName('polygon'),
+                    'rect': svg.getElementsByTagName('rect'),
+                    'polylines': svg.getElementsByTagName('polyline')
+                };
+                var SVGTypesKeys = Object.keys(SVGTypes);
                 svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
 
+                for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
+                    var SVGType = SVGTypesKeys[typeIndex];
+                    var SVGArray = SVGTypes[SVGType];
 
-                for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                    var id = 'tile_' + tileId + '_path_' + (pathIndex+1);
-                    svg.getElementsByTagName('path')[pathIndex].id = id;
-                    pathStyles[id] = {
-                        fill: '#FFFFFF',
-                        stroke: '#000000'
-                    };
+                    for(var elementIndex=0; elementIndex<SVGArray.length; elementIndex++){
+                        var id = 'tile_' + tileId + '_' + SVGType + '_' + (elementIndex+1);
+                        SVGArray[elementIndex].id = id;
+                        pathStyles[id] = {
+                            fill: '#FFFFFF',
+                            stroke: '#000000'
+                        };
+                    }
                 }
 
-                for(var pathIndex=0; pathIndex<SVGPolygons.length; pathIndex++){
-                    var id = 'tile_' + tileId + '_polygon_' + (pathIndex+1);
-                    svg.getElementsByTagName('polygon')[pathIndex].id = 'tile_' + tileId + '_polygon_' + (pathIndex+1);
-                    pathStyles[id] = {
-                        fill: '#FFFFFF',
-                        stroke: '#000000'
-                    };
-                }
                 return {
                     xmlString: new XMLSerializer().serializeToString(svg),
                     pathStyles: pathStyles
