@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function summaryController($scope, $mdDialog, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
+    function summaryController($scope, $mdDialog, $mdToast, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
 
         var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
@@ -10,6 +10,8 @@
         var _cellStyle;
         var _tileDetails = [];
         var _mdPanel = undefined;
+
+        ctrl.loading = false;
 
         $scope.$on('summaryChange', function(){
             refreshGrid();
@@ -219,27 +221,53 @@
             _tileDetails = summaryService.getTileDetails();
         };
 
-        /**
-         *
-         */
-        ctrl.openSaveProject = function(event) {
-            var confirm = $mdDialog.prompt()
-                .title('Save design')
-                .placeholder('Design name')
-                .ariaLabel('Design name')
-                .targetEvent(event)
-                .ok('Save')
-                .cancel('Cancel');
+        ctrl.promptSaveProject = function(event) {
 
-            $mdDialog.show(confirm).then(function(projectName) {
-                saveProject(projectName)
-            }, function() {
+            ctrl.projectName = '';
 
+            $mdDialog.show({
+                controller: summaryController,
+                template: '' +
+                '<md-dialog md-theme="default" aria-label="Save design" class="md-default-theme" ng-class="dialog.css" flex="20" ng-cloak>' +
+                '   <div layout="row" flex="100" ng-if="$ctrl.loading">' +
+                '       <div layout-align="center center" layout="column" flex="100">' +
+                '           <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
+                '      </div>' +
+                '   </div>' +
+                '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' +
+                '       <h2 class="md-title">Save design</h2>' +
+                '       <md-input-container class="md-default-theme">' +
+                '           <input ng-model="$ctrl.projectName" placeholder="Design name">' +
+                '       </md-input-container>' +
+                '   </md-dialog-content>' +
+                '   <md-dialog-actions ng-if="!$ctrl.loading">' +
+                '       <md-button ng-click="$ctrl.cancel()" class="md-default-theme md-primary">' +
+                '           Cancel' +
+                '       </md-button>' +
+                '       <md-button ng-click="$ctrl.saveProject()" class="md-default-theme md-primary">' +
+                '           Save' +
+                '       </md-button>' +
+                '   </md-dialog-actions>' +
+                '</md-dialog>',
+                parent: angular.element(document.body),
+                scope: $scope,
+                preserveScope: true,
+                targetEvent: event,
+                clickOutsideToClose:false
             });
         };
 
-        var saveProject = function (projectName) {
-            projectName = (projectName)? projectName : PROJECT_NAME;
+        /**
+         *
+         */
+        ctrl.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        ctrl.saveProject = function () {
+            ctrl.loading = true;
+
+            var projectName = (ctrl.projectName)? ctrl.projectName : PROJECT_NAME;
             exportAsPDF(projectName).then(
                 function (data) {
                     var htmlString = data;
@@ -248,21 +276,34 @@
                             projectService.saveProject(response.name, response.url).then(
                                 function (response) {
                                     var project = response.project;
+                                    ctrl.loading = false;
+
+                                    $mdDialog.hide();
+
                                     $window.open(project.url);
+
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                            .textContent('Your design was successfully saved!')
+                                            .position('top right')
+                                    );
 
                                 },
                                 function (error) {
+                                    ctrl.loading = false;
                                     console.log(error);
                                 }
                             );
                         },
                         function (error) {
+                            ctrl.loading = false;
                             console.log(error);
                         }
                     );
 
                 },
                 function () {
+                    ctrl.loading = false;
                     console.log('Error saving the project');
                 }
             );
