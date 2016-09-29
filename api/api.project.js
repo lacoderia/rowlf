@@ -4,9 +4,8 @@ var fs = require('fs');
 
 router.post('/', function (req, res, next) {
     try{
-
-        var fileName = req.query.fileName;
-        var fileUrl = 'app/documents/' + fileName;
+        var filename = req.body.filename;
+        var fileUrl = 'app/documents/' + filename;
 
         fs.unlink(fileUrl, function(error) {
             if(error) {
@@ -15,7 +14,7 @@ router.post('/', function (req, res, next) {
 
             var response = {
                 url: fileUrl,
-                fileName: fileName,
+                filename: filename,
                 text: 'File deleted'
             };
 
@@ -23,7 +22,6 @@ router.post('/', function (req, res, next) {
                 .status(200)
                 .end();
 
-            console.log('successfully deleted');
         });
 
 

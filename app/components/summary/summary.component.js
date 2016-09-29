@@ -273,7 +273,7 @@
                     var htmlString = data;
                     summaryService.convert2Pdf(htmlString, projectName).then(
                         function (response) {
-                            projectService.saveProject(response.name, response.url).then(
+                            projectService.saveProject(response.name, response.filename, response.url).then(
                                 function (response) {
                                     var project = response.project;
                                     ctrl.loading = false;
