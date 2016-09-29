@@ -43,23 +43,6 @@
             ctrl.openProjectsView();
         });
 
-        ctrl.generatePDF = function () {
-            var doc = new jsPDF();
-            var specialElementHandlers = {
-                '#editor': function(element, renderer){
-                    return true;
-                }
-            };
-
-            var renderElement = document.getElementsByTagName('previewer')[0];
-            doc.fromHTML(renderElement, 15, 15, {
-                'width': 170,
-                'elementHandlers': specialElementHandlers
-            }, function (response) {
-                doc.save('Test.pdf');
-            });
-        };
-
         ctrl.callAction = function ($event, action, tile) {
             $event.preventDefault();
             $event.stopPropagation();
