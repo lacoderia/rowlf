@@ -8,10 +8,10 @@ router.post('/', function (req, res, next) {
 
         var htmlString = req.body.htmlString;
         var projectName = req.body.projectName;
-        var fileName = new Date().getTime() + '_' + projectName + '.pdf';
-        var fileUrl = req.protocol + '://' + req.get('host') + '/' + +fileName;
+        var fileName = 'documents/' + new Date().getTime() + '_' + projectName + '.pdf';
+        var fileUrl = req.protocol + '://' + req.get('host') + '/' + fileName;
 
-        html5pdf().from.string(htmlString).to(fileName, function () {
+        html5pdf().from.string(htmlString).to('app/' + fileName, function () {
 
             var response = {
                 url: fileUrl,

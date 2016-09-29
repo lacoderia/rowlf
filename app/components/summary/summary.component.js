@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function summaryController($scope, $mdDialog, $timeout, $q, summaryService, projectService, collectionGrids) {
+    function summaryController($scope, $mdDialog, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
 
         var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
@@ -247,7 +247,9 @@
                         function (response) {
                             projectService.saveProject(response.name, response.url).then(
                                 function (response) {
-                                    console.log(response);
+                                    var project = response.project;
+                                    $window.open(project.url);
+
                                 },
                                 function (error) {
                                     console.log(error);
