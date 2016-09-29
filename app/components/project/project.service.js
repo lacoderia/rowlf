@@ -34,9 +34,27 @@
             return _projects;
         }
 
+        function saveProject(name, url) {
+            var serviceURL = AUTH_API_URL_BASE + '/projects/save';
+            return $http.post(serviceURL, { name: name, url: url })
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        _projects.push(data);
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        }
+
         var service = {
             callProjects: callProjects,
-            getProjects: getProjects
+            getProjects: getProjects,
+            saveProject: saveProject
         };
 
         return service;

@@ -7,30 +7,35 @@
                 <div id="summary-grid" class="grid">
                     <div class="row" ng-style="$ctrl.getRowStyle(row)" ng-repeat="row in $ctrl.getGrid()" flex>
                     <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active">
-                        <tile-button tile="{{ cell.tile }}" ng-if="cell.tile.id"></tile-button>
+                        <tile-grid tile="cell.tile" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
                     </span>
                     </div>
                 </div>
             </div>
             <div id="tile-list" class="tile-list" layout="column" flex="50" flex-xs="100" layout-fill layout-padding>
-                <h3>List of tiles</h3>
-                <ul>
-                    <li ng-repeat="tile in $ctrl.getTileDetails()" >
-                        <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id"></tile-button>
-                        <div class="info">
-                            <span class="count">x{{ tile.count }}</span>
-                            <span class="color-item" ng-repeat="hexValue in tile.colors">
-                                <span class="color" ng-style="::$ctrl.getColor(hexValue).style"></span>
-                                <span class="color-name">{{ ::$ctrl.getColor(hexValue).hex_value }}</span>
-                            </span>
-                            <!--span class="no-color">
-                                No selected colors
-                            </span-->
-                        </div>
-                    </li>
-                </ul>
+                <div class="dialog-content">
+                    <h3>List of tiles</h3>
+                    <table style="width: 100%; border-spacing: 0px 16px;" ng-repeat="tile in $ctrl.getTileDetails()">
+                        <tr>
+                            <td style="width: 76px; vertical-align: top; padding-right: 8px;">
+                                <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;"></tile-button>
+                            </td>
+                            <td class="count" style="font-size: 2rem; color: #212121; margin-right: 32px; vertical-align: top; width: 60px;">x{{ tile.count }}</td>
+                            <td ng-if="tile.proccessedColors.length > 0">
+                                <table style="width: 100%; height: 100%;" class="color-item" ng-repeat="color in tile.proccessedColors">
+                                    <tr style="vertical-align: top;">
+                                        <td class="color" style="vertical-align: middle; width: 30px; padding-right: 16px;"><span class="color" ng-style="::color.style" style="border: 1px solid #757575; border-radius: 50%; display: inline-block; position: relative; height: 30px; width: 30px;"></span></td>
+                                        <td class="color-value" style="vertical-align: middle; width: 80px;"><span class="color-value" style=" color: #616161; display: block; font-size: 0.8rem;">{{ ::color.hex_value }}</span></td>
+                                        <td class="color-name" style="vertical-align: middle; text-align: left;"><span class="color-name" style=" color: #616161; display: block; font-size: 0.8rem;">{{ ::color.name }}</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td colspan="3" ng-if="!tile.proccessedColors.length > 0" style="vertical-align: middle;">No colors selected</td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
-                    <md-button md-autofocus class="md-primary" ng-click="$ctrl.exportAsPDF()">
+                    <md-button md-autofocus class="md-primary" ng-click="$ctrl.openSaveProject()">
                         Save design
                     </md-button>
                 </div>

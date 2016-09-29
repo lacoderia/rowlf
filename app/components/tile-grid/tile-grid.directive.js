@@ -48,6 +48,11 @@
                                 }
                             }
                         }
+
+                        if(tileData.custom_styles.rotation) {
+                            d3.select(SVGObject)
+                                .style('transform', 'rotate(' + tileData.custom_styles.rotation + 'deg)');
+                        }
                     };
 
                     var rotateTile = function () {

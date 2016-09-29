@@ -31,23 +31,20 @@
             return undefined;
         }
 
-        function convert2Pdf(htmlString) {
+        function convert2Pdf(htmlString, projectName) {
             var serviceURL = '/api/converter';
-            return $http.post(serviceURL, { 'htmlString': htmlString, 'projectName': 'MI PROYECTO' }).then(
-                function (response) {
-                    try{
-                        console.log(response);
-                        /*if(response.data){
-
-                        }*/
-                    } catch(error){
-                        console.log(error)
+            return $http.post(serviceURL, { 'htmlString': htmlString, 'projectName': projectName }).then(
+                function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        return data;
+                    } else {
+                        return $q.reject(data);
                     }
-                },
-                function(error) {
-                    console.log(error);
-                }
-            );
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
         }
 
         function setTileDetails() {

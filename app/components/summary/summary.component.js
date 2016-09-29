@@ -1,13 +1,15 @@
 (function(angular) {
     'use strict';
 
-    function summaryController($scope, $timeout, summaryService, collectionGrids) {
+    function summaryController($scope, $mdDialog, $timeout, $q, summaryService, projectService, collectionGrids) {
 
+        var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
         var _grid = [];
         var _rowStyle;
         var _cellStyle;
         var _tileDetails = [];
+        var _mdPanel = undefined;
 
         $scope.$on('summaryChange', function(){
             refreshGrid();
@@ -128,6 +130,54 @@
 
         }
 
+        var getGridAsImage = function () {
+            var gridElement = document.createElement('div');
+            gridElement.setAttribute('class', 'grid-element');
+            gridElement.innerHTML = createPreview();
+
+            return gridElement;
+        };
+
+        var exportAsPDF = function (projectName) {
+            return $q(function (resolve, reject) {
+                // Wrapper element
+                var html2pdfTemplate = document.createElement('div');
+                html2pdfTemplate.setAttribute('class', 'html2pdfTemplate');
+                html2pdfTemplate.setAttribute('style', 'width: 100%; box-sizing: border-box; padding: 0; margin: 0; z-index: 0;');
+
+                // Tile and color list
+                var listElement = angular.copy(document.getElementById('tile-list'));
+                var actionsElement = listElement.querySelector('.dialog-actions');
+                listElement.removeChild(actionsElement);
+
+                // Adds the grid as DOM element
+                $timeout(function () {
+                    var bodyContainer = document.createElement('div');
+                    bodyContainer.setAttribute('style', 'margin: 0; padding: 16px; background: white; height: 100%;');
+                    bodyContainer.innerHTML =
+                        '<h1 style="color: white; background: #8BC34A; padding: 4px 16px; font-size: 20px; font-weight: normal; margin: 16px 0;">' + projectName + '</h1>' +
+                        '<div id="summary-body" style="padding: 0; margin: 16px 0 32px;">' +
+                        '<p style="color: #424242; margin: 16px 0; font-size: 16px;">This is a summary of your design: </p>' +
+                        '</div>';
+
+                    var gridElement = getGridAsImage();
+                    gridElement.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
+                    bodyContainer.querySelector('#summary-body').appendChild(gridElement);
+
+                    var listContainer = document.createElement('div');
+                    listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
+                    listContainer.innerHTML = listElement.innerHTML;
+
+                    bodyContainer.appendChild(listContainer);
+                    html2pdfTemplate.appendChild(bodyContainer);
+
+                    resolve(html2pdfTemplate.outerHTML);
+
+                }, 0);
+            });
+
+        };
+
         var refreshGrid = function() {
             _grid = summaryService.getGrid();
         };
@@ -169,85 +219,69 @@
             _tileDetails = summaryService.getTileDetails();
         };
 
-        ctrl.exportAsPDF = function () {
-            // Wrapper element
-            var html2pdfTemplate = document.createElement('div');
-            html2pdfTemplate.setAttribute('class', 'html2pdfTemplate');
-            html2pdfTemplate.setAttribute('style', 'width: 100%; box-sizing: border-box; padding: 0; margin: 0; z-index: 0;');
+        /**
+         *
+         */
+        ctrl.openSaveProject = function(event) {
+            var confirm = $mdDialog.prompt()
+                .title('Save design')
+                .placeholder('Design name')
+                .ariaLabel('Design name')
+                .targetEvent(event)
+                .ok('Save')
+                .cancel('Cancel');
 
-            // Tile and color list
-            var listElement = angular.copy(document.getElementById('tile-list'));
-            var actionsElement = listElement.querySelector('.dialog-actions');
-            listElement.removeChild(actionsElement);
+            $mdDialog.show(confirm).then(function(projectName) {
+                saveProject(projectName)
+            }, function() {
 
-            // Adds the grid as DOM element
-            $timeout(function () {
-                var bodyContainer = document.createElement('div');
-                bodyContainer.setAttribute('style', 'margin: 0; padding: 16px; background: white; height: 100%;');
-                bodyContainer.innerHTML =
-                    '<h1 style="color: white; background: #8BC34A; padding: 4px 16px; font-size: 20px; font-weight: normal; margin: 16px 0;">Mi proyecto</h1>' +
-                    '<div id="summary-body" style="padding: 0; margin: 16px 0 32px;">' +
-                        '<p style="color: #424242; margin: 16px 0; font-size: 16px;">This is a summary of your design: </p>' +
-                    '</div>';
-
-                var gridElement = ctrl.getGridAsImage();
-                gridElement.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
-                bodyContainer.querySelector('#summary-body').appendChild(gridElement);
-
-                var listContainer = document.createElement('div');
-                listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                listContainer.innerHTML = listElement.innerHTML;
-
-                var ulElement = listContainer.querySelector('ul');
-                ulElement.setAttribute('style', 'padding: 0; list-style: none;')
-
-                var liItems = ulElement.querySelectorAll('li');
-                for(var liIndex=0; liIndex<liItems.length; liIndex++) {
-
-                    var liItem = liItems[liIndex];
-                    liItem.setAttribute('style', 'display: block;');
-
-                    var tileButtonElement = liItem.querySelector('.tile');
-                    tileButtonElement.setAttribute('style', 'display: inline-block; border: 1px solid #EEEEEE; width: 60px; height: 60px; margin-right: 8px;');
-
-                    var tileInfo = liItem.querySelector('.info');
-                    tileInfo.setAttribute('style', 'display: inline-block; width: 75%;');
-
-                    var colorItems = liItem.querySelectorAll('.color');
-                    var titleItems = liItem.querySelectorAll('.color-name');
-                    var countItem = liItem.querySelector('.count');
-                    countItem.setAttribute('style', 'display: inline-block; width: 15%; margin-right:');
-
-                    for(var colorIndex=0; colorIndex<colorItems.length; colorIndex++) {
-                        var colorItem = colorItems[colorIndex];
-                        var titleItem = titleItems[colorIndex];
-                        colorItem.setAttribute('style', 'border-radius: 50%; background:' + titleItem.innerHTML + '; display: inline-block; cursor: pointer; margin-top: 2px; position: relative; height: 30px;width: 30px;');
-                        titleItem.setAttribute('style', 'color: #757575; display: block; font-size: 0.5rem;');
-                    }
-                }
-
-                bodyContainer.appendChild(listContainer);
-                html2pdfTemplate.appendChild(bodyContainer);
-
-                //document.body.innerHTML = html2pdfTemplate.outerHTML;
-                summaryService.convert2Pdf(html2pdfTemplate.outerHTML);
-            }, 0);
-
+            });
         };
 
-        ctrl.getGridAsImage = function () {
-            var gridElement = document.createElement('div');
-            gridElement.setAttribute('class', 'grid-element');
-            gridElement.innerHTML = createPreview();
+        var saveProject = function (projectName) {
+            projectName = (projectName)? projectName : PROJECT_NAME;
+            exportAsPDF(projectName).then(
+                function (data) {
+                    var htmlString = data;
+                    summaryService.convert2Pdf(htmlString, projectName).then(
+                        function (response) {
+                            projectService.saveProject(response.name, response.url).then(
+                                function (response) {
+                                    console.log(response);
+                                },
+                                function (error) {
+                                    console.log(error);
+                                }
+                            );
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
 
-            return gridElement;
+                },
+                function () {
+                    console.log('Error saving the project');
+                }
+            );
         };
 
         ctrl.getTileDetails = function() {
+            for(var tileIndex=0; tileIndex<_tileDetails.length; tileIndex++) {
+                var tile = _tileDetails[tileIndex];
+                tile.proccessedColors = [];
+                for(var colorIndex=0; colorIndex<tile.colors.length; colorIndex++) {
+                    var hexValue = tile.colors[colorIndex];
+                    var color = getColor(hexValue);
+                    if(color) {
+                        tile.proccessedColors.push(color);
+                    }
+                }
+            }
             return _tileDetails;
         };
 
-        ctrl.getColor = function(hexValue){
+        var getColor = function(hexValue){
             var color = summaryService.getColorByHexValue(hexValue);
             if(color) {
                 if((color.hex_value).toLowerCase() == '#ffffff'){
