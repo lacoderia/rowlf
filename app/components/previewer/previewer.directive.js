@@ -14,11 +14,8 @@
                 restrict: 'E',
                 templateUrl: '/components/previewer/previewer.html',
                 link: function (scope, element) {
-                    var GRID_FACTOR = 4;
                     var TILE_FACTOR = 6;
                     var TILE_SPACE = 1;
-                    var currentWidth = 0;
-                    var currentHeight = 0;
                     var tileWidth = 50;
                     var tileHeight = 50;
                     var loading = false;
@@ -99,6 +96,9 @@
                         var _svgString = '';
                         var tmpWidth = TILE_SPACE;
                         var tmpHeight = TILE_SPACE;
+
+                        d3.select('#image-container')
+                            .style('display', 'inline-block');
 
                         if(!d3.select('#previewer-image').empty()) {
                             !d3.select('#previewer-image').remove();
@@ -189,7 +189,7 @@
                                                     .style('background', 'transparent url(' + url + ') repeat top left')
                                                     .style('background-size', 40 + 'px ' + 40 + 'px')
                                                     .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
-                                                    .style('height', '120%')
+                                                    .style('height', '100%')
                                                     .style('width', '100%');
 
                                                 d3.select('#previewer-image')
@@ -207,11 +207,23 @@
                                                     .style('background', 'transparent url(' + url + ') repeat top left')
                                                     .style('background-size', 40 + 'px ' + 40 + 'px')
                                                     .style('transform', 'rotateX(0deg) rotateY(-24deg) rotateZ(0deg) translate(17%, 0%)')
-                                                    .style('height', '120%')
+                                                    .style('height', '100%')
                                                     .style('width', '100%');
 
                                                 break;
                                             case ('bathroom'):
+
+                                                d3.select('#grid')
+                                                    .style('perspective', '395px')
+                                                    .style('perspective-origin', '78% 111%');
+
+                                                d3.select('#grid-inner-wrapper')
+                                                    .style('background', 'transparent url(' + url + ') repeat top left')
+                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
+                                                    .style('transform', 'rotateX(54deg) rotateY(0deg) rotateZ(0deg) translate(16%, 0%)')
+                                                    .style('transform-origin', '0% 90%')
+                                                    .style('height', '100%')
+                                                    .style('width', '100%');
 
                                                 break;
                                             case ('kitchen'):
@@ -221,6 +233,9 @@
 
                                                 break;
                                         }
+
+                                        d3.select('#image-container')
+                                            .style('display', 'none');
 
                                     })
                                     .catch(function(error) {
@@ -232,186 +247,15 @@
 
                     }
 
-                    function generateImgFromSVGSting() {
-                        var SVGElements = (element[0].querySelectorAll('.svg-tile'))
+                    window.onresize = function() {
+                        var width = d3.select("#previewer-image").style("width");
+                        var height = d3.select("#previewer-image").style("height");
 
+                        d3.select("#grid")
+                            .style('height', height)
+                            .style('width', width);
+                    };
 
-                      /*  for(var elementIndex=0; elementIndex<SVGElements.length; elementIndex++) {
-
-                            if((elementIndex+1) == SVGElement.length) {
-                       var SVGElement = SVGElements[0];
-                       var source = (new XMLSerializer()).serializeToString(d3.select(SVGElement).node());
-                       var blob = new Blob([ source], { type: 'image/svg+xml;charset=utf-8' });
-                       var url = window.URL.createObjectURL(blob);
-                       var img = d3.select('#image-container').append('img')
-                       .attr('width', tileWidth)
-                       .attr('height', tileHeight)
-                       .style('left', SVGElement.getAttribute('x'))
-                       .style('top', SVGElement.getAttribute('y'))
-                       .node();
-
-                       img.src = url;
-                            }
-                        }
-
-
-                        /*
-
-                        switch(image.code) {
-                            case ('hallway'):
-                                img.onload = function () {
-                                    d3.select('#grid')
-                                        .style('perspective', '100px');
-
-                                    d3.select('#grid-inner-wrapper')
-                                        .style('background', 'transparent url(' + url + ') repeat top left')
-                                        .style('background-size', 40 + 'px ' + 40 + 'px')
-                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewX(0deg) skewY(0deg) translate(0%, 0%)');
-                                };
-                                break;
-                            case ('dinner-room'):
-                                img.onload = function () {
-                                    d3.select('#grid-inner-wrapper')
-                                        .style('background', 'transparent url(' + url + ') repeat top left')
-                                        .style('background-size', 45 + 'px ' + 45 + 'px')
-                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
-                                };
-                                break;
-                            case ('bathroom'):
-                                img.onload = function () {
-                                    d3.select('#grid-inner-wrapper')
-                                        .style('background', 'transparent url(' + url + ') repeat top left')
-                                        .style('background-size', 45 + 'px ' + 45 + 'px')
-                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
-                                };
-                                break;
-                            case ('kitchen'):
-                                img.onload = function () {
-                                    d3.select('#grid-inner-wrapper')
-                                        .style('background', 'transparent url(' + url + ') repeat top left')
-                                        .style('background-size', 45 + 'px ' + 45 + 'px')
-                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
-                                };
-                                break;
-                            case ('living-room'):
-                                img.onload = function () {
-                                    d3.select('#grid-inner-wrapper')
-                                        .style('background', 'transparent url(' + url + ') repeat top left')
-                                        .style('background-size', 45 + 'px ' + 45 + 'px')
-                                        .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)');;
-                                };
-                                break;
-                        }
-
-                        img.src = url;*/
-                    }
-
-                   /* function processXML(tileData) {
-                        if(tileData){
-                            if(tileData.xml) {
-                                var parser = new DOMParser();
-                                var svg = parser.parseFromString(tileData.xml, "application/xml");
-                                var SVGPolygons = svg.getElementsByTagName('polygon');
-                                var SVGPaths = svg.getElementsByTagName('path');
-                                var SVGObject = svg.getElementsByTagName('svg');
-
-                                if(SVGObject) {
-                                    if(SVGObject.length > 0){
-                                        SVGObject[0].style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
-                                    }
-                                }
-
-                                for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                                    var path = SVGPaths[pathIndex];
-                                    path.style.fill = tileData.custom_styles.path_styles[path.id].fill;
-                                    path.style.stroke = tileData.custom_styles.path_styles[path.id].stroke;
-                                }
-
-                                for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
-                                    var polygon = SVGPolygons[polygonIndex];
-                                    polygon.style.fill = tileData.custom_styles.path_styles[polygon.id].fill;
-                                    polygon.style.stroke = tileData.custom_styles.path_styles[polygon.id].stroke;
-                                }
-
-                                return new XMLSerializer().serializeToString(svg);
-                            }
-                        }
-                        return '';
-                    }
-
-                    function drawGrid(data, tmpWidth, tmpHeight, tileWidth, tileHeight) {
-
-                        var _tmpWidth = tmpWidth;
-                        var _tmpHeight = tmpHeight;
-                        var span = '';
-
-                        for(var rowIndex=0; rowIndex<data.length; rowIndex++){
-                            _tmpWidth = tmpWidth;
-                            for(var tileIndex=0; tileIndex<data[rowIndex].length; tileIndex++) {
-                                var tile = data[rowIndex][tileIndex];
-                                if(tile.active){
-                                    span+= '<span style="top:' + _tmpHeight + 'px; left:' + _tmpWidth + 'px; width:' + tileWidth + 'px; height:' + tileHeight + 'px;">';
-                                    span+= tile.tileProccesed;
-                                    span+= '</span>';
-                                    _tmpWidth+= tileWidth;
-                                }
-                            }
-                            _tmpHeight+= tileHeight;
-                        }
-
-                        return span;
-                    }
-
-                    function drawPattern(data,gridHeightLength, gridWidthLength) {
-
-                        var patternHtml = '';
-
-                        while(currentHeight <= canvasHeight) {
-                            currentWidth = 0;
-                            while(currentWidth <= canvasWidth){
-                                patternHtml+= drawGrid(data, currentWidth, currentHeight, tileWidth, tileHeight);
-                                currentWidth+= gridWidthLength*tileWidth;
-                            }
-                            currentHeight+= gridHeightLength*tileHeight;
-                        }
-
-                        return patternHtml;
-                    }
-
-                    function createPreview() {
-                        if(!scope.htmlPattern) {
-                            var _grid = angular.copy(scope.data);
-                            canvasWidth = element[0].clientWidth * GRID_FACTOR;
-                            canvasHeight = element[0].clientHeight * GRID_FACTOR;
-
-                            if(scope.size){
-                                tileWidth = scope.size * TILE_FACTOR;
-                                tileHeight = scope.size * TILE_FACTOR;
-                            }
-
-                            if(_grid) {
-                                var _gridWidthLength = 0;
-                                var _gridHeightLength = 0;
-                                for(var row=0; row<_grid.length; row++) {
-                                    for(var cellIndex=0; cellIndex<_grid[row].length; cellIndex++) {
-                                        _grid[row][cellIndex].tileProccesed = processXML(_grid[row][cellIndex].tile);
-                                        if(_grid[row][cellIndex].active) {
-                                            _gridHeightLength = row+1;
-                                            _gridWidthLength = cellIndex+1;
-                                        }
-                                    }
-                                }
-                            }
-
-                            $timeout(function () {
-                                var htmlPattern = drawPattern(_grid, _gridHeightLength, _gridWidthLength);
-                                scope.htmlPattern = $sce.trustAsHtml(htmlPattern);
-                                loading = false;
-                            },0);
-                        } else{
-                            loading = false;
-                        }
-                    }*/
                 }
             };
         });

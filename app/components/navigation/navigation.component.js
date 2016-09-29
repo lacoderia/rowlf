@@ -21,7 +21,6 @@
          * Opens user's projects
          */
         ctrl.openProjectsView = function(){
-            console.log('broadcast')
             $rootScope.$broadcast('openProjectsView');
         };
 

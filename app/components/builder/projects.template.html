@@ -1,14 +1,19 @@
 <div role="dialog" aria-label="View projects" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="column" layout-xs="column" layout-fill>
-        <h3>Mis proyectos</h3>
-        <md-list>
+        <h3 layout="row">My designs</h3>
+        <div layout="row" flex="100" ng-if="$ctrl.loading">
+            <div layout-align="center center" layout="column" flex="100">
+                <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+            </div>
+        </div>
+        <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length">
             <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects()">
                 <md-icon class="material-icons">&#xE415;</md-icon>
                 <p>{{project.name}}</p>
-                <md-button class="md-secondary" ng-click="$ctrl.openProject(project)">Abrir</md-button>
+                <md-button class="md-secondary" ng-click="$ctrl.openProject(project)">Open</md-button>
             </md-list-item>
         </md-list>
-        <p ng-if="!$ctrl.getUserProjects()">Aun no has guardado ningún proyecto</p>
+        <p ng-if="$ctrl.getUserProjects() && !$ctrl.getUserProjects().length">You haven't saved any designs yet</p>
     </div>
     <icon class="material-icons close-button" md-autofocus class="md-primary close-button" ng-click="$ctrl.closeProjectsView()">&#xE14C;</icon>
 </div>

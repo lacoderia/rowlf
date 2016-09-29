@@ -15,8 +15,9 @@
         var _selectedCell;
         var _mdPanel = undefined;
         var _colors = [];
-        var _projects = [];
+        var _projects = undefined;
         var _selectedImage = undefined;
+
         ctrl.EXAMPLE_IMAGES = [
             { code: 'hallway', title: 'Hallway', url: '/assets/images/preview/preview_1.png'},
             { code: 'dining-room',title: 'Dining Room', url: '/assets/images/preview/preview_2.png'},
@@ -36,9 +37,9 @@
         ctrl._selectedGridType =undefined;
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
+        ctrl.loading = false;
 
         $scope.$on('openProjectsView', function(){
-            console.log('listener');
             ctrl.openProjectsView();
         });
 
@@ -190,7 +191,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/add-tile.template.html',
                 hasBackdrop: true,
@@ -200,9 +204,7 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -368,7 +370,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/panel.template.html',
                 hasBackdrop: true,
@@ -378,9 +383,7 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -412,7 +415,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/preview.template.html',
                 hasBackdrop: true,
@@ -420,11 +426,9 @@
                 position: position,
                 trapFocus: true,
                 zIndex: 150,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -460,14 +464,15 @@
          */
         ctrl.openProjectsView = function() {
 
-            console.log('open projects');
-
             var position = $mdPanel.newPanelPosition()
                 .absolute()
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/projects.template.html',
                 hasBackdrop: true,
@@ -477,22 +482,24 @@
                 zIndex: 150,
                 clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
+
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
 
+            ctrl.loading = true;
             projectService.callProjects()
                 .then(function(data) {
                     if(data.projects){
                         _projects = projectService.getProjects();
                     }
+                    ctrl.loading = false;
                 }, function(error) {
                     if(error && error.errors){
                         console.log(error.errors[0].title);
                     }
+                    ctrl.loading = false;
                 });
 
         };
@@ -503,7 +510,6 @@
         ctrl.closeProjectsView = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;
-                console.log('close projects');
             });
         };
 
