@@ -23,6 +23,11 @@
     <navigation></navigation>
     <div id="main" ng-view flex layout="column"></div>
 
+    <!-- Vendor libs -->
+    <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+    <script src="bower_components/dom-to-image/dist/dom-to-image.min.js"></script>
+
+
     <!-- Angular libs -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -101,8 +106,11 @@
     <script src="components/tile-grid/tile-grid.module.js"></script>
     <script src="components/tile-grid/tile-grid.directive.js"></script>
 
-    <!-- Previwer Component -->
+    <!-- Previewer Component -->
     <script src="components/previewer/previewer.module.js"></script>
     <script src="components/previewer/previewer.directive.js"></script>
+
+    <!-- Project Component -->
+    <script src="components/project/project.service.js"></script>
 </body>
 </html>

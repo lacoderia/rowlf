@@ -1,6 +1,5 @@
 previewer
   background: transparent
-  border: 1px solid $color-gray-400
   height: 75%
   overflow: hidden
   position: relative
@@ -14,29 +13,50 @@ previewer
     transform: translate(-50%, -50%)
     z-index: 300
 
+  #image-container
+    display: inline-block
+    position: relative
+
+    &:before
+      background: transparent url('/assets/images/noisy-texture.png') repeat left top
+      content: ""
+      height: 100%
+      left: 0
+      opacity: 0.6
+      position: absolute
+      top: 0
+      width: 100%
+      z-index: 1
+
+    img
+      border: 1px solid rgba(0,0,0,0.4)
+      border-radius: 3px
+      box-shadow: 0px 0px 4px -1px rgba(0,0,0,0.6)
+      display: inline-block
+      opacity: 0.85
+      position: absolute
+
+
   #previewer-image
-    height: auto
-    left: 0
-    top: 0
-    width: 100%
+    left: 50%
+    position: absolute
+    transform: translate(-50%, -50%)
+    top: 50%
     z-index: 200
 
   #grid
-    height: 100%
-    left: 0
+    background: rgba(0,0,0,0.2)
+    left: 50%
+    overflow: hidden
     position: absolute
-    top: 0
+    top: 50%
+    transform: translate(-50%, -50%)
     z-index: -1
-    width: 100%
-    //transform: rotateX( 60deg ) rotateZ(60deg)
-    transform-style: preserve-3d
 
     #grid-inner-wrapper
-      height: 100%
       left: 0
       position: relative
       top: 0
-      width: 100%
 
       span
         background: white

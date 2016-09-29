@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $mdDialog, $location, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService) {
+    function builderController($mdPanel, $mdDialog, $location, $window, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService, projectService) {
 
         var ctrl = this;
         var _selectedTiles = [];
@@ -15,11 +15,15 @@
         var _selectedCell;
         var _mdPanel = undefined;
         var _colors = [];
+        var _projects = undefined;
         var _selectedImage = undefined;
+
         ctrl.EXAMPLE_IMAGES = [
-            { title: 'Bathroom', url: 'http://owenator.mx/bathroom.png'},
-            { title: 'Kitchen', url: 'http://owenator.mx/bathroom.png'},
-            { title: 'Lounge', url: 'http://owenator.mx/bathroom.png'}
+            { code: 'hallway', title: 'Hallway', url: '/assets/images/preview/preview_1.png'},
+            { code: 'dining-room',title: 'Dining Room', url: '/assets/images/preview/preview_2.png'},
+            { code: 'bathroom',title: 'Bathroom', url: '/assets/images/preview/preview_3.png'},
+            { code: 'kitchen',title: 'Kitchen', url: '/assets/images/preview/preview_4.png'},
+            { code: 'living-room',title: 'Living Room', url: '/assets/images/preview/preview_5.png'}
         ];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
@@ -33,6 +37,28 @@
         ctrl._selectedGridType =undefined;
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
+        ctrl.loading = false;
+
+        $scope.$on('openProjectsView', function(){
+            ctrl.openProjectsView();
+        });
+
+        ctrl.generatePDF = function () {
+            var doc = new jsPDF();
+            var specialElementHandlers = {
+                '#editor': function(element, renderer){
+                    return true;
+                }
+            };
+
+            var renderElement = document.getElementsByTagName('previewer')[0];
+            doc.fromHTML(renderElement, 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            }, function (response) {
+                doc.save('Test.pdf');
+            });
+        };
 
         ctrl.callAction = function ($event, action, tile) {
             $event.preventDefault();
@@ -165,7 +191,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/add-tile.template.html',
                 hasBackdrop: true,
@@ -173,11 +202,9 @@
                 position: position,
                 trapFocus: true,
                 zIndex: 150,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -343,7 +370,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/panel.template.html',
                 hasBackdrop: true,
@@ -351,14 +381,28 @@
                 position: position,
                 trapFocus: true,
                 zIndex: 150,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
+        };
+
+        /**
+         *
+         */
+        ctrl.isPreviewReady = function() {
+            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
+                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
+
+                    if(_grid[rowIndex][colIndex].active && _grid[rowIndex][colIndex].tile === undefined) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         };
 
         /**
@@ -371,7 +415,10 @@
                 .center();
             var config = {
                 attachTo: angular.element(document.body),
-                controller: builderController,
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
                 disableParentScroll: true,
                 templateUrl: 'components/builder/preview.template.html',
                 hasBackdrop: true,
@@ -379,11 +426,9 @@
                 position: position,
                 trapFocus: true,
                 zIndex: 150,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 escapeToClose: true,
-                focusOnOpen: true,
-                scope: $scope,
-                preserveScope: true
+                focusOnOpen: true
             };
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
@@ -411,6 +456,89 @@
                 }
             }
             ctrl.closeCustomizer();
+        };
+
+        /**
+         *
+         * @param tile
+         */
+        ctrl.openProjectsView = function() {
+
+            var position = $mdPanel.newPanelPosition()
+                .absolute()
+                .center();
+            var config = {
+                attachTo: angular.element(document.body),
+                controller: function(){
+                    return ctrl;
+                },
+                controllerAs: '$ctrl',
+                disableParentScroll: true,
+                templateUrl: 'components/builder/projects.template.html',
+                hasBackdrop: true,
+                panelClass: 'projects-view',
+                position: position,
+                trapFocus: true,
+                zIndex: 150,
+                clickOutsideToClose: false,
+                escapeToClose: true,
+                focusOnOpen: true
+            };
+
+            _mdPanel = $mdPanel.create(config);
+            _mdPanel.open();
+
+            ctrl.loading = true;
+            projectService.callProjects()
+                .then(function(data) {
+                    if(data.projects){
+                        _projects = projectService.getProjects();
+                    }
+                    ctrl.loading = false;
+                }, function(error) {
+                    if(error && error.errors){
+                        console.log(error.errors[0].title);
+                    }
+                    ctrl.loading = false;
+                });
+
+        };
+
+        /**
+         *
+         */
+        ctrl.closeProjectsView = function() {
+            _mdPanel.close().then(function() {
+                _mdPanel = undefined;
+            });
+        };
+
+        ctrl.openProject = function(project){
+            $window.open(project.url, "_blank");
+        };
+
+        ctrl.deleteProject = function (project) {
+
+            projectService.deleteProject(project.id).then(
+                function (response) {
+
+                    projectService.deleteFile(project).then(
+                        function (response) {
+                            projectService.deleteProjectById(_projects, project.id);
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        };
+
+        ctrl.getUserProjects = function() {
+            return _projects;
         };
 
         /**
