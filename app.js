@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var converter = require('./api/api.converter')
+var converter = require('./api/api.converter');
+var project = require('./api/api.project');
 var app = express();
 
 // view engine setup
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'app')));
 
 app.use('/', routes);
 app.use('/api/converter', converter);
+app.use('/api/project', project);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -296,14 +296,12 @@
                             );
                         },
                         function (error) {
-                            ctrl.loading = false;
                             console.log(error);
                         }
                     );
 
                 },
                 function () {
-                    ctrl.loading = false;
                     console.log('Error saving the project');
                 }
             );

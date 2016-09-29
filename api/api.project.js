@@ -1,27 +1,31 @@
 var express = require('express');
 var router = express.Router();
-var html5pdf = require('html5-to-pdf');
 var fs = require('fs');
 
 router.post('/', function (req, res, next) {
     try{
 
-        var htmlString = req.body.htmlString;
-        var projectName = req.body.projectName;
-        var fileName = new Date().getTime() + '_' + projectName + '.pdf';
-        var fileUrl = req.protocol + '://' + req.get('host') + '/documents/' + fileName;
+        var fileName = req.query.fileName;
+        var fileUrl = 'app/documents/' + fileName;
 
-        html5pdf().from.string(htmlString).to('app/documents/' + fileName, function () {
+        fs.unlink(fileUrl, function(error) {
+            if(error) {
+                throw error;
+            }
 
             var response = {
                 url: fileUrl,
-                name: fileName
+                fileName: fileName,
+                text: 'File deleted'
             };
+
             res.send(response)
                 .status(200)
                 .end();
-            }
-        );
+
+            console.log('successfully deleted');
+        });
+
 
     } catch(error) {
         console.log(error);

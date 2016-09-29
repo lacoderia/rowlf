@@ -7,10 +7,10 @@
             </div>
         </div>
         <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length">
-            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects()">
+            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects()" ng-click="$ctrl.openProject(project)">
                 <md-icon class="material-icons">&#xE415;</md-icon>
                 <p>{{project.name}}</p>
-                <md-button class="md-secondary" ng-click="$ctrl.openProject(project)">Open</md-button>
+                <md-button class="md-secondary" ng-click="$ctrl.deleteProject(project)">Delete</md-button>
             </md-list-item>
         </md-list>
         <p ng-if="$ctrl.getUserProjects() && !$ctrl.getUserProjects().length">You haven't saved any designs yet</p>

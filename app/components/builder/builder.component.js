@@ -517,6 +517,27 @@
             $window.open(project.url, "_blank");
         };
 
+        ctrl.deleteProject = function (project) {
+            console.log(project);
+
+            projectService.deleteProject(project.id).then(
+                function (response) {
+
+                    projectService.deleteFile(project).then(
+                        function (response) {
+                            projectService.deleteProjectById(_projects, project.id);
+                        },
+                        function (error) {
+                            console.log(error);
+                        }
+                    );
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        };
+
         ctrl.getUserProjects = function() {
             return _projects;
         };

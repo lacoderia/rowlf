@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('projectService', ['$http', 'AUTH_API_URL_BASE', function ($http, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('projectService', ['$http', '$q', 'AUTH_API_URL_BASE', function ($http, $q, AUTH_API_URL_BASE) {
 
         var _projects = [];
 
@@ -34,6 +34,50 @@
             return _projects;
         }
 
+        function deleteProjectById(projectsArray, projectId) {
+            for(var projectIndex=projectsArray.length-1; projectIndex>0; projectIndex--) {
+                var project = projectsArray[projectIndex];
+                if(project.id == projectId) {
+                    projectsArray.splice(projectIndex, 1);
+                }
+            }
+        }
+
+        function deleteProject(projectId) {
+            var serviceURL = AUTH_API_URL_BASE + '/projects/' + projectId;
+            return $http.delete(serviceURL, {})
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        console.log(data);
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        }
+
+        function deleteFile(project) {
+            var serviceURL = '/api/project';
+
+            return $http.post(serviceURL, { fileName: project.name })
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        deleteProjectById(_projects, project.id);
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        }
+
         function saveProject(name, url) {
             var serviceURL = AUTH_API_URL_BASE + '/projects/save';
             return $http.post(serviceURL, { name: name, url: url })
@@ -54,7 +98,10 @@
         var service = {
             callProjects: callProjects,
             getProjects: getProjects,
-            saveProject: saveProject
+            saveProject: saveProject,
+            deleteProject: deleteProject,
+            deleteFile: deleteFile,
+            deleteProjectById: deleteProjectById
         };
 
         return service;
