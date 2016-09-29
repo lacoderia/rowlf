@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $mdDialog, $location, $window, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService, projectService) {
+    function builderController($mdPanel, $mdDialog, $mdToast, $location, $window, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService, projectService) {
 
         var ctrl = this;
         var _selectedTiles = [];
@@ -471,6 +471,7 @@
             _mdPanel = $mdPanel.create(config);
             _mdPanel.open();
 
+            _projects = undefined;
             ctrl.loading = true;
             projectService.callProjects()
                 .then(function(data) {
@@ -482,7 +483,15 @@
                     if(error && error.errors){
                         console.log(error.errors[0].title);
                     }
+
                     ctrl.loading = false;
+                    ctrl.closeProjectsView();
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('An error ocurred while opening your designs!')
+                            .position('top right')
+                    );
                 });
 
         };

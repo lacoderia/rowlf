@@ -1,13 +1,13 @@
 <div role="dialog" aria-label="View projects" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="column" layout-xs="column" layout-fill>
-        <h3 layout="row">My designs</h3>
+        <h3>My designs</h3>
         <div layout="row" flex="100" ng-if="$ctrl.loading">
             <div layout-align="center center" layout="column" flex="100">
                 <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
             </div>
         </div>
-        <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length">
-            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects()" ng-click="$ctrl.openProject(project)">
+        <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
+            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'" ng-click="$ctrl.openProject(project)">
                 <md-icon class="material-icons">&#xE415;</md-icon>
                 <p>{{project.name}}</p>
                 <md-button class="md-secondary" ng-click="$ctrl.deleteProject(project)">Delete</md-button>
