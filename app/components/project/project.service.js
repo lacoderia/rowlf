@@ -49,7 +49,6 @@
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {
-                        console.log(data);
                         return data;
                     } else {
                         return $q.reject(data);
@@ -63,7 +62,7 @@
         function deleteFile(project) {
             var serviceURL = '/api/project';
 
-            return $http.post(serviceURL, { fileName: project.name })
+            return $http.post(serviceURL, { filename: project.filename })
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {
@@ -78,9 +77,9 @@
                 });
         }
 
-        function saveProject(name, url) {
+        function saveProject(name, filename, url) {
             var serviceURL = AUTH_API_URL_BASE + '/projects/save';
-            return $http.post(serviceURL, { name: name, url: url })
+            return $http.post(serviceURL, { name: name, filename: filename, url: url })
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {

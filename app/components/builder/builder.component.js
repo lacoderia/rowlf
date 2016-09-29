@@ -518,7 +518,6 @@
         };
 
         ctrl.deleteProject = function (project) {
-            console.log(project);
 
             projectService.deleteProject(project.id).then(
                 function (response) {
