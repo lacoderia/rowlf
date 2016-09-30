@@ -436,7 +436,8 @@
 
             for(var i=0; i<_selectedTiles.length; i++){
                 if(_selectedTiles[i].tmpId == _selectedTile.tmpId){
-                    _selectedTiles[i] = angular.copy(_selectedTile);
+                    _selectedTiles[i] = angular.copy(_tmpTile);
+                    _selectedTile = _tmpTile;
                 }
             }
             ctrl.closeCustomizer();
