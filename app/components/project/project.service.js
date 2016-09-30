@@ -35,10 +35,11 @@
         }
 
         function deleteProjectById(projectsArray, projectId) {
-            for(var projectIndex=projectsArray.length-1; projectIndex>0; projectIndex--) {
+            for(var projectIndex = projectsArray.length-1; projectIndex >= 0; projectIndex--) {
                 var project = projectsArray[projectIndex];
                 if(project.id == projectId) {
                     projectsArray.splice(projectIndex, 1);
+                    break;
                 }
             }
         }

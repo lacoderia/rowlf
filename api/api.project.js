@@ -3,35 +3,42 @@ var router = express.Router();
 var fs = require('fs');
 
 router.post('/', function (req, res, next) {
-    try{
-        var filename = req.body.filename;
-        var fileUrl = 'app/documents/' + filename;
 
-        fs.unlink(fileUrl, function(error) {
-            if(error) {
-                throw error;
-            }
+    var filename = req.body.filename;
+    var fileUrl = 'app/documents/' + filename;
 
-            var response = {
-                url: fileUrl,
-                filename: filename,
-                text: 'File deleted'
+    fs.exists(fileUrl, function(exists) {
+        if (exists) {
+            fs.unlink(fileUrl, function(error) {
+                if(error) {
+                    console.log(error);
+                    res.status(500)
+                        .send(error)
+                        .end();
+                } else {
+                    var response = {
+                        url: fileUrl,
+                        filename: filename,
+                        text: 'File deleted'
+                    };
+
+                    res.status(200)
+                        .send(response)
+                        .end();
+                }
+
+            });
+        } else {
+            var error = {
+                code: '500',
+                text: 'File does not exist'
             };
 
-            res.send(response)
-                .status(200)
+            res.status(500)
+                .send(error)
                 .end();
-
-        });
-
-
-    } catch(error) {
-        console.log(error);
-        res.send(error)
-            .status(500)
-            .end();
-    }
-
+        }
+    });
 
 });
 

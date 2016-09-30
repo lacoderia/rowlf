@@ -18,16 +18,16 @@ router.post('/', function (req, res, next) {
                 filename: filename,
                 name: projectName
             };
-            res.send(response)
-                .status(200)
+            res.status(200)
+                .send(response)
                 .end();
             }
         );
 
     } catch(error) {
         console.log(error);
-        res.send(error)
-            .status(500)
+        res.status(500)
+            .send(error)
             .end();
     }
 
