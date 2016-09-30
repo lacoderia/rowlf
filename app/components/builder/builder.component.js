@@ -38,6 +38,7 @@
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
         ctrl.loading = false;
+        ctrl.deleting = false;
 
         $scope.$on('openProjectsView', function(){
             ctrl.openProjectsView();
@@ -511,20 +512,24 @@
 
         ctrl.deleteProject = function (project) {
 
+            ctrl.deleting = true;
             projectService.deleteProject(project.id).then(
                 function (response) {
 
                     projectService.deleteFile(project).then(
                         function (response) {
                             projectService.deleteProjectById(_projects, project.id);
+                            ctrl.deleting = false;
                         },
                         function (error) {
                             console.log(error);
+                            ctrl.deleting = false;
                         }
                     );
                 },
                 function (error) {
                     console.log(error);
+                    ctrl.deleting = false;
                 }
             );
         };
