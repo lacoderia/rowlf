@@ -67,7 +67,8 @@
                     'path': svg.getElementsByTagName('path'),
                     'polygons': svg.getElementsByTagName('polygon'),
                     'rect': svg.getElementsByTagName('rect'),
-                    'polylines': svg.getElementsByTagName('polyline')
+                    'polylines': svg.getElementsByTagName('polyline'),
+                    'circle': svg.getElementsByTagName('circle')
                 };
                 var SVGTypesKeys = Object.keys(SVGTypes);
                 svg.getElementsByTagName('svg')[0].id = 'tile_' + tileId;
