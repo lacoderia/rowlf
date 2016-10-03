@@ -18,7 +18,7 @@
             refreshTileDetails();
         });
 
-        function processXML(tileData) {
+        function processXML(tileData, tileWidth, tileHeight) {
 
             if(tileData){
                 if(tileData.xml) {
@@ -26,7 +26,6 @@
                     var svg = parser.parseFromString(tileData.xml, "application/xml");
                     var SVGPolygons = svg.getElementsByTagName('polygon');
                     var SVGPaths = svg.getElementsByTagName('path');
-                    var SVGObject = svg.getElementsByTagName('svg');
 
                     for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
                         var path = SVGPaths[pathIndex];
@@ -50,15 +49,14 @@
             d3.select(GObject)
                 .attr('width', tileWidth)
                 .attr('height', tileHeight)
-                .attr('transform-origin', 'right bottom').
-
-            d3.select(GObject).append('rect')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('width', tileWidth)
-                .attr('height', tileHeight)
-                .attr('fill', '#FFFFFF')
-                .attr('stroke', '#E5E5E5');
+                .attr('transform-origin', 'right bottom')
+                .append('rect')
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('width', tileWidth)
+                    .attr('height', tileHeight)
+                    .attr('fill', '#FFFFFF')
+                    .attr('stroke', '#E5E5E5');
 
             SVGObject.appendChild(GObject);
 
@@ -66,78 +64,92 @@
         }
 
         function createPreview() {
-            var TILE_SPACE = 1;
-            var tileWidth = 100;
-            var tileHeight = 100;
-            var localGrid = angular.copy(_grid);
-            var containerElement = document.createElement('div');
-            var _svgString = '';
-            var tmpWidth = TILE_SPACE;
-            var tmpHeight = TILE_SPACE;
+            return $q(function (resolve, reject) {
+                var TILE_SPACE = 1;
+                var tileWidth = 100;
+                var tileHeight = 100;
+                var localGrid = angular.copy(_grid);
+                var containerElement = document.createElement('div');
+                var _svgString = '';
+                var tmpWidth = TILE_SPACE;
+                var tmpHeight = TILE_SPACE;
 
-            containerElement.setAttribute('id', 'image-container');
+                containerElement.setAttribute('id', 'image-container');
 
-            if(_grid) {
+                if(_grid) {
 
-                for(var row=0; row<_grid.length; row++) {
-                    tmpWidth = TILE_SPACE;
-                    for(var cellIndex=0; cellIndex<localGrid[row].length; cellIndex++) {
-                        if(localGrid[row][cellIndex].active) {
+                    for(var row=0; row<_grid.length; row++) {
+                        tmpWidth = TILE_SPACE;
+                        for(var cellIndex=0; cellIndex<localGrid[row].length; cellIndex++) {
+                            if(localGrid[row][cellIndex].active) {
 
-                            // Getting the SVG as String
-                            _svgString= processXML(localGrid[row][cellIndex].tile);
+                                // Getting the SVG as String
+                                _svgString= processXML(localGrid[row][cellIndex].tile, tileWidth, tileHeight);
 
-                            var tileId = localGrid[row][cellIndex].id;
-                            var SVGContainer = document.createElement('div');
+                                var tileId = localGrid[row][cellIndex].id;
+                                var SVGContainer = document.createElement('div');
 
-                            SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
-                            SVGContainer.setAttribute('class', 'svg-tile');
-                            SVGContainer.innerHTML = _svgString;
+                                SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
+                                SVGContainer.setAttribute('class', 'svg-tile');
+                                SVGContainer.innerHTML = _svgString;
 
-                            var html = SVGContainer.querySelector('svg');
-                            html.setAttribute('version', '1.1');
-                            html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                                var html = SVGContainer.querySelector('svg');
+                                html.setAttribute('version', '1.1');
+                                html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-                            var rotation = 'rotate(' + _grid[row][cellIndex].tile.custom_styles.rotation + 'deg)'
-                            var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
-                            var img = '<img src="' + imgsrc + '" style="position: absolute; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + '" >';
+                                var rotation = (_grid[row][cellIndex].tile) ? 'rotate(' + _grid[row][cellIndex].tile.custom_styles.rotation + 'deg)': 'rotate(' + 0 + 'deg)';
+                                console.log(rotation);
+                                var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
+                                var img = '<img src="' + imgsrc + '" style="position: absolute; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + ';" >';
 
-                            containerElement.innerHTML+= img;
-                            tmpWidth+= tileWidth + TILE_SPACE;
+                                containerElement.innerHTML+= img;
+                                tmpWidth+= tileWidth + TILE_SPACE;
+                            }
+                        }
+                        tmpHeight+= tileHeight + TILE_SPACE;
+                    }
+
+                    var images = containerElement.querySelectorAll('img');
+                    var maxHeight = 0;
+                    var maxWidth = 0;
+                    for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
+                        var tmpImage = images[imageIndex];
+
+                        if (tmpImage.offsetTop > maxHeight) {
+                            maxHeight = image.offsetTop + tileHeight;
+                        }
+
+                        if(tmpImage.offsetLeft > maxWidth) {
+                            maxWidth = tmpImage.offsetLeft + tileWidth;
                         }
                     }
-                    tmpHeight+= tileHeight + TILE_SPACE;
+                    containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
+
+                    resolve(containerElement.innerHTML);
                 }
 
-                var images = containerElement.querySelectorAll('img');
-                var maxHeight = 0;
-                var maxWidth = 0;
-                for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
-                    var tmpImage = images[imageIndex];
-
-                    if (tmpImage.offsetTop > maxHeight) {
-                        maxHeight = image.offsetTop + tileHeight;
-                    }
-
-                    if(tmpImage.offsetLeft > maxWidth) {
-                        maxWidth = tmpImage.offsetLeft + tileWidth;
-                    }
-                }
-                containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
-
-                return containerElement.innerHTML;
-            }
-
-            return '';
+                reject('');
+            });
 
         }
 
         var getGridAsImage = function () {
-            var gridElement = document.createElement('div');
-            gridElement.setAttribute('class', 'grid-element');
-            gridElement.innerHTML = createPreview();
+            return $q(function (resolve, reject) {
+                var gridElement = document.getElementById('tmp-grid-image');
+                gridElement.setAttribute('class', 'grid-element');
+                createPreview().then(
+                    function (response) {
+                        gridElement.innerHTML = response;
+                        var images = angular.element(gridElement).children();
+                        var factor = Math.floor((images.length)/2);
+                        var tileWidth = (100 * factor) + (1 * factor) + 1;
+                        var tileHeight = tileWidth;
+                        gridElement.setAttribute('style', 'position: relative; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px;');
+                        resolve(gridElement);
+                    }
+                );
+            });
 
-            return gridElement;
         };
 
         var exportAsPDF = function (projectName) {
@@ -162,18 +174,36 @@
                         '<p style="color: #424242; margin: 16px 0; font-size: 16px;">This is a summary of your design: </p>' +
                         '</div>';
 
-                    var gridElement = getGridAsImage();
-                    gridElement.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
-                    bodyContainer.querySelector('#summary-body').appendChild(gridElement);
+                    $timeout(function () {
 
-                    var listContainer = document.createElement('div');
-                    listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                    listContainer.innerHTML = listElement.innerHTML;
+                        getGridAsImage().then(
+                            function (response) {
+                                domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
+                                    function (url) {
+                                        var gridImage = document.createElement('img');
+                                        gridImage.src = url;
 
-                    bodyContainer.appendChild(listContainer);
-                    html2pdfTemplate.appendChild(bodyContainer);
+                                        gridImage.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
+                                        bodyContainer.querySelector('#summary-body').appendChild(gridImage);
 
-                    resolve(html2pdfTemplate.outerHTML);
+                                        var listContainer = document.createElement('div');
+                                        listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
+                                        listContainer.innerHTML = listElement.innerHTML;
+
+                                        bodyContainer.appendChild(listContainer);
+                                        html2pdfTemplate.appendChild(bodyContainer);
+
+                                        resolve(html2pdfTemplate.outerHTML);
+                                    },
+                                    function (error) {
+                                        console.log(error);
+                                        reject(error);
+                                    }
+                                );
+                            }
+                        );
+
+                    }, 0)
 
                 }, 0);
             });
@@ -277,11 +307,8 @@
                                 function (response) {
                                     var project = response.project;
                                     ctrl.loading = false;
-
                                     $mdDialog.hide();
-
                                     $window.open(project.url);
-
                                     $mdToast.show(
                                         $mdToast.simple()
                                             .textContent('Your design was successfully saved!')
