@@ -98,7 +98,6 @@
                                 html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
                                 var rotation = (_grid[row][cellIndex].tile) ? 'rotate(' + _grid[row][cellIndex].tile.custom_styles.rotation + 'deg)': 'rotate(' + 0 + 'deg)';
-                                console.log(rotation);
                                 var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
                                 var img = '<img src="' + imgsrc + '" style="position: absolute; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + ';" >';
 
@@ -174,36 +173,71 @@
                         '<p style="color: #424242; margin: 16px 0; font-size: 16px;">This is a summary of your design: </p>' +
                         '</div>';
 
-                    $timeout(function () {
+                    getGridAsImage().then(
+                        function (response) {
+                            domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
+                                function (url) {
+                                    var gridImage = document.createElement('img');
+                                    gridImage.src = url;
 
-                        getGridAsImage().then(
-                            function (response) {
-                                domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
-                                    function (url) {
-                                        var gridImage = document.createElement('img');
-                                        gridImage.src = url;
+                                    gridImage.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
+                                    bodyContainer.querySelector('#summary-body').appendChild(gridImage);
 
-                                        gridImage.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
-                                        bodyContainer.querySelector('#summary-body').appendChild(gridImage);
+                                    var listContainer = document.createElement('div');
+                                    listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
+                                    listContainer.innerHTML = listElement.innerHTML;
 
-                                        var listContainer = document.createElement('div');
-                                        listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                                        listContainer.innerHTML = listElement.innerHTML;
+                                    var tileCells = listContainer.querySelectorAll('.tile-cell');
+                                    var originalTileCells = document.querySelectorAll('.tile-cell');
 
-                                        bodyContainer.appendChild(listContainer);
-                                        html2pdfTemplate.appendChild(bodyContainer);
 
-                                        resolve(html2pdfTemplate.outerHTML);
-                                    },
-                                    function (error) {
-                                        console.log(error);
-                                        reject(error);
+                                    var promises = [];
+                                    var urls = [];
+                                    for(var tileIndex=0; tileIndex<tileCells.length; tileIndex++) {
+                                        var originalTileCell = originalTileCells[tileIndex].querySelector('tile-button');
+
+                                        promises.push(
+                                            domtoimage.toPng(originalTileCell, { quality: 0.95 }).then(
+                                            function (url) {
+                                                urls.push(url);
+                                            },
+                                            function (error) {
+                                                console.log(error);
+                                                reject(error);
+                                            }
+                                        ));
                                     }
-                                );
-                            }
-                        );
 
-                    }, 0)
+                                    $q.all(promises).then(
+                                        function () {
+                                            for(var urlIndex=0; urlIndex<urls.length; urlIndex++) {
+                                                var url = urls[urlIndex];
+                                                var tileCell = tileCells[urlIndex];
+                                                var tileImage = document.createElement('img');
+                                                tileImage.src = url;
+                                                tileCell.innerHTML = '';
+                                                tileCell.appendChild(tileImage);
+
+                                            }
+
+                                            bodyContainer.appendChild(listContainer);
+                                            html2pdfTemplate.appendChild(bodyContainer);
+                                            resolve(html2pdfTemplate.outerHTML);
+                                        },
+                                        function (error) {
+                                            console.log(error);
+                                            reject(error);
+                                        }
+                                    );
+
+                                },
+                                function (error) {
+                                    console.log(error);
+                                    reject(error);
+                                }
+                            );
+                        }
+                    );
 
                 }, 0);
             });
