@@ -48,3 +48,6 @@ app/bower_components
 # Styles
 *.css
 *.css.map
+
+# Documents
+/app/documents/*

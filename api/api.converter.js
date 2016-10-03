@@ -11,6 +11,8 @@ router.post('/', function (req, res, next) {
         var filename = new Date().getTime() + '_' + projectName + '.pdf';
         var fileUrl = req.protocol + '://' + req.get('host') + '/documents/' + filename;
 
+        console.log(htmlString);
+
         html5pdf().from.string(htmlString).to('app/documents/' + filename, function () {
 
             var response = {
