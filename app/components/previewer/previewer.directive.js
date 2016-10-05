@@ -117,8 +117,6 @@
                         var ctx = canvas.getContext('2d');
                         var images = [];
 
-                        canvas.setAttribute('width','300px');
-                        canvas.setAttribute('height','300px');
 
                         d3.select('#image-container')
                             .style('display', 'inline-block');
@@ -189,9 +187,74 @@
                                 tmpHeight+= tileHeight + TILE_SPACE;
                             }
 
+                            var factor = Math.floor((images.length)/2);
+                            var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+                            var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+
+                            canvas.width  = canvasWidth;
+                            canvas.height = canvasHeight;
+                            canvas.style.width  = canvasWidth + 'px';
+                            canvas.style.height = canvasHeight + 'px';
+
                             $q.all(images).then(function () {
-                                document.body.innerHTML = '';
-                                document.body.appendChild(canvas);
+                                var backgroundUrl = canvas.toDataURL("image/png");
+                                switch(image.code) {
+                                    case ('hallway'):
+                                        d3.select('#grid')
+                                            .style('perspective', '187px')
+                                            .style('perspective-origin', '0% 0%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', 65 + 'px ' + 65 + 'px')
+                                            .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        d3.select('#previewer-image')
+                                            .style('height', '477px')
+                                            .style('width', '358px');
+
+                                        break;
+                                    case ('dining-room'):
+
+                                        d3.select('#grid')
+                                            .style('perspective', '400px')
+                                            .style('perspective-origin', '87% 25%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', 40 + 'px ' + 40 + 'px')
+                                            .style('transform', 'rotateX(0deg) rotateY(-24deg) rotateZ(0deg) translate(17%, 0%)')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        break;
+                                    case ('bathroom'):
+
+                                        d3.select('#grid')
+                                            .style('perspective', '395px')
+                                            .style('perspective-origin', '78% 111%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', 40 + 'px ' + 40 + 'px')
+                                            .style('transform', 'rotateX(54deg) rotateY(0deg) rotateZ(0deg) translate(16%, 0%)')
+                                            .style('transform-origin', '0% 90%')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        break;
+                                    case ('kitchen'):
+
+                                        break;
+                                    case ('living-room'):
+
+                                        break;
+                                }
+
+                                d3.select('#image-container')
+                                    .style('display', 'none');
                             });
 
 
