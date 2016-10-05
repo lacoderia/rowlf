@@ -359,6 +359,7 @@
 
         // Function to authenticate a user
         ctrl.login = function() {
+            document.activeElement.blur();
 
             if(ctrl.loginForm.$valid) {
 
@@ -390,6 +391,7 @@
 
         // Function to register a new user
         ctrl.signUp = function() {
+            document.activeElement.blur();
 
             if(ctrl.signupForm.$valid) {
 
@@ -462,6 +464,7 @@
 
         // Function to recover user password
         ctrl.recoverPassword = function() {
+            document.activeElement.blur();
 
             if(ctrl.forgotForm.$valid) {
 
@@ -494,6 +497,7 @@
 
         // Function to reset user password
         ctrl.resetPassword = function() {
+            document.activeElement.blur();
 
             var reset = {
                 reset_password_token: resetToken,
