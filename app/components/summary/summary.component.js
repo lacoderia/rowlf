@@ -24,20 +24,30 @@
                 if(tileData.xml) {
                     var parser = new DOMParser();
                     var svg = parser.parseFromString(tileData.xml, "application/xml");
-                    var SVGPolygons = svg.getElementsByTagName('polygon');
-                    var SVGPaths = svg.getElementsByTagName('path');
+                    var SVGTypes = {
+                        'path': svg.getElementsByTagName('path'),
+                        'polygons': svg.getElementsByTagName('polygon'),
+                        'rect': svg.getElementsByTagName('rect'),
+                        'polylines': svg.getElementsByTagName('polyline'),
+                        'circle': svg.getElementsByTagName('circle')
+                    };
+                    var SVGTypesKeys = Object.keys(SVGTypes);
+                    for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
+                        var SVGType = SVGTypesKeys[typeIndex];
+                        var SVGArray = SVGTypes[SVGType];
 
-                    for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                        var path = SVGPaths[pathIndex];
-                        path.style.fill = tileData.custom_styles.path_styles[path.id].fill;
-                        path.style.stroke = tileData.custom_styles.path_styles[path.id].stroke;
+                        for(var elementIndex=0; elementIndex<SVGArray.length; elementIndex++){
+                            var element = SVGArray[elementIndex];
+                            if(element.id){
+                                if(tileData.custom_styles.path_styles[element.id]) {
+                                    var pathStyle = tileData.custom_styles.path_styles[element.id];
+                                    element.style.fill = pathStyle.fill;
+                                    element.style.stroke = pathStyle.stroke;
+                                }
+                            }
+                        }
                     }
 
-                    for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
-                        var polygon = SVGPolygons[polygonIndex];
-                        polygon.style.fill = tileData.custom_styles.path_styles[polygon.id].fill;
-                        polygon.style.stroke = tileData.custom_styles.path_styles[polygon.id].stroke;
-                    }
 
                     return new XMLSerializer().serializeToString(svg);
                 }

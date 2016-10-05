@@ -3,7 +3,7 @@
 
     angular
         .module('previewer')
-        .directive('previewer', function($timeout, $sce){
+        .directive('previewer', function($timeout, $q){
             return {
                 transclude: true,
                 replace: false,
@@ -26,13 +26,6 @@
                             if(image.url){
                                 loading = true;
                                 createPreview(image);
-                                /*scope.imageUrl = image.url;
-                                try {
-                                    createPreview();
-                                } catch(error) {
-                                    loading = false;
-                                    console.log(error);
-                                }*/
                             }
                         }
                     });
@@ -46,20 +39,30 @@
                         if(tileData && tileData.xml){
                             var parser = new DOMParser();
                             var svg = parser.parseFromString(tileData.xml, "application/xml");
-                            var SVGPolygons = svg.getElementsByTagName('polygon');
-                            var SVGPaths = svg.getElementsByTagName('path');
+                            var SVGTypes = {
+                                'path': svg.getElementsByTagName('path'),
+                                'polygons': svg.getElementsByTagName('polygon'),
+                                'rect': svg.getElementsByTagName('rect'),
+                                'polylines': svg.getElementsByTagName('polyline'),
+                                'circle': svg.getElementsByTagName('circle')
+                            };
+                            var SVGTypesKeys = Object.keys(SVGTypes);
+                            for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
+                                var SVGType = SVGTypesKeys[typeIndex];
+                                var SVGArray = SVGTypes[SVGType];
 
-                            for(var pathIndex=0; pathIndex<SVGPaths.length; pathIndex++){
-                                var path = SVGPaths[pathIndex];
-                                path.style.fill = tileData.custom_styles.path_styles[path.id].fill;
-                                path.style.stroke = tileData.custom_styles.path_styles[path.id].stroke;
+                                for(var elementIndex=0; elementIndex<SVGArray.length; elementIndex++){
+                                    var element = SVGArray[elementIndex];
+                                    if(element.id){
+                                        if(tileData.custom_styles.path_styles[element.id]) {
+                                            var pathStyle = tileData.custom_styles.path_styles[element.id];
+                                            element.style.fill = pathStyle.fill;
+                                            element.style.stroke = pathStyle.stroke;
+                                        }
+                                    }
+                                }
                             }
 
-                            for(var polygonIndex=0; polygonIndex<SVGPolygons.length; polygonIndex++){
-                                var polygon = SVGPolygons[polygonIndex];
-                                polygon.style.fill = tileData.custom_styles.path_styles[polygon.id].fill;
-                                polygon.style.stroke = tileData.custom_styles.path_styles[polygon.id].stroke;
-                            }
 
                             return new XMLSerializer().serializeToString(svg);
 
@@ -89,6 +92,20 @@
 
                     }
 
+                    function createImage(url, imageOptions, ctx) {
+                        return $q(function (resolve, reject) {
+                            var image = new Image();
+                            image.setAttribute('style', 'width: ' + imageOptions.width + 'px; height: ' + imageOptions.height + 'px;');
+                            image.onload = function() {
+                                console.log(imageOptions);
+                                ctx.drawImage(this, imageOptions.x, imageOptions.y, imageOptions.width, imageOptions.height);
+                                resolve();
+                            };
+                            image.src = url;
+                        });
+
+                    };
+
                     function createPreview(image) {
 
                         var _grid = angular.copy(scope.data);
@@ -96,6 +113,12 @@
                         var _svgString = '';
                         var tmpWidth = TILE_SPACE;
                         var tmpHeight = TILE_SPACE;
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext('2d');
+                        var images = [];
+
+                        canvas.setAttribute('width','300px');
+                        canvas.setAttribute('height','300px');
 
                         d3.select('#image-container')
                             .style('display', 'inline-block');
@@ -139,9 +162,9 @@
                                         SVGContainer.setAttribute('class', 'svg-tile');
                                         SVGContainer.innerHTML = _svgString;
 
-                                        var html = SVGContainer.querySelector('svg');
-                                        html.setAttribute('version', '1.1');
-                                        html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                                        var svg = SVGContainer.querySelector('svg');
+                                        svg.setAttribute('version', '1.1');
+                                        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
                                         var degrees = '0';
 
@@ -149,16 +172,41 @@
                                             degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
                                         }
                                         var rotation = 'rotate(' + degrees + 'deg)';
-                                        var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
-                                        var img = '<img src="' + imgsrc + '" style="width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + '" >';
+                                        var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
 
-                                        containerElement.innerHTML+= img;
+                                        var imageOptions = {
+                                            x: tmpWidth,
+                                            y: tmpHeight,
+                                            width: tileWidth,
+                                            height: tileHeight,
+                                            url: imgsrc
+                                        };
+
+                                        images.push(createImage(imgsrc, imageOptions, ctx));
                                         tmpWidth+= tileWidth + TILE_SPACE;
                                     }
                                 }
                                 tmpHeight+= tileHeight + TILE_SPACE;
                             }
 
+                            $q.all(images).then(function () {
+                                document.body.innerHTML = '';
+                                document.body.appendChild(canvas);
+                            });
+
+
+                            /*
+
+                             //var img = '<img src="' + imgsrc + '" style="width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + '" >';
+                             var img = new Image();
+                             img.setAttribute('style', 'transform: rotate(' + rotation + 'deg)');
+
+                             img.src = imgsrc;
+                             console.log(tmpWidth + ' ' + tmpHeight + ' ' + tileWidth + ' ' + tileHeight);
+                             ctx.drawImage(img, tmpWidth, tmpHeight, tileWidth, tileHeight);
+
+
+                             //containerElement.innerHTML+= img;
                             var images = containerElement.querySelectorAll('img');
                             var maxHeight = 0;
                             var maxWidth = 0;
@@ -174,9 +222,13 @@
                                 }
                             }
                             containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
+                            */
 
                             $timeout(function () {
-                                domtoimage.toPng(containerElement)
+
+
+
+                                /*domtoimage.toPng(containerElement)
                                     .then(function(url) {
 
                                         switch(image.code) {
@@ -187,7 +239,7 @@
 
                                                 d3.select('#grid-inner-wrapper')
                                                     .style('background', 'transparent url(' + url + ') repeat top left')
-                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
+                                                    .style('background-size', 65 + 'px ' + 65 + 'px')
                                                     .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
                                                     .style('height', '100%')
                                                     .style('width', '100%');
@@ -240,7 +292,7 @@
                                     })
                                     .catch(function(error) {
                                         console.log(error);
-                                    });
+                                    });*/
                             },0)
 
                         }
