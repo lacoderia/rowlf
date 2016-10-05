@@ -94,11 +94,15 @@
 
                     function createImage(url, imageOptions, ctx) {
                         return $q(function (resolve, reject) {
+                            var TO_RADIANS = Math.PI/180;
                             var image = new Image();
                             image.setAttribute('style', 'width: ' + imageOptions.width + 'px; height: ' + imageOptions.height + 'px;');
                             image.onload = function() {
-                                console.log(imageOptions);
-                                ctx.drawImage(this, imageOptions.x, imageOptions.y, imageOptions.width, imageOptions.height);
+                                ctx.save();
+                                ctx.translate((imageOptions.x + (imageOptions.width/2)), imageOptions.y + (imageOptions.height/2));
+                                ctx.rotate(imageOptions.degrees * TO_RADIANS);
+                                ctx.drawImage(this, -(imageOptions.width/2), -(imageOptions.height/2), imageOptions.width, imageOptions.height);
+                                ctx.restore();
                                 resolve();
                             };
                             image.src = url;
@@ -169,7 +173,6 @@
                                         if (_grid[row][cellIndex].tile) {
                                             degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
                                         }
-                                        var rotation = 'rotate(' + degrees + 'deg)';
                                         var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
 
                                         var imageOptions = {
@@ -177,6 +180,7 @@
                                             y: tmpHeight,
                                             width: tileWidth,
                                             height: tileHeight,
+                                            degrees: degrees,
                                             url: imgsrc
                                         };
 
@@ -256,107 +260,6 @@
                                 d3.select('#image-container')
                                     .style('display', 'none');
                             });
-
-
-                            /*
-
-                             //var img = '<img src="' + imgsrc + '" style="width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + '" >';
-                             var img = new Image();
-                             img.setAttribute('style', 'transform: rotate(' + rotation + 'deg)');
-
-                             img.src = imgsrc;
-                             console.log(tmpWidth + ' ' + tmpHeight + ' ' + tileWidth + ' ' + tileHeight);
-                             ctx.drawImage(img, tmpWidth, tmpHeight, tileWidth, tileHeight);
-
-
-                             //containerElement.innerHTML+= img;
-                            var images = containerElement.querySelectorAll('img');
-                            var maxHeight = 0;
-                            var maxWidth = 0;
-                            for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
-                                var tmpImage = images[imageIndex];
-
-                                if (tmpImage.offsetTop > maxHeight) {
-                                    maxHeight = tmpImage.offsetTop + tileHeight;
-                                }
-
-                                if(tmpImage.offsetLeft > maxWidth) {
-                                    maxWidth = tmpImage.offsetLeft + tileWidth;
-                                }
-                            }
-                            containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
-                            */
-
-                            $timeout(function () {
-
-
-
-                                /*domtoimage.toPng(containerElement)
-                                    .then(function(url) {
-
-                                        switch(image.code) {
-                                            case ('hallway'):
-                                                d3.select('#grid')
-                                                    .style('perspective', '187px')
-                                                    .style('perspective-origin', '0% 0%');
-
-                                                d3.select('#grid-inner-wrapper')
-                                                    .style('background', 'transparent url(' + url + ') repeat top left')
-                                                    .style('background-size', 65 + 'px ' + 65 + 'px')
-                                                    .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
-                                                    .style('height', '100%')
-                                                    .style('width', '100%');
-
-                                                d3.select('#previewer-image')
-                                                    .style('height', '477px')
-                                                    .style('width', '358px');
-
-                                                break;
-                                            case ('dining-room'):
-
-                                                d3.select('#grid')
-                                                    .style('perspective', '400px')
-                                                    .style('perspective-origin', '87% 25%');
-
-                                                d3.select('#grid-inner-wrapper')
-                                                    .style('background', 'transparent url(' + url + ') repeat top left')
-                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
-                                                    .style('transform', 'rotateX(0deg) rotateY(-24deg) rotateZ(0deg) translate(17%, 0%)')
-                                                    .style('height', '100%')
-                                                    .style('width', '100%');
-
-                                                break;
-                                            case ('bathroom'):
-
-                                                d3.select('#grid')
-                                                    .style('perspective', '395px')
-                                                    .style('perspective-origin', '78% 111%');
-
-                                                d3.select('#grid-inner-wrapper')
-                                                    .style('background', 'transparent url(' + url + ') repeat top left')
-                                                    .style('background-size', 40 + 'px ' + 40 + 'px')
-                                                    .style('transform', 'rotateX(54deg) rotateY(0deg) rotateZ(0deg) translate(16%, 0%)')
-                                                    .style('transform-origin', '0% 90%')
-                                                    .style('height', '100%')
-                                                    .style('width', '100%');
-
-                                                break;
-                                            case ('kitchen'):
-
-                                                break;
-                                            case ('living-room'):
-
-                                                break;
-                                        }
-
-                                        d3.select('#image-container')
-                                            .style('display', 'none');
-
-                                    })
-                                    .catch(function(error) {
-                                        console.log(error);
-                                    });*/
-                            },0)
 
                         }
 
