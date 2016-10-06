@@ -6,10 +6,8 @@
         var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
         var _grid = [];
-        var _rowStyle;
         var _cellStyle;
         var _tileDetails = [];
-        var _mdPanel = undefined;
 
         ctrl.loading = false;
 
@@ -194,8 +192,8 @@
 
         var getGridAsImage = function () {
             return $q(function (resolve, reject) {
-                var gridElement = document.getElementById('tmp-grid-image');
-                gridElement.setAttribute('class', 'grid-element');
+                var gridElement = document.createElement('div');
+                gridElement.setAttribute('style', 'visibility: hidden');
                 createPreview().then(
                     function (response) {
                         gridElement.appendChild(response);
@@ -292,68 +290,6 @@
                                 html2pdfTemplate.appendChild(bodyContainer);
                                 resolve(html2pdfTemplate.outerHTML);
                             });
-
-                            /*domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
-                                function (url) {
-                                    var gridImage = document.createElement('img');
-                                    gridImage.src = url;
-
-                                    gridImage.setAttribute('style', 'display: inline-block; position: relative; min-width: 210px; min-height: 210px; left: 0;');
-                                    bodyContainer.querySelector('#summary-body').appendChild(gridImage);
-
-                                    var listContainer = document.createElement('div');
-                                    listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                                    listContainer.innerHTML = listElement.innerHTML;
-
-                                    var tileCells = listContainer.querySelectorAll('.tile-cell');
-                                    var originalTileCells = document.querySelectorAll('.tile-cell');
-
-
-                                    var promises = [];
-                                    var urls = [];
-                                    for(var tileIndex=0; tileIndex<tileCells.length; tileIndex++) {
-                                        var originalTileCell = originalTileCells[tileIndex].querySelector('tile-button');
-
-                                        promises.push(
-                                            domtoimage.toPng(originalTileCell, { quality: 0.95 }).then(
-                                            function (url) {
-                                                urls.push(url);
-                                            },
-                                            function (error) {
-                                                console.log(error);
-                                                reject(error);
-                                            }
-                                        ));
-                                    }
-
-                                    $q.all(promises).then(
-                                        function () {
-                                            for(var urlIndex=0; urlIndex<urls.length; urlIndex++) {
-                                                var url = urls[urlIndex];
-                                                var tileCell = tileCells[urlIndex];
-                                                var tileImage = document.createElement('img');
-                                                tileImage.src = url;
-                                                tileCell.innerHTML = '';
-                                                tileCell.appendChild(tileImage);
-
-                                            }
-
-                                            bodyContainer.appendChild(listContainer);
-                                            html2pdfTemplate.appendChild(bodyContainer);
-                                            resolve(html2pdfTemplate.outerHTML);
-                                        },
-                                        function (error) {
-                                            console.log(error);
-                                            reject(error);
-                                        }
-                                    );
-
-                                },
-                                function (error) {
-                                    console.log(error);
-                                    reject(error);
-                                }
-                            );*/
                         }
                     );
 
