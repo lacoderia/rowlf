@@ -233,8 +233,6 @@
 
                     getGridAsImage().then(
                         function (response) {
-                            var canvas = document.createElement("canvas");
-                            var ctx = canvas.getContext('2d');
                             var images = [];
                             var canvasArray = [];
                             var gridImage = response;
@@ -250,11 +248,12 @@
                             var originalTileCells = document.querySelectorAll('.tile-cell');
 
                             for(var tileIndex=0; tileIndex<tileCells.length; tileIndex++) {
+                                var canvas = document.createElement("canvas");
+                                var ctx = canvas.getContext('2d');
                                 var svg = originalTileCells[tileIndex].querySelector('svg');
                                 var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
                                 var canvasWidth = originalTileCells[tileIndex].offsetWidth;
                                 var canvasHeight = originalTileCells[tileIndex].offsetHeight;
-                                console.log(canvasWidth + " " + canvasHeight);
                                 var imageOptions = {
                                     x: 0,
                                     y: 0,
