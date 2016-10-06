@@ -1,7 +1,9 @@
 <div role="dialog" aria-label="Preview" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-xs="column" layout-fill>
-        <div class="tile-preview" layout="row" flex-gt-xs="65" layout-align="center center" layout-wrap>
-            <previewer data="$ctrl.getGrid()" size="{{ $ctrl.getSelectedCollection().inches }}"></previewer>
+        <div class="tile-preview" layout="column" layout-fill>
+            <div layout="row" layout-fill flex-gt-xs="65" layout-align="center center" layout-wrap>
+                <previewer data="$ctrl.getGrid()" size="{{ $ctrl.getSelectedCollection().inches }}"></previewer>
+            </div>
         </div>
         <div class="tile-tools" layout="row" flex-gt-xs="35" layout-wrap md-whiteframe="1" layout-align="start start">
             <div class="tile-tools-wrapper" layout-wrap flex="100">
