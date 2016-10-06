@@ -73,6 +73,24 @@
             return SVGObject.outerHTML;
         }
 
+        function createImage(url, imageOptions, ctx) {
+            return $q(function (resolve, reject) {
+                var TO_RADIANS = Math.PI/180;
+                var image = new Image();
+                image.setAttribute('style', 'width: ' + imageOptions.width + 'px; height: ' + imageOptions.height + 'px;');
+                image.onload = function() {
+                    ctx.save();
+                    ctx.translate((imageOptions.x + (imageOptions.width/2)), imageOptions.y + (imageOptions.height/2));
+                    ctx.rotate(imageOptions.degrees * TO_RADIANS);
+                    ctx.drawImage(this, -(imageOptions.width/2), -(imageOptions.height/2), imageOptions.width, imageOptions.height);
+                    ctx.restore();
+                    resolve();
+                };
+                image.src = url;
+            });
+
+        }
+
         function createPreview() {
             return $q(function (resolve, reject) {
                 var TILE_SPACE = 1;
@@ -83,6 +101,9 @@
                 var _svgString = '';
                 var tmpWidth = TILE_SPACE;
                 var tmpHeight = TILE_SPACE;
+                var canvas = document.createElement("canvas");
+                var ctx = canvas.getContext('2d');
+                var images = [];
 
                 containerElement.setAttribute('id', 'image-container');
 
@@ -103,22 +124,52 @@
                                 SVGContainer.setAttribute('class', 'svg-tile');
                                 SVGContainer.innerHTML = _svgString;
 
-                                var html = SVGContainer.querySelector('svg');
-                                html.setAttribute('version', '1.1');
-                                html.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                                var svg = SVGContainer.querySelector('svg');
+                                svg.setAttribute('version', '1.1');
+                                svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-                                var rotation = (_grid[row][cellIndex].tile) ? 'rotate(' + _grid[row][cellIndex].tile.custom_styles.rotation + 'deg)': 'rotate(' + 0 + 'deg)';
-                                var imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.outerHTML);
-                                var img = '<img src="' + imgsrc + '" style="position: absolute; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + ';" >';
+                                var degrees = '0';
+                                if (_grid[row][cellIndex].tile) {
+                                    degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
+                                }
 
-                                containerElement.innerHTML+= img;
+                                //var img = '<img src="' + imgsrc + '" style="position: absolute; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px; left: ' + tmpWidth +'px; top: ' + tmpHeight + 'px; transform: ' + rotation + ';" >';
+                                var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
+                                var imageOptions = {
+                                    x: tmpWidth,
+                                    y: tmpHeight,
+                                    width: tileWidth,
+                                    height: tileHeight,
+                                    degrees: degrees,
+                                    url: imgsrc
+                                };
+
+                                images.push(createImage(imgsrc, imageOptions, ctx));
                                 tmpWidth+= tileWidth + TILE_SPACE;
                             }
                         }
                         tmpHeight+= tileHeight + TILE_SPACE;
                     }
 
-                    var images = containerElement.querySelectorAll('img');
+                    var factor = Math.floor((images.length)/2);
+                    var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+                    var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+
+                    canvas.width  = canvasWidth;
+                    canvas.height = canvasHeight;
+                    canvas.style.width  = canvasWidth + 'px';
+                    canvas.style.height = canvasHeight + 'px';
+
+                    $q.all(images).then(function () {
+                        var imageUrl = canvas.toDataURL("image/png");
+                        var gridImage = document.createElement('img');
+                        gridImage.onload = function () {
+                            resolve(this);
+                        };
+                        gridImage.src = imageUrl;
+                    });
+
+                    /*var images = containerElement.querySelectorAll('img');
                     var maxHeight = 0;
                     var maxWidth = 0;
                     for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
@@ -134,10 +185,9 @@
                     }
                     containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
 
-                    resolve(containerElement.innerHTML);
+                    resolve(containerElement.innerHTML);*/
                 }
 
-                reject('');
             });
 
         }
@@ -148,12 +198,10 @@
                 gridElement.setAttribute('class', 'grid-element');
                 createPreview().then(
                     function (response) {
-                        gridElement.innerHTML = response;
-                        var images = angular.element(gridElement).children();
-                        var factor = Math.floor((images.length)/2);
-                        var tileWidth = (100 * factor) + (1 * factor) + 1;
-                        var tileHeight = tileWidth;
-                        gridElement.setAttribute('style', 'position: relative; width: ' + tileWidth + 'px; height: ' + tileHeight + 'px;');
+                        gridElement.appendChild(response);
+                        var imageWidth = gridElement.querySelector('img').offsetWidth;
+                        var imageHeight = gridElement.querySelector('img').offsetWidth;
+                        gridElement.setAttribute('style', 'position: relative; width: ' + imageWidth + 'px; height: ' + imageHeight + 'px;');
                         resolve(gridElement);
                     }
                 );
@@ -185,7 +233,68 @@
 
                     getGridAsImage().then(
                         function (response) {
-                            domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
+                            var canvas = document.createElement("canvas");
+                            var ctx = canvas.getContext('2d');
+                            var images = [];
+                            var canvasArray = [];
+                            var gridImage = response;
+
+                            gridImage.setAttribute('style', 'display: inline-block; left: 0;');
+                            bodyContainer.querySelector('#summary-body').appendChild(gridImage);
+
+                            var listContainer = document.createElement('div');
+                            listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
+                            listContainer.innerHTML = listElement.innerHTML;
+
+                            var tileCells = listContainer.querySelectorAll('.tile-cell');
+                            var originalTileCells = document.querySelectorAll('.tile-cell');
+
+                            for(var tileIndex=0; tileIndex<tileCells.length; tileIndex++) {
+                                var svg = originalTileCells[tileIndex].querySelector('svg');
+                                var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
+                                var canvasWidth = originalTileCells[tileIndex].offsetWidth;
+                                var canvasHeight = originalTileCells[tileIndex].offsetHeight;
+                                console.log(canvasWidth + " " + canvasHeight);
+                                var imageOptions = {
+                                    x: 0,
+                                    y: 0,
+                                    width: canvasWidth,
+                                    height: canvasWidth,
+                                    degrees: 0,
+                                    url: imgsrc
+                                };
+                                canvas.width = canvasWidth;
+                                canvas.heigth = canvasWidth;
+                                canvas.style.width = canvasWidth + 'px';
+                                canvas.style.height = canvasWidth + 'px';
+
+                                canvasArray[tileIndex] = {
+                                    canvas: canvas,
+                                    ctx: ctx
+                                };
+                                images.push(createImage(imgsrc, imageOptions, canvasArray[tileIndex].ctx));
+                            }
+
+                            $q.all(images).then(function () {
+                                for(var canvasIndex=0; canvasIndex<canvasArray.length; canvasIndex++) {
+
+                                    var canvasObject = canvasArray[canvasIndex];
+                                    var imageUrl = canvasObject.canvas.toDataURL("image/png");
+                                    var tileCell = tileCells[canvasIndex];
+                                    var tileImage = document.createElement('img');
+
+                                    tileImage.src = imageUrl;
+                                    tileCell.innerHTML = '';
+                                    tileCell.appendChild(tileImage);
+
+                                }
+
+                                bodyContainer.appendChild(listContainer);
+                                html2pdfTemplate.appendChild(bodyContainer);
+                                resolve(html2pdfTemplate.outerHTML);
+                            });
+
+                            /*domtoimage.toPng(document.querySelector('#tmp-grid-image'), { quality: 0.95 }).then(
                                 function (url) {
                                     var gridImage = document.createElement('img');
                                     gridImage.src = url;
@@ -245,7 +354,7 @@
                                     console.log(error);
                                     reject(error);
                                 }
-                            );
+                            );*/
                         }
                     );
 

@@ -108,7 +108,7 @@
                             image.src = url;
                         });
 
-                    };
+                    }
 
                     function createPreview(image) {
 
@@ -169,12 +169,10 @@
                                         svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
                                         var degrees = '0';
-
                                         if (_grid[row][cellIndex].tile) {
                                             degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
                                         }
                                         var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
-
                                         var imageOptions = {
                                             x: tmpWidth,
                                             y: tmpHeight,
