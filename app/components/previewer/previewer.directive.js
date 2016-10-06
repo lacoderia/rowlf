@@ -107,6 +107,10 @@
                                 ctx.save();
                                 ctx.translate((imageOptions.x + (imageOptions.width/2)), imageOptions.y + (imageOptions.height/2));
                                 ctx.rotate(imageOptions.degrees * TO_RADIANS);
+                                ctx.shadowColor = "#333333";
+                                ctx.shadowBlur = 10;
+                                ctx.shadowOffsetX = 0;
+                                ctx.shadowOffsetY = 0;
                                 ctx.drawImage(this, -(imageOptions.width/2), -(imageOptions.height/2), imageOptions.width, imageOptions.height);
                                 ctx.restore();
                                 resolve();
