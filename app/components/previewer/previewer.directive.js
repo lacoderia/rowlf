@@ -123,27 +123,20 @@
                     function createPreview(image) {
 
                         var _grid = angular.copy(scope.data);
-                        var _svgString = '';
                         var tmpWidth = TILE_SPACE;
                         var tmpHeight = TILE_SPACE;
                         var canvas = document.createElement("canvas");
                         var ctx = canvas.getContext('2d');
                         var images = [];
 
+                        var imageContainer = document.createElement("div");
+                        imageContainer.setAttribute('id', 'image-container');
+                        imageContainer.setAttribute('style', 'display: inline-block');
 
-                        d3.select('#image-container')
-                            .style('display', 'inline-block');
-
-                        if(!d3.select('#previewer-image').empty()) {
-                            !d3.select('#previewer-image').remove();
-                        }
-
-                        var bgImage = d3.select(element[0]).append('img')
-                            .attr('id', 'previewer-image')
-                            .style('height', '100%')
-                            .style('width', 'auto')
+                        var bgImage = d3.select('#previewer-image')
                             .node();
 
+                        // Set grid's height and width to previewer-image height and width
                         bgImage.onload = function () {
                             var gridElement = (element[0]).querySelector('#grid');
                             gridElement.setAttribute('style', 'width: ' + this.width + 'px; height: ' + this.height + 'px;')
@@ -163,16 +156,12 @@
                                 for(var cellIndex=0; cellIndex<_grid[row].length; cellIndex++) {
                                     if(_grid[row][cellIndex].active) {
 
-                                        // Getting the SVG as String
-                                        _svgString= processXML(_grid[row][cellIndex].tile);
-                                        console.log(_svgString);
-
                                         var tileId = _grid[row][cellIndex].id;
                                         var SVGContainer = document.createElement('div');
 
                                         SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
                                         SVGContainer.setAttribute('class', 'svg-tile');
-                                        SVGContainer.innerHTML = _svgString;
+                                        SVGContainer.innerHTML = processXML(_grid[row][cellIndex].tile);
 
                                         var svg = SVGContainer.querySelector('svg');
                                         svg.setAttribute('version', '1.1');
@@ -211,57 +200,81 @@
                             $q.all(images).then(function () {
                                 var backgroundUrl = canvas.toDataURL("image/png");
                                 switch(image.code) {
-                                    case ('hallway'):
+                                    case ('kitchen'):
                                         d3.select('#grid')
-                                            .style('perspective', '187px')
-                                            .style('perspective-origin', '0% 0%');
+                                            .style('perspective', '0px')
+                                            .style('perspective-origin', '50% 50%');
 
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', 65 + 'px ' + 65 + 'px')
+                                            .style('background-size', '10%')
                                             .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
 
-                                        d3.select('#previewer-image')
-                                            .style('height', '477px')
-                                            .style('width', '358px');
-
                                         break;
-                                    case ('dining-room'):
 
-                                        d3.select('#grid')
-                                            .style('perspective', '400px')
-                                            .style('perspective-origin', '87% 25%');
-
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', 40 + 'px ' + 40 + 'px')
-                                            .style('transform', 'rotateX(0deg) rotateY(-24deg) rotateZ(0deg) translate(17%, 0%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
-
-                                        break;
                                     case ('bathroom'):
-
                                         d3.select('#grid')
-                                            .style('perspective', '395px')
-                                            .style('perspective-origin', '78% 111%');
+                                            .style('perspective', '500px')
+                                            .style('perspective-origin', '50% 50%');
 
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', 40 + 'px ' + 40 + 'px')
-                                            .style('transform', 'rotateX(54deg) rotateY(0deg) rotateZ(0deg) translate(16%, 0%)')
-                                            .style('transform-origin', '0% 90%')
+                                            .style('background-size', '5%')
+                                            .style('transform', 'rotateX(75deg) rotateY(0deg) rotateZ(0deg) translate(0%, 60%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
 
                                         break;
-                                    case ('kitchen'):
 
                                         break;
-                                    case ('living-room'):
 
+                                    case ('dining-room'):
+                                        d3.select('#grid')
+                                            .style('perspective', '500px')
+                                            .style('perspective-origin', '50% 50%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', '7%')
+                                            .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        break;
+
+                                        break;
+
+                                    case ('living-room'):
+                                        d3.select('#grid')
+                                            .style('perspective', '500px')
+                                            .style('perspective-origin', '50% 50%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', '5%')
+                                            .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        break;
+
+                                    case ('kitchen2'):
+                                        d3.select('#grid')
+                                            .style('perspective', '0px')
+                                            .style('perspective-origin', '50% 50%');
+
+                                        d3.select('#grid-inner-wrapper')
+                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                            .style('background-size', '10%')
+                                            .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
+                                            .style('height', '100%')
+                                            .style('width', '100%');
+
+                                        break;
+
+                                    default:
                                         break;
                                 }
 

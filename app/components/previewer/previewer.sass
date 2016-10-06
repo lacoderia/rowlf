@@ -18,6 +18,9 @@ previewer
     transform: translate(-50%, -50%)
     z-index: 300
 
+  #previewer-container
+    position: relative
+
   #image-container
     display: inline-block
     position: relative
@@ -43,20 +46,21 @@ previewer
 
 
   #previewer-image
+    height: 100%
     left: 50%
     position: absolute
     transform: translate(-50%, -50%)
     top: 50%
+    width: auto
     z-index: 200
 
   #grid
     background: rgba(0,0,0,0.2)
-    left: 50%
+    margin: 0 auto
     overflow: hidden
-    position: absolute
-    top: 50%
-    transform: translate(-50%, -50%)
+    position: relative
     z-index: -1
+
 
     #grid-inner-wrapper
       left: 0
