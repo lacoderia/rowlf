@@ -166,28 +166,9 @@
                         };
                         gridImage.src = imageUrl;
                     });
-
-                    /*var images = containerElement.querySelectorAll('img');
-                    var maxHeight = 0;
-                    var maxWidth = 0;
-                    for(var imageIndex=0; imageIndex<images.length; imageIndex++) {
-                        var tmpImage = images[imageIndex];
-
-                        if (tmpImage.offsetTop > maxHeight) {
-                            maxHeight = image.offsetTop + tileHeight;
-                        }
-
-                        if(tmpImage.offsetLeft > maxWidth) {
-                            maxWidth = tmpImage.offsetLeft + tileWidth;
-                        }
-                    }
-                    containerElement.setAttribute('style', 'width: ' + maxWidth + 'px; height: ' + maxHeight + 'px;');
-
-                    resolve(containerElement.innerHTML);*/
                 }
 
             });
-
         }
 
         var getGridAsImage = function () {

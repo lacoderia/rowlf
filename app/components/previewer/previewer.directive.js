@@ -71,18 +71,24 @@
                             var SVGObject = document.createElement('svg');
                             var GObject = document.createElement('g');
 
+                            d3.select(SVGObject)
+                                .attr('xmlns', 'http://www.w3.org/2000/svg')
+                                .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+                                .attr('version', '1.1')
+                                .attr('viewBox', '0 0 567 567')
+                                .attr('style', 'enable-background:new 0 0 567 567;')
+                                .attr('xml:space', 'preserve');
+
                             d3.select(GObject)
-                                .attr('width', tileWidth)
-                                .attr('height', tileHeight)
                                 .attr('transform-origin', 'right bottom');
 
                             d3.select(GObject).append('rect')
                                 .attr('x', 0)
                                 .attr('y', 0)
-                                .attr('width', tileWidth)
-                                .attr('height', tileHeight)
+                                .attr('width', '100%')
+                                .attr('height', '100%')
                                 .attr('fill', '#FFFFFF')
-                                .attr('stroke', '#E5E5E5');
+                                .attr('stroke', '#000000');
 
                             SVGObject.appendChild(GObject);
 
@@ -113,7 +119,6 @@
                     function createPreview(image) {
 
                         var _grid = angular.copy(scope.data);
-                        var containerElement = (element[0].querySelector('#image-container'));
                         var _svgString = '';
                         var tmpWidth = TILE_SPACE;
                         var tmpHeight = TILE_SPACE;
@@ -156,6 +161,7 @@
 
                                         // Getting the SVG as String
                                         _svgString= processXML(_grid[row][cellIndex].tile);
+                                        console.log(_svgString);
 
                                         var tileId = _grid[row][cellIndex].id;
                                         var SVGContainer = document.createElement('div');
