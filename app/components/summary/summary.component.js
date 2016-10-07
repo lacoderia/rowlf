@@ -198,7 +198,8 @@
                 // Tile and color list
                 var listElement = angular.copy(document.getElementById('tile-list'));
                 var actionsElement = listElement.querySelector('.dialog-actions');
-                listElement.removeChild(actionsElement);
+                var actionsParentElement = listElement.querySelector('.dialog-content');
+                actionsParentElement.removeChild(actionsElement);
 
                 // Adds the grid as DOM element
                 $timeout(function () {
