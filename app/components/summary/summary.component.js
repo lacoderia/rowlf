@@ -328,11 +328,13 @@
                 controller: summaryController,
                 template: '' +
                 '<md-dialog md-theme="default" aria-label="Save design" class="md-default-theme" ng-class="dialog.css" flex="20" ng-cloak>' +
-                '   <div layout="row" flex="100" ng-if="$ctrl.loading">' +
-                '       <div layout-align="center center" layout="column" flex="100">' +
-                '           <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
-                '      </div>' +
-                '   </div>' +
+                '   <md-dialog-content class="md-dialog-content" ng-if="$ctrl.loading">' +
+                '       <div layout="row" flex="100">' +
+                '           <div layout-align="center center" layout="column" flex="100">' +
+                '               <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
+                '           </div>' +
+                '       </div>' +
+                '   </md-dialog-content>' +
                 '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' +
                 '       <h2 class="md-title">Save design</h2>' +
                 '       <md-input-container class="md-default-theme">' +
