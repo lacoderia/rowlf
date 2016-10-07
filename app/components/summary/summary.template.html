@@ -33,12 +33,13 @@
                             <td colspan="3" ng-if="!tile.proccessedColors.length > 0" style="vertical-align: middle;">No colors selected</td>
                         </tr>
                     </table>
+                    <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
+                        <md-button md-autofocus class="md-primary" ng-click="$ctrl.promptSaveProject()">
+                            Save design
+                        </md-button>
+                    </div>
                 </div>
-                <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
-                    <md-button md-autofocus class="md-primary" ng-click="$ctrl.promptSaveProject()">
-                        Save design
-                    </md-button>
-                </div>
+
             </div>
         </div>
     </div>
