@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('summaryService', ['$rootScope', '$http', 'builderService', 'AUTH_API_URL_BASE', function ($rootScope, $http, builderService, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('summaryService', ['$rootScope', '$http', '$q', 'builderService', 'AUTH_API_URL_BASE', function ($rootScope, $http, $q, builderService, AUTH_API_URL_BASE) {
 
         var _grid = [];
         var _tileDetails = [];

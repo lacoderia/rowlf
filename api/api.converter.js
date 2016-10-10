@@ -25,13 +25,17 @@ router.post('/', function (req, res, next) {
         );
 
     } catch(error) {
-        console.log(error);
-        res.status(500)
-            .send(error)
-            .end();
+        return next(error);
     }
 
+});
 
+router.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 module.exports = router;

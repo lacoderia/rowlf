@@ -528,13 +528,29 @@
                         },
                         function (error) {
                             console.log(error);
+
                             ctrl.deleting = false;
+                            ctrl.closeProjectsView();
+
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent('An error occurred, please try again later.')
+                                    .position('top right')
+                            );
                         }
                     );
                 },
                 function (error) {
                     console.log(error);
+
                     ctrl.deleting = false;
+                    ctrl.closeProjectsView();
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('An error occurred, please try again later.')
+                            .position('top right')
+                    );
                 }
             );
         };
