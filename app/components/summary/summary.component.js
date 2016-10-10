@@ -389,19 +389,45 @@
 
                                 },
                                 function (error) {
-                                    ctrl.loading = false;
                                     console.log(error);
+
+                                    ctrl.loading = false;
+                                    ctrl.cancel();
+
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                            .textContent('An error occurred, please try again later.')
+                                            .position('top right')
+                                    );
                                 }
                             );
                         },
                         function (error) {
                             console.log(error);
+
+                            ctrl.loading = false;
+                            ctrl.cancel();
+
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent('An error occurred, please try again later.')
+                                    .position('top right')
+                            );
                         }
                     );
 
                 },
                 function () {
                     console.log('Error saving the project');
+
+                    ctrl.loading = false;
+                    ctrl.cancel();
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('An error occurred, please try again later.')
+                            .position('top right')
+                    );
                 }
             );
         };
