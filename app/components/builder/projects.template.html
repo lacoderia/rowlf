@@ -7,11 +7,11 @@
             </div>
         </div>
         <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
-            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'" ng-click="$ctrl.openProject(project)" ng-disabled="$ctrl.deleting">
+            <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'" ng-click="$ctrl.openProject(project)" ng-disabled="project.deleting">
                 <md-icon class="material-icons">&#xE415;</md-icon>
                 <p class="project-name">{{project.name}}</p>
-                <md-button class="md-secondary" ng-click="$ctrl.deleteProject(project)" ng-if="!$ctrl.deleting">Delete</md-button>
-                <div layout-align="center center" layout="column" ng-if="$ctrl.deleting">
+                <md-button class="md-secondary" ng-click="$ctrl.deleteProject(project)" ng-if="!project.deleting">Delete</md-button>
+                <div layout-align="center center" layout="column" ng-if="project.deleting">
                     <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
                 </div>
             </md-list-item>
