@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prestart": "npm install && gulp prod",
-    "start": "node ./bin/www",
+    "start": "./nodule_modules/forever/bin/forever ./bin/www",
     "postinstall": "bower install",
     "dev": "concurrently --kill-others 'gulp default'"
   },
@@ -16,6 +16,7 @@
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
+    "forever": "^0.15.2",
     "html5-to-pdf": "^1.1.3",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.8.0",
