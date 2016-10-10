@@ -257,7 +257,7 @@
                                         var bgSize = (gridSize * 5)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', gridSize)
+                                            .style('background-size', bgSize)
                                             .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
@@ -272,7 +272,7 @@
                                         var bgSize = (gridSize * 10)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', '10%')
+                                            .style('background-size', bgSize)
                                             .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
