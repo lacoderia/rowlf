@@ -9,7 +9,8 @@
                 replace: false,
                 scope: {
                     data: '=',
-                    size: '@'
+                    size: '@',
+                    gridSize: '='
                 },
                 restrict: 'E',
                 templateUrl: '/components/previewer/previewer.html',
@@ -19,6 +20,7 @@
                     var tileWidth = 50;
                     var tileHeight = 50;
                     var loading = false;
+                    var gridSize = scope.gridSize.cols;
                     scope.htmlPattern = '';
 
                     scope.$on('imageChanged', function ($event, image) {
@@ -70,6 +72,7 @@
 
                             var SVGObject = document.createElement('svg');
                             var GObject = document.createElement('g');
+                            //console.log('ESTOY ENTRANDO AQUI')
 
                             d3.select(SVGObject)
                                 .attr('xmlns', 'http://www.w3.org/2000/svg')
@@ -184,7 +187,7 @@
                                 tmpHeight+= tileHeight + TILE_SPACE;
                             }
 
-                            var factor = Math.floor((images.length)/2);
+                            var factor = Math.floor((images.length)/gridSize);
                             var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
                             var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
 
@@ -195,15 +198,21 @@
 
                             $q.all(images).then(function () {
                                 var backgroundUrl = canvas.toDataURL("image/png");
+                                var tmpImage = document.createElement('img');
+                                tmpImage.src= backgroundUrl;
+                                tmpImage.style.width  = canvasWidth + 'px';
+                                tmpImage.style.height = canvasHeight + 'px';
+
                                 switch(image.code) {
                                     case ('kitchen'):
                                         d3.select('#grid')
                                             .style('perspective', '0px')
                                             .style('perspective-origin', '50% 50%');
 
+                                        var bgSize = (gridSize * 10)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', '10%')
+                                            .style('background-size', bgSize)
                                             .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
@@ -215,9 +224,10 @@
                                             .style('perspective', '500px')
                                             .style('perspective-origin', '50% 50%');
 
+                                        var bgSize = (gridSize * 5)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', '5%')
+                                            .style('background-size', bgSize)
                                             .style('transform', 'rotateX(75deg) rotateY(0deg) rotateZ(0deg) translate(0%, 60%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
@@ -229,9 +239,10 @@
                                             .style('perspective', '500px')
                                             .style('perspective-origin', '50% 50%');
 
+                                        var bgSize = (gridSize * 7)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', '7%')
+                                            .style('background-size', bgSize)
                                             .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
@@ -243,9 +254,10 @@
                                             .style('perspective', '500px')
                                             .style('perspective-origin', '50% 50%');
 
+                                        var bgSize = (gridSize * 5)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', '5%')
+                                            .style('background-size', gridSize)
                                             .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
                                             .style('height', '100%')
                                             .style('width', '100%');
@@ -257,6 +269,7 @@
                                             .style('perspective', '0px')
                                             .style('perspective-origin', '50% 50%');
 
+                                        var bgSize = (gridSize * 10)/2 + '%';
                                         d3.select('#grid-inner-wrapper')
                                             .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
                                             .style('background-size', '10%')

@@ -257,6 +257,10 @@
             return _selectedTiles;
         };
 
+        ctrl.getSelectedGridType = function () {
+            return ctrl._selectedGridType;
+        };
+
         ctrl.setSelectedGridType = function (gridType) {
             ctrl._selectedGridType = gridType;
             collectionGrids.setSelectedGridType(gridType);
