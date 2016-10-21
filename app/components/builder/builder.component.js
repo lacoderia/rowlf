@@ -19,11 +19,11 @@
         var _selectedImage = undefined;
 
         ctrl.EXAMPLE_IMAGES = [
-            { code: 'kitchen', title: 'Kitchen', url: '/assets/images/preview/preview_1.png'},
+            { code: 'backsplash', title: 'Backsplash', url: '/assets/images/preview/preview_1.png'},
             { code: 'bathroom',title: 'Bathroom', url: '/assets/images/preview/preview_2.png'},
             { code: 'dining-room',title: 'Dining Room', url: '/assets/images/preview/preview_3.png'},
             { code: 'living-room',title: 'Living Room', url: '/assets/images/preview/preview_4.png'},
-            { code: 'kitchen2',title: 'Kitchen 2', url: '/assets/images/preview/preview_5.png'}
+            { code: 'kitchen',title: 'Kitchen', url: '/assets/images/preview/preview_5.png'}
         ];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
