@@ -299,6 +299,9 @@
         // Object that holds new user parameters
         ctrl.newUser = {
             name: undefined,
+            address: undefined,
+            zip: undefined,
+            phone: undefined,
             city: undefined,
             state: undefined,
             country: undefined,
@@ -404,6 +407,9 @@
 
                             var user = {
                                 name: ctrl.newUser.name,
+                                address: ctrl.newUser.address,
+                                zip: ctrl.newUser.zip,
+                                phone: ctrl.newUser.phone,
                                 city: ctrl.newUser.city,
                                 state: ctrl.newUser.state,
                                 country: ctrl.selectedCountry.display,
