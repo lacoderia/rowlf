@@ -7,37 +7,39 @@
             </div>
         </div>
         <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
-            <div ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'">
-                <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }">
-                    <p class="project-name" ng-click="$ctrl.openProject(project)">{{project.name}}</p>
-                    <div class="list-item-buttons" ng-if="!project.deleting">
-                        <md-icon class="material-icons" ng-click="$ctrl.showEmailView($event, project)">&#xE0BE;</md-icon>
-                        <md-icon class="material-icons" ng-click="$ctrl.deleteProject($event, project)">&#xE92B;</md-icon>
-                    </div>
-                    <div layout-align="center center" layout="column" ng-if="project.deleting">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
-                    </div>
-                </md-list-item>
-                <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
-                    <md-icon class="material-icons" ng-click="$ctrl.hideEmailView($event, project)">&#xE14C;</md-icon>
-                    <form novalidate class="form" name="$ctrl.emailForm" flex="1">
-                        <md-input-container class="md-block">
+            <form novalidate class="form" name="$ctrl.emailForm">
+                <div ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'">
+                    <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }">
+                        <p class="project-name" ng-click="$ctrl.openProject(project)">{{project.name}}</p>
+                        <div class="list-item-buttons" ng-if="!project.deleting">
+                            <md-icon class="material-icons" ng-click="$ctrl.showEmailView($event, project)">&#xE0BE;</md-icon>
+                            <md-icon class="material-icons" ng-click="$ctrl.deleteProject($event, project)">&#xE92B;</md-icon>
+                        </div>
+                        <div layout-align="center center" layout="column" ng-if="project.deleting">
+                            <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
+                        </div>
+                    </md-list-item>
+                    <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
+                        <md-icon class="material-icons" ng-click="$ctrl.hideEmailView($event, project)">&#xE14C;</md-icon>
+
+                        <md-input-container class="md-block" flex="1">
                             <label>Email</label>
-                            <input type="email" name="email" ng-model="$ctrl.emailData.email" required>
-                            <div ng-messages="$ctrl.emailForm.email.$error">
+                            <input type="email" name="email_{{$index}}" ng-model="project.email" required>
+                            <div ng-messages="$ctrl.emailForm['email_' + $index].$error" md-auto-hide="false">
                                 <div ng-message="required">Email is required</div>
                                 <div ng-message="email">Not a valid email</div>
                             </div>
                         </md-input-container>
-                    </form>
-                    <div class="list-item-buttons" ng-if="!project.sending">
-                        <md-icon class="material-icons" ng-click="$ctrl.sendProject($event, project)">&#xE163;</md-icon>
-                    </div>
-                    <div layout-align="center center" layout="column" ng-if="project.sending">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
-                    </div>
-                </md-list-item>
-            </div>
+
+                        <div class="list-item-buttons" ng-if="!project.sending">
+                            <md-icon class="material-icons" ng-click="$ctrl.sendProject($event, project)">&#xE163;</md-icon>
+                        </div>
+                        <div layout-align="center center" layout="column" ng-if="project.sending">
+                            <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
+                        </div>
+                    </md-list-item>
+                </div>
+            </form>
         </md-list>
         <p ng-if="$ctrl.getUserProjects() && !$ctrl.getUserProjects().length">You haven't saved any designs yet</p>
     </div>

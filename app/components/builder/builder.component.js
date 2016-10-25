@@ -39,10 +39,6 @@
         ctrl.tileQuery = '';
         ctrl.loading = false;
 
-        ctrl.emailData = {
-            email: ''
-        };
-
         $scope.$on('openProjectsView', function(){
             ctrl.openProjectsView();
         });
@@ -522,7 +518,7 @@
             $event.preventDefault();
             $event.stopPropagation();
 
-            ctrl.emailData.email = '';
+            project.email = '';
             project.showEmailView = true;
         };
 
@@ -542,7 +538,7 @@
             if(ctrl.emailForm.$valid) {
 
                 project.sending = true;
-                projectService.sendProject(project.id, ctrl.emailData.email).then(
+                projectService.sendProject(project.id, project.email).then(
                     function (response) {
                         project.sending = false;
                         project.showEmailView = false;
