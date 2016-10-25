@@ -204,7 +204,7 @@
                                 tmpImage.style.height = canvasHeight + 'px';
 
                                 switch(image.code) {
-                                    case ('kitchen'):
+                                    case ('backsplash'):
                                         d3.select('#grid')
                                             .style('perspective', '0px')
                                             .style('perspective-origin', '50% 50%');
@@ -264,7 +264,7 @@
 
                                         break;
 
-                                    case ('kitchen2'):
+                                    case ('kitchen'):
                                         d3.select('#grid')
                                             .style('perspective', '0px')
                                             .style('perspective-origin', '50% 50%');
