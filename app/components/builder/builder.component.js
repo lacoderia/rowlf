@@ -39,6 +39,10 @@
         ctrl.tileQuery = '';
         ctrl.loading = false;
 
+        ctrl.emailData = {
+            email: ''
+        };
+
         $scope.$on('openProjectsView', function(){
             ctrl.openProjectsView();
         });
@@ -514,9 +518,64 @@
             $window.open(project.url, "_blank");
         };
 
-        ctrl.deleteProject = function (project) {
+        ctrl.showEmailView = function($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            ctrl.emailData.email = '';
+            project.showEmailView = true;
+        };
+
+        ctrl.hideEmailView = function($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            project.showEmailView = false;
+        };
+
+        ctrl.sendProject = function($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            ctrl.emailForm.$submitted = true;
+
+            if(ctrl.emailForm.$valid) {
+
+                project.sending = true;
+                projectService.sendProject(project.id, ctrl.emailData.email).then(
+                    function (response) {
+                        project.sending = false;
+                        project.showEmailView = false;
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Your design was successfully sent!')
+                                .position('top right')
+                        );
+                    },
+                    function (error) {
+                        console.log(error);
+
+                        project.sending = false;
+                        ctrl.closeProjectsView();
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('An error occurred, please try again later.')
+                                .position('top right')
+                        );
+                    }
+                );
+            }
+
+        };
+
+        ctrl.deleteProject = function ($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
 
             project.deleting = true;
+
             projectService.deleteProject(project.id).then(
                 function (response) {
 
