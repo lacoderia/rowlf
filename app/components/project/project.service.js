@@ -34,6 +34,25 @@
             return _projects;
         }
 
+        function sendProject(projectId, email) {
+            var serviceURL = AUTH_API_URL_BASE + '/projects/send_by_email';
+            return $http.post(serviceURL, {
+                email: email,
+                project_id: projectId
+            })
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        }
+
         function deleteProjectById(projectsArray, projectId) {
             for(var projectIndex = projectsArray.length-1; projectIndex >= 0; projectIndex--) {
                 var project = projectsArray[projectIndex];
@@ -99,6 +118,7 @@
             callProjects: callProjects,
             getProjects: getProjects,
             saveProject: saveProject,
+            sendProject: sendProject,
             deleteProject: deleteProject,
             deleteFile: deleteFile,
             deleteProjectById: deleteProjectById

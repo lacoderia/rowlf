@@ -505,6 +505,27 @@ md-step-content
   md-list-item
     background-color: #fff
 
+    .project-name
+      cursor: pointer
+      outline: none
+
+    .list-item-buttons
+
+      md-icon
+        cursor: pointer
+        outline: none
+
+    md-input-container
+      margin-bottom: 0px
+      padding-right: 16px
+
+    &.disabled
+      color: rgba(0,0,0,0.26)
+      pointer-events: none
+
+      md-icon
+        color: rgba(0,0,0,0.26)
+
   .close-button
     background: $color-gray-300
     cursor: pointer
