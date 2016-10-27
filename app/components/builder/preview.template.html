@@ -7,13 +7,18 @@
             <div class="tile-tools-wrapper" layout-wrap flex="100">
                 <h3>Preview images examples</h3>
                 <div class="example-images" layout="row" layout-wrap layout-align="start center">
-                    <span md-whiteframe="1" ng-repeat="image in $ctrl.EXAMPLE_IMAGES" ng-click="$ctrl.setSelectedImage(image)" ng-class="{ true: 'selected', false: '' }[$ctrl.isImageSelected(image)]">
+                    <span md-whiteframe="1" ng-repeat="image in $ctrl.EXAMPLE_IMAGES" ng-click="$ctrl.setSelectedImage(image)" ng-class="{ true: 'selected', false: '' }[$ctrl.equalImageSelected(image)]">
                         <img ng-src="{{ image.url }}" title="{{ image.title }}">
                         <h3 ng-bind="image.title"></h3>
                         <div class="selected-overlay"></div>
                         <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
                     </span>
                 </div>
+            </div>
+            <div class="dialog-actions" layout="row" layout-align-xs="end center" flex="100">
+                <md-button md-autofocus class="md-primary" ng-click="$ctrl.downloadImage($event)" ng-disabled="!$ctrl.isImageSelected()">
+                    Save image <md-icon class="material-icons">&#xE2C4;</md-icon>
+                </md-button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function builderController($mdPanel, $mdDialog, $mdToast, $location, $window, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService, projectService) {
+    function builderController($q, $mdPanel, $mdDialog, $mdToast, $location, $window, $scope, $rootScope, collectionGrids, collectionTilesService, builderService, summaryService, projectService) {
 
         var ctrl = this;
         var _selectedTiles = [];
@@ -83,6 +83,76 @@
             }
         };
 
+        ctrl.downloadImage = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            if( _selectedImage) {
+                var previewerElement = angular.copy(document.querySelector('previewer'));
+                var previewerContainer = angular.copy(previewerElement.querySelector('#previewer-container'));
+                var gridInnerWrapper = previewerElement.querySelector('#grid-inner-wrapper');
+                var previewerImage = previewerElement.querySelector('#previewer-image');
+                var width = document.querySelector('previewer').querySelector('#previewer-image').clientWidth;
+                var height = document.querySelector('previewer').querySelector('#previewer-image').clientHeight;
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                previewerContainer.setAttribute('style', 'position: relative;');
+                canvas.width = width;
+                canvas.height = height;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+
+
+                var data =  '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
+                    '<foreignObject width="100%" height="100%">' +
+                    '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:40px">' +
+                    '<div style="width: ' + width + 'px; height: ' + height + 'px; overflow: hidden;">' +
+                        previewerContainer.outerHTML +
+                    '</div>' +
+                    '</div>' +
+                    '</foreignObject>' +
+                    '</svg>';
+                var backImageUrl = 'data:image/svg+xml;base64,'+ btoa(data);
+                console.log(backImageUrl);
+
+                // Background image
+                var backImage = new Image();
+                backImage.onload = function () {
+                    // Setting image styles
+                    this.style.height = gridInnerWrapper.style.height;
+                    this.style.width = gridInnerWrapper.style.width;
+
+                    // Create image in canvas
+                    ctx.drawImage(this, 0, 0, width, height);
+
+                    // Front Image
+                    var frontImage = new Image();
+                    frontImage.onload = function () {
+                        // Setting image styles
+                        this.style.width = width + 'px';
+                        this.style.height = height + 'px';
+
+                        // Create image in canvas
+                        ctx.drawImage(this, 0, 0, width, height);
+
+                        // Create image as png
+                        var url = canvas.toDataURL();
+
+                        // Auto download image
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.style = "display: none";
+                        a.href = url;
+                        a.download = 'preview';
+                        a.click();
+                        a.parentNode.removeChild(a);
+                    };
+                    frontImage.src = previewerImage.src;
+                };
+                backImage.src = backImageUrl;
+            }
+        };
+
         ctrl.getSelectedImage = function () {
             return _selectedImage;
         };
@@ -92,8 +162,12 @@
             $rootScope.$broadcast('imageChanged', _selectedImage);
         };
 
-        ctrl.isImageSelected = function (image) {
+        ctrl.equalImageSelected = function (image) {
             return (_selectedImage == image);
+        };
+
+        ctrl.isImageSelected = function () {
+            return (_selectedImage)? true : false;
         };
 
         ctrl.getColors = function(){
