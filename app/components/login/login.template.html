@@ -52,6 +52,29 @@
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
+                                <label>Address</label>
+                                <input type="text" name="address" ng-model="$ctrl.newUser.address" required>
+                                <div ng-messages="$ctrl.signupForm.address.$error" md-auto-hide="false">
+                                    <div ng-message="required">Address is required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>ZIP code</label>
+                                <input type="text" name="zip" ng-model="$ctrl.newUser.zip" ng-pattern="/^[0-9]{5}$/" required>
+                                <div ng-messages="$ctrl.signupForm.zip.$error" md-auto-hide="false">
+                                    <div ng-message="required">ZIP code is required</div>
+                                    <div ng-message="pattern">Please enter a valid ZIP code.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Phone (numbers and spaces only)</label>
+                                <input type="text" name="phone" ng-model="$ctrl.newUser.phone" ng-pattern="/^[0-9 ]{7,20}$/" required>
+                                <div ng-messages="$ctrl.signupForm.phone.$error" md-auto-hide="false">
+                                    <div ng-message="required">Phone is required</div>
+                                    <div ng-message="pattern">Please enter a valid phone.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
                                 <label>City</label>
                                 <input type="text" name="city" ng-model="$ctrl.newUser.city" required>
                                 <div ng-messages="$ctrl.signupForm.city.$error" md-auto-hide="false">

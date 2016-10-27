@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function summaryController($scope, $mdDialog, $mdToast, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
+    function summaryController($rootScope, $scope, $mdDialog, $mdToast, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
 
         var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
@@ -336,12 +336,20 @@
                 '           </div>' +
                 '       </div>' +
                 '   </md-dialog-content>' +
-                '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' +
-                '       <h2 class="md-title">Save design</h2>' +
-                '       <md-input-container class="md-default-theme">' +
-                '           <input ng-model="$ctrl.projectName" placeholder="Design name">' +
-                '       </md-input-container>' +
+
+                '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' + 
+                '      <form novalidate class="form" name="$ctrl.saveDesignForm">' + 
+                '           <h2 class="md-title">Save design</h2>' +
+                '           <md-input-container class="md-default-theme">' + 
+                '               <input name="projectName" ng-model="$ctrl.projectName" placeholder="Design name" ng-pattern="/^[0-9a-zA-Z ]+$/" required>' + 
+                '               <div ng-messages="$ctrl.saveDesignForm.projectName.$error" md-auto-hide="false">' +
+                '                   <div ng-message="required">You must enter a design name</div>' +
+                '                   <div ng-message="pattern">Please enter a valid name.</div>' + 
+                '               </div>' + 
+                '           </md-input-container>' +
+                '       </form>' +
                 '   </md-dialog-content>' +
+
                 '   <md-dialog-actions ng-if="!$ctrl.loading">' +
                 '       <md-button ng-click="$ctrl.cancel()" class="md-default-theme md-primary">' +
                 '           Cancel' +
@@ -367,69 +375,75 @@
         };
 
         ctrl.saveProject = function () {
-            ctrl.loading = true;
 
-            var projectName = (ctrl.projectName)? ctrl.projectName : PROJECT_NAME;
-            exportAsPDF(projectName).then(
-                function (data) {
-                    var htmlString = data;
-                    summaryService.convert2Pdf(htmlString, projectName).then(
-                        function (response) {
-                            projectService.saveProject(response.name, response.filename, response.url).then(
-                                function (response) {
-                                    var project = response.project;
-                                    ctrl.loading = false;
-                                    $mdDialog.hide();
-                                    $window.open(project.url);
-                                    $mdToast.show(
-                                        $mdToast.simple()
-                                            .textContent('Your design was successfully saved!')
-                                            .position('top right')
-                                    );
+            if(ctrl.saveDesignForm.$valid) {
 
-                                },
-                                function (error) {
-                                    console.log(error);
+                ctrl.loading = true;
 
-                                    ctrl.loading = false;
-                                    ctrl.cancel();
+                var projectName = (ctrl.projectName)? ctrl.projectName : PROJECT_NAME;
+                exportAsPDF(projectName).then(
+                    function (data) {
+                        var htmlString = data;
+                        summaryService.convert2Pdf(htmlString, projectName).then(
+                            function (response) {
+                                projectService.saveProject(response.name, response.filename, response.url).then(
+                                    function (response) {
+                                        var project = response.project;
+                                        ctrl.loading = false;
+                                        $mdDialog.hide();
+                                        $window.open(project.url);
+                                        $mdToast.show(
+                                            $mdToast.simple()
+                                                .textContent('Your design was successfully saved!')
+                                                .position('top right')
+                                        );
 
-                                    $mdToast.show(
-                                        $mdToast.simple()
-                                            .textContent('An error occurred, please try again later.')
-                                            .position('top right')
-                                    );
-                                }
-                            );
-                        },
-                        function (error) {
-                            console.log(error);
+                                        $rootScope.$broadcast('openProjectsView');
 
-                            ctrl.loading = false;
-                            ctrl.cancel();
+                                    },
+                                    function (error) {
+                                        console.log(error);
 
-                            $mdToast.show(
-                                $mdToast.simple()
-                                    .textContent('An error occurred, please try again later.')
-                                    .position('top right')
-                            );
-                        }
-                    );
+                                        ctrl.loading = false;
+                                        ctrl.cancel();
 
-                },
-                function () {
-                    console.log('Error saving the project');
+                                        $mdToast.show(
+                                            $mdToast.simple()
+                                                .textContent('An error occurred, please try again later.')
+                                                .position('top right')
+                                        );
+                                    }
+                                );
+                            },
+                            function (error) {
+                                console.log(error);
 
-                    ctrl.loading = false;
-                    ctrl.cancel();
+                                ctrl.loading = false;
+                                ctrl.cancel();
 
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .textContent('An error occurred, please try again later.')
-                            .position('top right')
-                    );
-                }
-            );
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                        .textContent('An error occurred, please try again later.')
+                                        .position('top right')
+                                );
+                            }
+                        );
+
+                    },
+                    function () {
+                        console.log('Error saving the project');
+
+                        ctrl.loading = false;
+                        ctrl.cancel();
+
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('An error occurred, please try again later.')
+                                .position('top right')
+                        );
+                    }
+                );
+            }
         };
 
         ctrl.getTileDetails = function() {
