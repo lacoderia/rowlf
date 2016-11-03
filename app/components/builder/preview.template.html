@@ -1,7 +1,10 @@
 <div role="dialog" aria-label="Preview" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill layout-wrap>
-        <div class="tile-preview" layout="row" flex-gt-xs="70" flex-xs="100" layout-align="center center">
+        <div class="tile-preview" layout="row" flex-gt-xs="70" flex-xs="100" layout-align="center center" layout-wrap>
             <previewer data="$ctrl.getGrid()" size="{{ $ctrl.getSelectedCollection().inches }}" grid-size="$ctrl.getSelectedGridType()" layout-wrap></previewer>
+            <div class="preview-instructions" flex="100" layout-align="center center">
+                If you want to save the image, please take a screenshot. Use Command (⌘)+Shift+3 or Win+PrtScn
+            </div>
         </div>
         <div class="tile-tools" layout="row" flex-gt-xs="30" flex-xs="100" layout-wrap md-whiteframe="1" layout-align="start start">
             <div class="tile-tools-wrapper" layout-wrap flex="100">
