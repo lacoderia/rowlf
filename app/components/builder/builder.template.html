@@ -40,11 +40,12 @@
                         </div>
                     </md-list-item>
                     <md-list-item>
-                        <div class="md-list-item-text">
-                            <h4>Preview</h4>
+                        <div class="md-list-item-text" style="margin: 0 16px;">
+                            <h4>Click to see a preview</h4>
                         </div>
                         <div class="md-secondary">
-                            <md-icon class="material-icons preview" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip>&#xE417;</md-icon>
+                            <md-button class="md-raised" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip><md-icon>&#xE417;</md-icon> Preview</md-button>
+                            <!--md-icon class="material-icons preview" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip>&#xE417;</md-icon-->
                         </div>
                     </md-list-item>
                 </md-list>
