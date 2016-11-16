@@ -46,7 +46,8 @@
                                 'polygons': svg.getElementsByTagName('polygon'),
                                 'rect': svg.getElementsByTagName('rect'),
                                 'polylines': svg.getElementsByTagName('polyline'),
-                                'circle': svg.getElementsByTagName('circle')
+                                'circle': svg.getElementsByTagName('circle'),
+                                'ellipses': svg.getElementsByTagName('ellipse')
                             };
                             var SVGTypesKeys = Object.keys(SVGTypes);
                             for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
