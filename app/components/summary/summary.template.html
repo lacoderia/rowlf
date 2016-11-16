@@ -42,6 +42,11 @@
 
             </div>
         </div>
+        <div id="tile-list-big">
+            <div ng-repeat="tile in $ctrl.getTileDetails()" style="width:700px">
+                <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;" show-text="true"></tile-button>
+            </div>
+        </div>
     </div>
 </div>
 <md-toolbar class="bottom-navigation">

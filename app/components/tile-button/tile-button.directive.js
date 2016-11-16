@@ -8,7 +8,8 @@
                 transclude: true,
                 replace: true,
                 scope: {
-                    tile: '@'
+                    tile: '@',
+                    showText: '='
                 },
                 restrict: 'E',
                 link: function (scope, element) {
@@ -43,6 +44,17 @@
                                         element.style.stroke = pathStyle.stroke;
                                     }
                                 }
+
+                                if (scope.showText) {
+                                    var textElements = SVGObject.getElementsByTagName('text');
+
+                                    for(var i=0; i<textElements.length; i++) {
+                                        if (element.getAttribute('twin') == textElements[i].getAttribute('twin')) {
+                                            textElements[i].textContent = pathStyle.colorName.substr(2,3);
+                                        }
+                                    }
+                                }
+
                             }
                         }
 

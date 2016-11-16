@@ -197,6 +197,7 @@
 
                 // Tile and color list
                 var listElement = angular.copy(document.getElementById('tile-list'));
+                var listElementBig = angular.copy(document.getElementById('tile-list-big'));
                 var actionsElement = listElement.querySelector('.dialog-actions');
                 var actionsParentElement = listElement.querySelector('.dialog-content');
                 actionsParentElement.removeChild(actionsElement);
@@ -269,6 +270,7 @@
                                 }
 
                                 bodyContainer.appendChild(listContainer);
+                                bodyContainer.appendChild(listElementBig);
                                 html2pdfTemplate.appendChild(bodyContainer);
                                 resolve(html2pdfTemplate.outerHTML);
                             });

@@ -57,7 +57,8 @@
                             path.style.stroke = selectedColor.hex_value;
                             tileData.custom_styles.path_styles[path.id] = {
                                 fill: selectedColor.hex_value,
-                                stroke: selectedColor.hex_value
+                                stroke: selectedColor.hex_value,
+                                colorName: selectedColor.name
                             };
                         });
                     }
