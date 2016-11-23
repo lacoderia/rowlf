@@ -22,8 +22,8 @@ angular.module('tileDesignStudio', [
 ]);
 
 angular.module('tileDesignStudio')
-    .constant('AUTH_API_URL_BASE', 'http://198.61.202.55:8081')
-    .constant('API_URL_BASE', 'http://198.61.202.55:8081')
+    .constant('AUTH_API_URL_BASE', 'http://104.130.158.134:8081')
+    .constant('API_URL_BASE', 'http://104.130.158.134:8081')
     .constant('TILES_ACTIONS', [
         { code: 'CHANGE_COLOR_TILE', icon: 'color_lens', title: 'Change color'},
         { code: 'ROTATE_TILE', icon: 'rotate_right', title: 'Rotate tile'},
@@ -36,13 +36,17 @@ angular.module('tileDesignStudio')
             routingService.setView($route.current.view);
         });
 
-        if(routingService.getParam('embed') == 'yes'){
-            $rootScope.iframe = true;
+        if(routingService.getParam('original') == 'true') {
+            $rootScope.iframe = false;
         } else {
-            if ( window.location !== window.parent.location ) {
+            if(routingService.getParam('embed') == 'true'){
                 $rootScope.iframe = true;
             } else {
-                $rootScope.iframe = false;
+                if ( window.location !== window.parent.location ) {
+                    $rootScope.iframe = true;
+                } else {
+                    $rootScope.iframe = false;
+                }
             }
         }
 

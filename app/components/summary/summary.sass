@@ -44,60 +44,30 @@ summary-component
       .dialog-content
         padding: 0 16px
 
-      ul
-        list-style: none
-        margin: 0
-        padding: 0
-
-        >li
-          box-sizing: border-box
-          display: flex
-          padding: 8px 0 16px
-          width: 100%
-
-          /*.info
-            align-items: baseline
-            display: flex
-            justify-content: flex-start
-            padding: 0 16px
-            width: 85%
-
-          /*.count
-            font-size: 2rem
-            color: $color-gray-900
-            margin-right: 32px
-
-          /*li.color-item
-            align-items: center
-            border: none
-            display: flex
-            justify-content: flex-start
-            overflow: hidden
-            text-align: center
+        .tile-colors
+          table
+            height: 100%
             width: 100%
 
-            .color
-              border: 1px solid $color-gray-600
+            td.color
+              padding-right: 16px
+
+            span.color
+              border: 1px solid #757575
               border-radius: 50%
               display: inline-block
-              margin-right: 16px
               position: relative
               height: 30px
               width: 30px
 
-            .color-name
-              color: $color-gray-700
+            span.color-name
+              color: #000
               display: block
               font-size: 0.8rem
 
-            .color-value
-              color: $color-gray-600
-              display: block
-              font-size: 0.8rem
-              margin-right: 8px
 
-          &:last-child
-            border-bottom: none
+
+
 
 @media (max-width: 599px)
   .summary

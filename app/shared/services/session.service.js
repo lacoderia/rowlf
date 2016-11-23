@@ -12,7 +12,7 @@
         };
 
         var createSession = function (user) {
-            Session = new User(user.id, user.first_name, user.last_name, user.email);
+            Session = new User(user.id, user.name, user.email);
             broadcast('sessionCreated');
         };
 
