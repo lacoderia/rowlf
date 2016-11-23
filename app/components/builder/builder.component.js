@@ -277,6 +277,15 @@
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
+
+            // delete unwanted tiles
+            for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
+                for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
+                    if(_grid[rowIndex][colIndex].active == false) {
+                        _grid[rowIndex][colIndex].tile = undefined;
+                    }
+                }
+            }
         };
 
         ctrl.getGrid = function () {
