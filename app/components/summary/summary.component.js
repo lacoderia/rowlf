@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function summaryController($rootScope, $scope, $mdDialog, $mdToast, $timeout, $q, $window, summaryService, projectService, collectionGrids) {
+    function summaryController($rootScope, $scope, $mdDialog, $mdToast, $timeout, $q, $window, sessionService, summaryService, projectService, collectionGrids) {
 
         var PROJECT_NAME = 'MyDesign';
         var ctrl = this;
@@ -27,7 +27,8 @@
                         'polygons': svg.getElementsByTagName('polygon'),
                         'rect': svg.getElementsByTagName('rect'),
                         'polylines': svg.getElementsByTagName('polyline'),
-                        'circle': svg.getElementsByTagName('circle')
+                        'circle': svg.getElementsByTagName('circle'),
+                        'ellipses': svg.getElementsByTagName('ellipse')
                     };
                     var SVGTypesKeys = Object.keys(SVGTypes);
                     for(var typeIndex=0; typeIndex<SVGTypesKeys.length; typeIndex++) {
@@ -177,7 +178,9 @@
                 gridElement.setAttribute('style', 'visibility: hidden');
                 createPreview().then(
                     function (response) {
-                        gridElement.appendChild(response);
+                        var gridImage = response;
+                        gridImage.setAttribute('style', 'display: inline-block;');
+                        gridElement.appendChild(gridImage);
                         var imageWidth = gridElement.querySelector('img').offsetWidth;
                         var imageHeight = gridElement.querySelector('img').offsetWidth;
                         gridElement.setAttribute('style', 'position: relative; width: ' + imageWidth + 'px; height: ' + imageHeight + 'px;');
@@ -206,72 +209,82 @@
                     var bodyContainer = document.createElement('div');
                     bodyContainer.setAttribute('style', 'margin: 0; padding: 16px; background: white; height: 100%;');
                     bodyContainer.innerHTML =
-                        '<h1 style="color: white; background: #8BC34A; padding: 4px 16px; font-size: 20px; font-weight: normal; margin: 16px 0;">' + projectName + '</h1>' +
+                        '<h1 style="color: white; background: #8BC34A; padding: 4px 16px; font-size: 20px; font-weight: normal; margin: 16px 0;">Design Studio</h1>' +
                         '<div id="summary-body" style="padding: 0; margin: 16px 0 32px;">' +
-                        '<p style="color: #424242; margin: 16px 0; font-size: 16px;">This is a summary of your design: </p>' +
+                        '<p style="color: #424242; margin: 16px 0; font-size: 12px;">' + sessionService.get().getName().split(' ')[0] + ', this is a summary of your design: "' + projectName + '"</p>' +
+                        '<p style="color: #424242; margin: 16px 0; font-size: 12px;">Preview: </p>' +
                         '</div>';
 
                     getGridAsImage().then(
                         function (response) {
-                            var images = [];
-                            var canvasArray = [];
                             var gridImage = response;
 
-                            gridImage.setAttribute('style', 'display: inline-block; left: 0;');
+                            gridImage.setAttribute('style', 'text-align: center;');
                             bodyContainer.querySelector('#summary-body').appendChild(gridImage);
+
+                            var listTitle = document.createElement('p');
+                            listTitle.setAttribute('style', 'color: #424242; margin: 16px 0; font-size: 12px;');
+                            listTitle.innerHTML = 'Tile details are shown on the following pages.';
+                            bodyContainer.appendChild(listTitle);
 
                             var listContainer = document.createElement('div');
                             listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
                             listContainer.innerHTML = listElement.innerHTML;
 
-                            var tileCells = listContainer.querySelectorAll('.tile-cell');
-                            var originalTileCells = document.querySelectorAll('.tile-cell');
+                            var tileRows = listContainer.querySelectorAll('.tile-row');
 
-                            for(var tileIndex=0; tileIndex<tileCells.length; tileIndex++) {
-                                var canvas = document.createElement("canvas");
-                                var ctx = canvas.getContext('2d');
-                                var svg = originalTileCells[tileIndex].querySelector('svg');
-                                var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
-                                var canvasWidth = originalTileCells[tileIndex].offsetWidth;
-                                var canvasHeight = originalTileCells[tileIndex].offsetHeight;
-                                var imageOptions = {
-                                    x: 0,
-                                    y: 0,
-                                    width: canvasWidth,
-                                    height: canvasWidth,
-                                    degrees: 0,
-                                    url: imgsrc
-                                };
-                                canvas.width = canvasWidth;
-                                canvas.heigth = canvasWidth;
-                                canvas.style.width = canvasWidth + 'px';
-                                canvas.style.height = canvasWidth + 'px';
+                            for(var i=0; i<tileRows.length; i++) {
+                                var t = document.createElement('table');
+                                t.setAttribute('style', 'width: 80%; margin: 0 auto; page-break-before: always;');
 
-                                canvasArray[tileIndex] = {
-                                    canvas: canvas,
-                                    ctx: ctx
-                                };
-                                images.push(createImage(imgsrc, imageOptions, canvasArray[tileIndex].ctx));
-                            }
+                                var tileColors = tileRows[i].querySelector('.tile-colors') ? angular.copy(tileRows[i].querySelector('.tile-colors')) : undefined;
+                                var tileColorsInnerHTML = '';
 
-                            $q.all(images).then(function () {
-                                for(var canvasIndex=0; canvasIndex<canvasArray.length; canvasIndex++) {
+                                if (tileColors) {
+                                    var tileColorCells = tileColors.querySelectorAll('.color-item');
+                                    for(var j=0; j<tileColorCells.length; j++) {
+                                        tileColorCells[j].setAttribute('style', 'display: inline-block; width: 200px;');
+                                    }
 
-                                    var canvasObject = canvasArray[canvasIndex];
-                                    var imageUrl = canvasObject.canvas.toDataURL("image/png");
-                                    var tileCell = tileCells[canvasIndex];
-                                    var tileImage = document.createElement('img');
+                                    var tileColorCells = tileColors.querySelectorAll('span.color');
+                                    for(var j=0; j<tileColorCells.length; j++) {
+                                        tileColorCells[j].setAttribute('style', tileColorCells[j].getAttribute('style') + 'height:20px; width: 20px; border: 1px solid #757575; border-radius: 50%; display: inline-block; position: relative;');
+                                    }
 
-                                    tileImage.src = imageUrl;
-                                    tileCell.innerHTML = '';
-                                    tileCell.appendChild(tileImage);
+                                    var tileColorCells = tileColors.querySelectorAll('span.color-name');
+                                    for(var j=0; j<tileColorCells.length; j++) {
+                                        tileColorCells[j].setAttribute('style', 'font-size: 12px; display: block;');
+                                    }
 
+                                    tileColorsInnerHTML = tileColors.innerHTML;
                                 }
 
-                                bodyContainer.appendChild(listContainer);
-                                html2pdfTemplate.appendChild(bodyContainer);
-                                resolve(html2pdfTemplate.outerHTML);
-                            });
+                                t.innerHTML ='' +
+                                    '<tbody>' +
+                                    '   <tr>' +
+                                    '       <td align="center">' +
+                                    '           <div style="width:400px; height:400px; margin-top:20px;">' +
+                                                    tileRows[i].querySelector('.tile-cell').innerHTML +
+                                    '           </div>' +
+                                    '       </td>' +
+                                    '   </tr>' +
+                                    '   <tr>' +
+                                    '       <td style="font-size:12px;" align="center">' +
+                                                    tileRows[i].querySelector('.tile-count').innerHTML + ' x ' + tileRows[i].querySelector('.tile-name').innerHTML +
+                                    '       </td>' +
+                                    '   </tr>' +
+                                    '   <tr>' +
+                                    '       <td style="font-size:12px; padding-top:20px;">' +
+                                                tileColorsInnerHTML +
+                                    '       </td>' +
+                                    '   </tr>' +
+                                    '</tbody';
+
+                                bodyContainer.appendChild(t);
+                            }
+
+                            html2pdfTemplate.appendChild(bodyContainer);
+                            resolve(html2pdfTemplate.outerHTML);
                         }
                     );
 

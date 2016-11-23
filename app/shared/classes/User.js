@@ -1,24 +1,21 @@
-function User(id, firstName, lastName, email) {
+function User(id, name, email) {
 
     // Private attributes
     var _id = undefined;
-    var _firstName = undefined;
-    var _lastName = undefined;
+    var _name = undefined;
     var _email = undefined;
 
     /**
      *
      * @param id
-     * @param firstName
-     * @param lastName
+     * @param name
      * @param email
      *
      */
 
-    this.constructor = function(id, firstName, lastName, email) {
+    this.constructor = function(id, name, email) {
         this.setId(id);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
+        this.setName(name);
         this.setEmail(email);
     };
 
@@ -42,32 +39,16 @@ function User(id, firstName, lastName, email) {
      *
      * @returns {undefined}
      */
-    this.getFirstName = function(){
-        return _firstName;
+    this.getName = function(){
+        return _name;
     };
 
     /**
      *
-     * @param firstName
+     * @param name
      */
-    this.setFirstName = function(firstName){
-        _firstName = firstName;
-    };
-
-    /**
-     *
-     * @returns {undefined}
-     */
-    this.getLastName = function(){
-        return _lastName;
-    };
-
-    /**
-     *
-     * @param lastName
-     */
-    this.setLastName = function(lastName){
-        _lastName = lastName;
+    this.setName = function(name){
+        _name = name;
     };
 
     /**
@@ -86,6 +67,6 @@ function User(id, firstName, lastName, email) {
         _email = email;
     };
 
-    this.constructor(id, firstName, lastName, email);
+    this.constructor(id, name, email);
 
 };
