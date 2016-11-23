@@ -264,12 +264,14 @@
             ctrl._selectedGridType = gridType;
             collectionGrids.setSelectedGridType(gridType);
 
+            // deactivate all tiles
             for(var rowIndex=0; rowIndex<_grid.length; rowIndex++){
                 for(var colIndex=0; colIndex<_grid[rowIndex].length; colIndex++){
                     _grid[rowIndex][colIndex].active = false;
                 }
             }
 
+            // activate selected grid's tiles
             for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
                 for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
                     _grid[rowIndex][colIndex].active = true;
