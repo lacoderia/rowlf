@@ -150,7 +150,7 @@
                         tmpHeight+= tileHeight + TILE_SPACE;
                     }
 
-                    var factor = Math.floor((images.length)/2);
+                    var factor = Math.floor((images.length)/collectionGrids.getSelectedGridType().cols);
                     var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
                     var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
 
