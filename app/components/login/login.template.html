@@ -60,10 +60,11 @@
                             </md-input-container>
                             <md-input-container class="md-block">
                                 <label>ZIP code</label>
-                                <input type="text" name="zip" ng-model="$ctrl.newUser.zip" ng-pattern="/^[0-9]{5}$/" required>
+                                <input type="text" name="zip" ng-model="$ctrl.newUser.zip" minlength="3" maxlength="8" required>
                                 <div ng-messages="$ctrl.signupForm.zip.$error" md-auto-hide="false">
                                     <div ng-message="required">ZIP code is required</div>
-                                    <div ng-message="pattern">Please enter a valid ZIP code.</div>
+                                    <div ng-message="minlength">ZIP code is too short.</div>
+                                    <div ng-message="maxlength">ZIP code is too long.</div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block">
