@@ -345,7 +345,7 @@
                 '   <md-dialog-content class="md-dialog-content" ng-if="$ctrl.loading">' +
                 '       <div layout="row" flex="100">' +
                 '           <div layout-align="center center" layout="column" flex="100">' +
-                '               <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
+                '               <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>' +
                 '           </div>' +
                 '       </div>' +
                 '   </md-dialog-content>' +

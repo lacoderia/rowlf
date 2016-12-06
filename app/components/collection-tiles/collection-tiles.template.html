@@ -30,7 +30,7 @@
                         <h3>Size: {{ $ctrl.getSelectedCollectionTiles().title }}</h3>
                     </div>
                     <div layout-align="center center" ng-if="$ctrl.loading">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+                        <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
                     </div>
                     <div class="tile-selector" layout-fill>
                         <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | orderBy:'name' | filter: { name: $ctrl.tileQuery }" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" flex="15" flex-xs="100">
