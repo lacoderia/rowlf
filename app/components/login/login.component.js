@@ -480,7 +480,7 @@
                     .then(function(data) {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent('Recibirás instrucciones en tu correo electrónico para recuperar tu contraseña')
+                                .textContent('You\'ll receive an email with further instructions to recover your password.')
                                 .position('top right')
                         );
                         ctrl.loading = false;
@@ -519,7 +519,7 @@
                     .then(function(data) {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent('Tu contraseña fue actualizada. Ya puedes iniciar sesión.')
+                                .textContent('Your password was updated.')
                                 .position('top right')
                         );
                         ctrl.loading = false;

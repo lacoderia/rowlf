@@ -178,7 +178,7 @@
                     return ctrl;
                 },
                 controllerAs: '$ctrl',
-                disableParentScroll: true,
+                disableParentScroll: false,
                 templateUrl: 'components/builder/add-tile.template.html',
                 hasBackdrop: true,
                 panelClass: 'tile-customizer',
@@ -372,7 +372,7 @@
                     return ctrl;
                 },
                 controllerAs: '$ctrl',
-                disableParentScroll: true,
+                disableParentScroll: false,
                 templateUrl: 'components/builder/panel.template.html',
                 hasBackdrop: true,
                 panelClass: 'tile-customizer',
@@ -417,7 +417,7 @@
                     return ctrl;
                 },
                 controllerAs: '$ctrl',
-                disableParentScroll: true,
+                disableParentScroll: false,
                 templateUrl: 'components/builder/preview.template.html',
                 hasBackdrop: true,
                 panelClass: 'tile-customizer',
@@ -472,7 +472,7 @@
                     return ctrl;
                 },
                 controllerAs: '$ctrl',
-                disableParentScroll: true,
+                disableParentScroll: false,
                 templateUrl: 'components/builder/projects.template.html',
                 hasBackdrop: true,
                 panelClass: 'projects-view',

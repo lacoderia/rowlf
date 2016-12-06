@@ -3,7 +3,7 @@
         <h3>My designs</h3>
         <div layout="row" flex="100" ng-if="$ctrl.loading">
             <div layout-align="center center" layout="column" flex="100">
-                <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>
+                <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
             </div>
         </div>
         <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
@@ -16,13 +16,13 @@
                             <md-icon class="material-icons" ng-click="$ctrl.deleteProject($event, project)">&#xE92B;</md-icon>
                         </div>
                         <div layout-align="center center" layout="column" ng-if="project.deleting">
-                            <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
+                            <md-progress-circular md-mode="indeterminate" md-diameter="22"></md-progress-circular>
                         </div>
                     </md-list-item>
                     <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
                         <md-icon class="material-icons" ng-click="$ctrl.hideEmailView($event, project)">&#xE14C;</md-icon>
 
-                        <md-input-container class="md-block" flex="1">
+                        <md-input-container class="md-block" flex="100">
                             <label>Email</label>
                             <input type="email" name="email_{{$index}}" ng-model="project.email" required>
                             <div ng-messages="$ctrl.emailForm['email_' + $index].$error" md-auto-hide="false">
@@ -35,7 +35,7 @@
                             <md-icon class="material-icons" ng-click="$ctrl.sendProject($event, project)">&#xE163;</md-icon>
                         </div>
                         <div layout-align="center center" layout="column" ng-if="project.sending">
-                            <md-progress-circular md-mode="indeterminate" md-diameter="45"></md-progress-circular>
+                            <md-progress-circular md-mode="indeterminate" md-diameter="22"></md-progress-circular>
                         </div>
                     </md-list-item>
                 </div>

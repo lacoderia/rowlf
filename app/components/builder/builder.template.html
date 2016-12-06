@@ -26,8 +26,8 @@
         <div layout="row" layout-fill layout-wrap layout-align="center start">
             <div class="worktable-tools" flex="35" flex-xs="100" layout-fill layout-wrap layout-align="center start" md-whiteframe="1">
                 <md-list ng-cloak>
-                    <md-subheader class="md-no-sticky" hide-xs>Grid actions</md-subheader>
-                    <md-list-item>
+                    <md-subheader class="md-no-sticky" hide-xs style="background-color: #ffffff">Grid actions</md-subheader>
+                    <md-list-item class="secondary-button-padding md-no-proxy">
                         <div class="md-list-item-text">
                             <h4>Grid size</h4>
                         </div>
@@ -39,13 +39,12 @@
                             </label>
                         </div>
                     </md-list-item>
-                    <md-list-item>
-                        <div class="md-list-item-text" style="margin: 0 16px;">
+                    <md-list-item class="secondary-button-padding md-no-proxy">
+                        <div class="md-list-item-text">
                             <h4>Click to see a preview</h4>
                         </div>
                         <div class="md-secondary">
                             <md-button class="md-raised" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip><md-icon>&#xE417;</md-icon> Preview</md-button>
-                            <!--md-icon class="material-icons preview" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip>&#xE417;</md-icon-->
                         </div>
                     </md-list-item>
                 </md-list>
@@ -69,13 +68,13 @@
     </div>
 </div>
 <md-toolbar class="bottom-navigation">
-    <div layout="row" layout-align="center center" layout-wrap>
-        <div flex="49" layout="row" layout-align="start center" layout-wrap layout-margin>
+    <div layout="row" layout-align="center center">
+        <div flex="50" layout="row" layout-align="start center" layout-margin>
             <md-button ng-click="$ctrl.startOver($event)">
                 <md-icon class="material-icons">&#xE314;</md-icon> Previous
             </md-button>
         </div>
-        <div flex="49" layout="row" layout-align="end center" layout-wrap layout-margin>
+        <div flex="50" layout="row" layout-align="end center" layout-margin>
             <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
                 Next <md-icon class="material-icons">&#xE409;</md-icon>
             </md-button>
