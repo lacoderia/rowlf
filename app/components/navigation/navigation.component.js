@@ -25,13 +25,6 @@
         };
 
         /**
-         * Open youtube's tutorial
-         */
-        ctrl.openTutorial = function(){
-          console.log("opening tutorial");
-        };
-
-        /**
          * Closes user's session
          */
         ctrl.logout = function() {
