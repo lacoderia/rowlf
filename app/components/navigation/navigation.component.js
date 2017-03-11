@@ -25,6 +25,13 @@
         };
 
         /**
+         * Open youtube's tutorial
+         */
+        ctrl.openTutorial = function(){
+            $rootScope.url = 'https://www.youtube.com/watch?v=5FfUYDVN1QM';
+        };
+
+        /**
          * Closes user's session
          */
         ctrl.logout = function() {
