@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function navigationController($rootScope, $location, navigationService, sessionService, routingService) {
+    function navigationController($rootScope, $location, $scope, navigationService, sessionService, routingService) {
 
         /**
          *
@@ -28,7 +28,7 @@
          * Open youtube's tutorial
          */
         ctrl.openTutorial = function(){
-            $rootScope.url = 'https://www.youtube.com/watch?v=5FfUYDVN1QM';
+            $scope.url = 'https://www.youtube.com/watch?v=5FfUYDVN1QM';
         };
 
         /**
