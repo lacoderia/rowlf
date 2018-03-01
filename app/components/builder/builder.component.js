@@ -262,6 +262,7 @@
 
         ctrl.setSelectedGridType = function (gridType) {
             ctrl._selectedGridType = gridType;
+            ctrl._selectedGridType.shape = 'hex';
             collectionGrids.setSelectedGridType(gridType);
 
             // deactivate all tiles
@@ -300,7 +301,11 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    _rowStyle.height = (100 / ctrl._selectedGridType.cols) + '%';
+                    if (ctrl._selectedGridType.shape == 'hex'){
+                        _rowStyle.height = 'auto';
+                    } else {
+                        _rowStyle.height = (100 / ctrl._selectedGridType.cols) + '%';
+                    }
                     break;
                 }
             }

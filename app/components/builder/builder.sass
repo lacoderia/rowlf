@@ -112,6 +112,11 @@ builder
         text-align: center
         width: 100vw
 
+        &.hex-grid
+          div.row
+            &:nth-child(even)
+              margin-left: 25%
+
         div.row
           box-sizing: border-box
           display: inline-block
@@ -123,7 +128,6 @@ builder
           span.cell
             background-color: white
             box-sizing: border-box
-            border: 1px solid $color-gray-600
             display: inline-block
             font-size: 16px
             margin: 0
@@ -178,6 +182,58 @@ builder
                 color: white
                 cursor: pointer
                 outline: none
+
+          .hex
+            display: inline-block
+            outline: 1px solid transparent
+            position: relative
+            width: 50%
+            visibility: hidden
+
+            .hexIn
+              position: absolute
+              width: 100%
+              padding-bottom: 115.851%
+              margin: 0
+              overflow: hidden
+              outline: 1px solid transparent
+              -webkit-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+              -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+              transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+              visibility: hidden
+
+              *
+                visibility: visible
+
+              .hexLink
+                display: block
+                width: 100%
+                height: 100%
+                text-align: center
+                color: #fff
+                overflow: hidden
+                -webkit-transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+                -ms-transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+                transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+                position: absolute
+                outline: 1px solid transparent
+
+                .cell
+                  left: -100%
+                  right: -100%
+                  width: 100%
+                  height: 100%
+                  margin: 0 auto
+                  -webkit-transform: rotate3d(0,0,0,0deg)
+                  -ms-transform: rotate3d(0,0,0,0deg)
+                  transform: rotate3d(0,0,0,0deg)
+                  position: absolute
+                  outline: 1px solid transparent
+
+          .hex::after
+            content: ''
+            display: block
+            padding-bottom: 86.602%
 
     .worktable-tools
       background: white
