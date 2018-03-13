@@ -34,7 +34,7 @@
             'ROTATE': {code: 'ROTATE'},
             'DELETE': {code: 'DELETE'}
         };
-        ctrl._selectedGridType =undefined;
+        ctrl.selectedGridType = undefined;
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
         ctrl.loading = false;
@@ -248,6 +248,10 @@
             return _selectedCollectionTiles;
         };
 
+        ctrl.isSelectedCollectionHex = function() {
+            return collectionGrids.isHexagonalGrid();
+        };
+
         ctrl.getGridTypes = function () {
             return _gridTypes;
         };
@@ -257,12 +261,11 @@
         };
 
         ctrl.getSelectedGridType = function () {
-            return ctrl._selectedGridType;
+            return ctrl.selectedGridType;
         };
 
         ctrl.setSelectedGridType = function (gridType) {
-            ctrl._selectedGridType = gridType;
-            ctrl._selectedGridType.shape = 'hex';
+            ctrl.selectedGridType = gridType;
             collectionGrids.setSelectedGridType(gridType);
 
             // deactivate all tiles
@@ -273,8 +276,8 @@
             }
 
             // activate selected grid's tiles
-            for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
-                for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
+            for(var rowIndex=0; rowIndex<ctrl.selectedGridType.rows; rowIndex++){
+                for(var colIndex=0; colIndex<ctrl.selectedGridType.cols; colIndex++){
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
@@ -293,7 +296,7 @@
             return _grid;
         };
 
-        ctrl.getRowStyle = function (row) {
+        ctrl.getRowStyle = function (row, index) {
             var _rowStyle = {
                 'height': '0px',
                 'width': '100%'
@@ -301,10 +304,13 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    if (ctrl._selectedGridType.shape == 'hex'){
+                    if (ctrl.isSelectedCollectionHex()){
                         _rowStyle.height = 'auto';
+                        if( index % 2 != 0 ) {
+                            _rowStyle['margin-left'] = (50 / ctrl.selectedGridType.cols) + '%';
+                        }
                     } else {
-                        _rowStyle.height = (100 / ctrl._selectedGridType.cols) + '%';
+                        _rowStyle.height = (100 / ctrl.selectedGridType.cols) + '%';
                     }
                     break;
                 }
@@ -317,7 +323,7 @@
 
             return _cellStyle = {
                 'height': '100%',
-                'width': (100/ctrl._selectedGridType.cols)+'%',
+                'width': (100/ctrl.selectedGridType.cols)+'%',
                 'vertical-align': 'top'
             };
         };
@@ -694,10 +700,6 @@
             }
 
             return disabled;
-        };
-
-        ctrl.getSelectedCollection = function () {
-            return collectionTilesService.getSelectedCollection();
         };
 
         ctrl.$onInit = function() {

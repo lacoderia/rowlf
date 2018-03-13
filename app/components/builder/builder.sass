@@ -107,15 +107,17 @@ builder
         font-size: 0px
         height: 100vw
         margin: 0 auto
-        max-height: 400px
-        max-width: 400px
+        max-height: 440px
+        max-width: 440px
         text-align: center
         width: 100vw
 
         &.hex-grid
+          border: none
+
           div.row
-            &:nth-child(even)
-              margin-left: 25%
+            span.cell
+              border: none
 
         div.row
           box-sizing: border-box
@@ -127,6 +129,7 @@ builder
 
           span.cell
             background-color: white
+            border: 1px solid $color-gray-600
             box-sizing: border-box
             display: inline-block
             font-size: 16px
@@ -183,14 +186,19 @@ builder
                 cursor: pointer
                 outline: none
 
-          .hex
+          .hex-container
             display: inline-block
             outline: 1px solid transparent
             position: relative
             width: 50%
             visibility: hidden
 
-            .hexIn
+            &::after
+              content: ''
+              display: block
+              padding-bottom: 86.602%
+
+            .hex-out
               position: absolute
               width: 100%
               padding-bottom: 115.851%
@@ -205,7 +213,7 @@ builder
               *
                 visibility: visible
 
-              .hexLink
+              .hex-in
                 display: block
                 width: 100%
                 height: 100%
@@ -229,11 +237,6 @@ builder
                   transform: rotate3d(0,0,0,0deg)
                   position: absolute
                   outline: 1px solid transparent
-
-          .hex::after
-            content: ''
-            display: block
-            padding-bottom: 86.602%
 
     .worktable-tools
       background: white

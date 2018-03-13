@@ -4,11 +4,20 @@
     <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap flex>
         <div layout="row" layout-fill layout-wrap>
             <div layout="row" flex="50" flex-xs="100">
-                <div id="summary-grid" class="grid">
-                    <div class="row" ng-style="$ctrl.getRowStyle(row)" ng-repeat="row in $ctrl.getGrid()" flex>
-                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active">
-                        <tile-grid tile="cell.tile" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
-                    </span>
+                <div id="summary-grid" class="grid" ng-class="{ 'hex-grid' : $ctrl.isSelectedCollectionHex() }">
+                    <div class="row" ng-style="$ctrl.getRowStyle(row, $index)" ng-repeat="row in $ctrl.getGrid()" flex>
+                        <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && !$ctrl.isSelectedCollectionHex()">
+                            <tile-grid tile="cell.tile" tile-shape="cell.shape" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
+                        </span>
+                        <div class="hex-container" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && $ctrl.isSelectedCollectionHex()">
+                            <div class="hex-out">
+                                <div class="hex-in">
+                                    <span class="cell">
+                                        <tile-grid tile="cell.tile" tile-shape="cell.shape" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,11 +9,18 @@
                         <li class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1">
                             <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
                                 <div class="tile-body">
-                                    <div>
-                                        <div class="tile-size size-{{ ::item.inches }}"></div>
+                                    <div ng-if="::!$ctrl.isHexagonalCollection(item)">
+                                        <div class="tile-shape size-{{ ::item.inches }}"></div>
+                                    </div>
+                                    <div ng-if="::$ctrl.isHexagonalCollection(item)">
+                                        <div class="hex-container tile-shape size-{{ ::item.inches }}">
+                                            <div class="hex-out">
+                                                <div class="hex-in"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <h3 class="tile-title" ng-bind="::item.title"></h3>
+                                <h3 class="tile-title" ng-class="{ 'tile-title-hex' : item.hex }" ng-bind="::item.title"></h3>
                                 <div class="selected-overlay"></div>
                                 <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
                             </a>

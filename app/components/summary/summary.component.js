@@ -104,12 +104,21 @@
                 var ctx = canvas.getContext('2d');
                 var images = [];
 
+                // hexagon numbers
+                var hexSide = (tileWidth/2) * 1.15;
+                if(ctrl.isSelectedCollectionHex()){
+                    tileHeight = hexSide * 2;
+                }
+
                 containerElement.setAttribute('id', 'image-container');
 
                 if(_grid) {
 
                     for(var row=0; row<_grid.length; row++) {
                         tmpWidth = TILE_SPACE;
+                        if(ctrl.isSelectedCollectionHex() && (row % 2 != 0) ){   // is hex and row is even
+                            tmpWidth += (tileWidth/2);
+                        }
                         for(var cellIndex=0; cellIndex<localGrid[row].length; cellIndex++) {
                             if(localGrid[row][cellIndex].active) {
 
@@ -144,14 +153,21 @@
                                 };
 
                                 images.push(createImage(imgsrc, imageOptions, ctx));
-                                tmpWidth+= tileWidth + TILE_SPACE;
+                                tmpWidth += tileWidth + TILE_SPACE;
                             }
                         }
-                        tmpHeight+= tileHeight + TILE_SPACE;
+                        if(ctrl.isSelectedCollectionHex()){   // is hex
+                            tmpHeight += (hexSide * 1.5);
+                        } else {
+                            tmpHeight += tileHeight + TILE_SPACE;
+                        }
                     }
 
                     var factor = Math.floor((images.length)/collectionGrids.getSelectedGridType().cols);
                     var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+                    if(ctrl.isSelectedCollectionHex()){
+                        canvasWidth += (tileWidth/2);
+                    }
                     var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
 
                     canvas.width  = canvasWidth;
@@ -278,7 +294,7 @@
                                                 tileColorsInnerHTML +
                                     '       </td>' +
                                     '   </tr>' +
-                                    '</tbody';
+                                    '</tbody>';
 
                                 bodyContainer.appendChild(t);
                             }
@@ -301,7 +317,11 @@
             return _grid;
         };
 
-        ctrl.getRowStyle = function (row) {
+        ctrl.isSelectedCollectionHex = function() {
+            return collectionGrids.isHexagonalGrid();
+        };
+
+        ctrl.getRowStyle = function (row, index) {
             var _rowStyle = {
                 'height': '0px',
                 'width': '100%'
@@ -309,7 +329,14 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    _rowStyle.height = (100/collectionGrids.getSelectedGridType().cols) + '%';
+                    if (ctrl.isSelectedCollectionHex()){
+                        _rowStyle.height = 'auto';
+                        if( index % 2 != 0 ) {
+                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridType().cols) + '%';
+                        }
+                    } else {
+                        _rowStyle.height = (100 / collectionGrids.getSelectedGridType().cols) + '%';
+                    }
                     break;
                 }
             }

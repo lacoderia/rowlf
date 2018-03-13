@@ -51,7 +51,7 @@ collection-tiles
             display: table-cell
             vertical-align: middle
 
-        .tile-size
+        .tile-shape
           background: $color-blue-500
           margin: 0 auto
 
@@ -79,12 +79,53 @@ collection-tiles
             height: 28px
             width: 28px
 
+        .hex-container
+          position: relative
+          visibility: hidden
+          outline: 1px solid transparent
+
+          &::after
+            content: ''
+            display: block
+            padding-bottom: 86.602%
+
+          .hex-out
+            position: absolute
+            width: 96%
+            padding-bottom: 110.851%
+            margin: 0 2%
+            overflow: hidden
+            visibility: hidden
+            outline: 1px solid transparent
+            -webkit-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+            -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+            transform: rotate3d(0,0,1,-60deg) skewY(30deg)
+
+            *
+              position: absolute
+              visibility: visible
+              outline: 1px solid transparent
+
+            .hex-in
+              display: block
+              width: 100%
+              height: 100%
+              text-align: center
+              background-color: $color-blue-500
+              overflow: hidden
+              -webkit-transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+              -ms-transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+              transform: skewY(-30deg) rotate3d(0,0,1,60deg)
+
         .tile-title
           color: $color-gray-500
           font-size: 0.9rem
           margin: 0.5rem 0 0
           padding: 0 1rem
           width: 100%
+
+          &.tile-title-hex
+            margin: 1.4rem 0 0
 
       .selected-overlay
         background: $color-light-green-300
