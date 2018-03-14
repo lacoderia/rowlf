@@ -13,8 +13,8 @@ summary-component
       font-size: 0px
       height: 100vw
       margin: 0 auto
-      max-height: 440px
-      max-width: 440px
+      max-height: 400px
+      max-width: 400px
       text-align: center
       width: 100vw
 
@@ -146,7 +146,9 @@ summary-component
 
     .tile-list
       background: white
-      padding: 0 16px
+      margin-bottom: 30px
+      max-height: none
+      padding: 0px 16px 16px 16px
 
       .dialog-content
         padding: 0 16px
@@ -185,3 +187,8 @@ summary-component
 
     .tile-list
       margin-top: 1rem
+
+@media (max-width: 863px)
+  .summary
+    .tile-list
+      margin-top: 2rem

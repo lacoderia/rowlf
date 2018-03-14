@@ -52,8 +52,10 @@ collection-tiles
             vertical-align: middle
 
         .tile-shape
-          background: $color-blue-500
           margin: 0 auto
+
+          &.tile-shape-blue
+            background: $color-blue-500
 
           &.size-12
             height: 80px
@@ -81,7 +83,6 @@ collection-tiles
 
         .hex-container
           position: relative
-          visibility: hidden
           outline: 1px solid transparent
 
           &::after
@@ -95,7 +96,6 @@ collection-tiles
             padding-bottom: 110.851%
             margin: 0 2%
             overflow: hidden
-            visibility: hidden
             outline: 1px solid transparent
             -webkit-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
             -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg)
