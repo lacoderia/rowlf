@@ -99,13 +99,14 @@ builder
             color: $color-light-green-500
 
     .work-table
+      text-align: center
+
       .grid
         border: 1px solid $color-gray-600
         box-sizing: border-box
-        display: block
+        display: inline-block
         font-size: 0px
         height: 100vw
-        margin: 0 auto
         max-height: 400px
         max-width: 400px
         text-align: center
@@ -114,9 +115,18 @@ builder
         &.hex-grid
           border: none
 
+          &.grid-size-2
+            margin-left: -100px
+
+          &.grid-size-5
+            margin-left: -40px
+
           div.row
             span.cell
               border: none
+
+              .tile-actions
+                transform: translate(-50%, -25px)
 
         div.row
           box-sizing: border-box
@@ -446,20 +456,20 @@ builder
   .customize-tile-display
     background: $color-gray-400
     overflow: scroll
-    padding-top: 40px
-    padding-bottom: 40px
-    padding-left: 4%
+    padding: 40px 4%
 
-    .tile-selector-item
-      background: white
-      border: 2px solid transparent
-      box-sizing: border-box
-      height: auto
-      margin: 1.5%
-      outline: none
+    .tile-selector-item-container
+      padding: 1rem
 
-      img
-        width: 100%
+      .tile-selector-item
+        background: white
+        border: 2px solid transparent
+        box-sizing: border-box
+        height: auto
+        outline: none
+
+        img
+          width: 100%
 
   .customize-tile-selector
     height: 100%
@@ -468,6 +478,7 @@ builder
     .customize-tile-collection
       height: calc(100% - 48px)
       overflow: auto
+      padding: 0px 4%
 
       .search
 
@@ -475,36 +486,38 @@ builder
           margin: 1.6rem 0 0
           padding: 0 1rem
 
-          label
-            margin-left: 1rem
-
           .md-errors-spacer
             min-height: 8px
 
       .customize-tile
 
-        .customize-tile-item
-          background: white
-          border: 2px solid transparent
-          cursor: pointer
-          display: inline-block
-          margin: 1.5%
-          outline: none
-          padding: 1rem
-          position: relative
+        .customize-tile-item-container
+          padding: 0.5rem
 
-          &:hover
-            &:not(.selected)
-              border-color: $color-light-green-300
-
-          .tile-image
+          .customize-tile-item
+            background: white
+            border: 2px solid transparent
+            box-sizing: border-box
+            cursor: pointer
+            display: inline-block
+            height: 100%
+            outline: none
+            padding: 1rem
+            position: relative
             width: 100%
 
-          .tile-title
-            color: $color-gray-900
-            font-size: 0.9rem
-            margin: 0 0 0.5rem
-            text-align: center
+            &:hover
+              &:not(.selected)
+                border-color: $color-light-green-300
+
+            .tile-image
+              width: 100%
+
+            .tile-title
+              color: $color-gray-900
+              font-size: 0.7rem
+              margin: 0.5rem 0
+              text-align: center
 
   .dialog-actions
     margin-top: auto
@@ -538,7 +551,8 @@ builder
 
 .step-container-wrapper
   height: calc(100% - 49px - 4rem)
-  overflow: scroll
+  overflow: hidden
+  overflow-y: scroll
   padding: 1.4rem 2rem
 
 .step-content
@@ -614,6 +628,13 @@ md-step-content
         max-height: 75vw !important
         max-width: 75vw !important
 
+        &.hex-grid
+          &.grid-size-2
+            margin-left: -18.75vw !important
+
+          &.grid-size-5
+            margin-left: -7.5vw !important
+
         div.row
           span.cell
             .no-tile-selected-title
@@ -633,15 +654,21 @@ md-step-content
           font-size: 14px
 
     .customize-tile-display
-      height: 35%
+      height: 40%
+      max-height: 40%
       overflow: hidden
       padding-bottom: 0px
+      overflow-y: scroll
 
       h3
         font-size: 14px
 
+      .tile-selector-item-container
+        padding: 0.3rem
+
     .customize-tile-selector
-      height: 65%
+      height: 60%
+      max-height: 60%
       overflow: hidden
 
       .customize-tile-collection
@@ -675,8 +702,12 @@ md-step-content
         overflow: hidden
         text-overflow: ellipsis
 
-
-@media (max-width: 863px)
+@media (max-width: 959px)
   .builder
     .work-table
       margin-top: 2rem
+
+  .tile-customizer
+    .customize-tile-display
+      .tile-selector-item-container
+        padding: 0.3rem

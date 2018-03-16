@@ -296,6 +296,16 @@
             return _grid;
         };
 
+        ctrl.getGridClasses = function () {
+            var _gridClasses = {
+                'hex-grid' : ctrl.isSelectedCollectionHex(),
+                'grid-size-2': ctrl.selectedGridType.cols == 2,
+                'grid-size-5': ctrl.selectedGridType.cols == 5
+            };
+
+            return _gridClasses;
+        };
+
         ctrl.getRowStyle = function (row, index) {
             var _rowStyle = {
                 'height': '0px',

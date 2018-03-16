@@ -1,15 +1,17 @@
 <div role="dialog" aria-label="Add tiles!" layout="column" layout-align="center center" layout-fill>
-    <div class="work-table" layout="row" layout-xs="column" layout-fill>
-        <div class="customize-tile-display" layout="row" layout-align="start start" flex-gt-xs="65" layout-wrap>
+    <div class="work-table" layout="row" layout-sm="column" layout-xs="column" layout-fill>
+        <div class="customize-tile-display" layout="row" layout-align="start start" flex="60"flex-sm="100" flex-xs="100" layout-wrap>
             <h3 layout="column" flex="100">Selected tiles:</h3>
             <div class="customize-tiles-empty" ng-if="!$ctrl.getTmpSelectedTiles().length" ng-click="$ctrl.openAddTile()">
                 <p layout="row">Add tiles to customize</p>
             </div>
-            <div class="tile-selector-item" ng-if="$ctrl.getTmpSelectedTiles().length" ng-repeat="item in $ctrl.getTmpSelectedTiles()" ng-click="$ctrl.customizeTile(item)" flex="20">
-                <tile-button tile="{{ item }}"></tile-button>
+            <div class="tile-selector-item-container" ng-if="$ctrl.getTmpSelectedTiles().length" ng-repeat="item in $ctrl.getTmpSelectedTiles()" flex="25">
+                <div class="tile-selector-item" ng-click="$ctrl.customizeTile(item)">
+                    <tile-button tile="{{ item }}"></tile-button>
+                </div>
             </div>
         </div>
-        <div class="customize-tile-selector" layout="row" flex-gt-xs="35" md-whiteframe="1" layout-wrap >
+        <div class="customize-tile-selector" layout="row" flex="40" flex-sm="100" flex-xs="100" md-whiteframe="1" layout-wrap >
             <div class="customize-tile-collection" layout-wrap flex="100">
                 <div class="search">
                     <md-input-container>
@@ -17,10 +19,12 @@
                         <input ng-model="$ctrl.tileQuery" type="text">
                     </md-input-container>
                 </div>
-                <div class="customize-tile" layout="row" layout-wrap layout-padding>
-                    <div class="customize-tile-item" flex="30" flex-xs="45" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | orderBy:'name' | filter: { name: $ctrl.tileQuery }" ng-click="$ctrl.addTile(item)">
-                        <img class="tile-image" ng-src="{{ item.url }}"/>
-                        <h3 class="tile-title" ng-bind="::item.name"></h3>
+                <div class="customize-tile" layout="row" layout-wrap layout-padding layout-align="center">
+                    <div class="customize-tile-item-container" ng-repeat="item in $ctrl.getSelectedCollectionTiles() | orderBy:'name' | filter: { name: $ctrl.tileQuery }" flex="30" flex-md="50" flex-xs="50">
+                        <div class="customize-tile-item" ng-click="$ctrl.addTile(item)" md-whiteframe="1">
+                            <img class="tile-image" ng-src="{{ item.url }}"/>
+                            <h3 class="tile-title" ng-bind="::item.name"></h3>
+                        </div>
                     </div>
                 </div>
             </div>

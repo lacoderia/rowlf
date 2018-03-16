@@ -102,13 +102,13 @@
         }
 
 
-        function callTilesByCollectionId(collectionId) {
+        function callTilesByCollection(collection) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
-            return $http.get(serviceURL, { params: { tile_type: collectionId } }).then(
+            return $http.get(serviceURL, { params: { tile_type: collection.id } }).then(
                 function (response) {
                     try{
                         if(response.data){
-                            var collectionTiles = getCollectionTilesById(collectionId);
+                            var collectionTiles = getCollectionTilesById(collection.id);
                             collectionTiles.tiles = [];
                             for(var itemIndex=0; itemIndex<response.data.tiles.length; itemIndex++){
                                 var tile = response.data.tiles[itemIndex];
@@ -122,7 +122,8 @@
                                             rotation: 0,
                                             path_styles: xmlParsed.pathStyles
                                         },
-                                        xml: xmlParsed.xmlString
+                                        xml: xmlParsed.xmlString,
+                                        shape: collection.shape
                                     });
                                 }
                             }
@@ -244,7 +245,7 @@
             getSelectedCollectionTiles: getSelectedCollectionTiles,
             getSelectedTiles: getSelectedTiles,
             setSelectedTiles: setSelectedTiles,
-            callTilesByCollectionId: callTilesByCollectionId,
+            callTilesByCollection: callTilesByCollection,
             getTileByTmpId: getTileByTmpId,
             updateTileByTmpId: updateTileByTmpId
         };

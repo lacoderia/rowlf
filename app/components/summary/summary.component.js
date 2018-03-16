@@ -214,12 +214,6 @@
                 html2pdfTemplate.setAttribute('class', 'html2pdfTemplate');
                 html2pdfTemplate.setAttribute('style', 'width: 100%; box-sizing: border-box; padding: 0; margin: 0; z-index: 0;');
 
-                // Tile and color list
-                var listElement = angular.copy(document.getElementById('tile-list'));
-                var actionsElement = listElement.querySelector('.dialog-actions');
-                var actionsParentElement = listElement.querySelector('.dialog-content');
-                actionsParentElement.removeChild(actionsElement);
-
                 // Adds the grid as DOM element
                 $timeout(function () {
                     var bodyContainer = document.createElement('div');
@@ -243,9 +237,10 @@
                             listTitle.innerHTML = 'Tile details are shown on the following pages.';
                             bodyContainer.appendChild(listTitle);
 
+                            // Tile and color list
                             var listContainer = document.createElement('div');
                             listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                            listContainer.innerHTML = listElement.innerHTML;
+                            listContainer.innerHTML = angular.copy(document.getElementById('tile-list')).innerHTML;
 
                             var tileRows = listContainer.querySelectorAll('.tile-row');
 
@@ -319,6 +314,16 @@
 
         ctrl.isSelectedCollectionHex = function() {
             return collectionGrids.isHexagonalGrid();
+        };
+
+        ctrl.getGridClasses = function () {
+            var _gridClasses = {
+                'hex-grid' : ctrl.isSelectedCollectionHex(),
+                'grid-size-2': collectionGrids.getSelectedGridType().cols == 2,
+                'grid-size-5': collectionGrids.getSelectedGridType().cols == 5
+            };
+
+            return _gridClasses;
         };
 
         ctrl.getRowStyle = function (row, index) {

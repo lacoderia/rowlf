@@ -112,7 +112,7 @@
                     collectionTilesService.setSelectedCollection(collection.id);
                 } else {
                         ctrl.loading = true;
-                        collectionTilesService.callTilesByCollectionId(collection.id).
+                        collectionTilesService.callTilesByCollection(collection).
                             then(
                                 function (response) {
                                     collectionTilesService.setSelectedCollection(collection.id);

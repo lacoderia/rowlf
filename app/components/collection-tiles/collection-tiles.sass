@@ -198,60 +198,63 @@ collection-tiles
     flex-wrap: wrap
     width: 100%
 
-    .tile-item
-      background: white
-      border: 2px solid transparent
-      cursor: pointer
-      display: flex
-      outline: none
-      margin: 1.5%
+    .tile-item-container
       padding: 1rem
-      position: relative
 
-      &:hover
-        &:not(.selected)
-          border-color: $color-light-green-300
+      .tile-item
+        background: white
+        border: 2px solid transparent
+        cursor: pointer
+        display: flex
+        outline: none
+        padding: 1rem
+        position: relative
+        height: 100%
 
-      .tile-image
-        width: 100%
+        &:hover
+          &:not(.selected)
+            border-color: $color-light-green-300
 
-      .tile-title
-        color: $color-gray-900
-        font-size: 0.9rem
-        margin-bottom: 0
-        margin-top: 1rem
-        text-align: center
+        .tile-image
+          width: 100%
 
-      .selected-overlay
-        background: $color-light-green-300
-        bottom: 0
-        display: none
-        left: 0
-        opacity: 0
-        position: absolute
-        right: 0
-        top: 0
-        transition: opacity 0.2s
-
-      .selected-icon
-        bottom: 10px
-        color: $color-light-green-500
-        content: ""
-        height: 20px
-        opacity: 0
-        position: absolute
-        right: 10px
-        width: 20px
-        transition: opacity 0.2s
-
-      &.selected
+        .tile-title
+          color: $color-gray-900
+          font-size: 0.9rem
+          margin-bottom: 0
+          margin-top: 1rem
+          text-align: center
 
         .selected-overlay
-          display: block
-          opacity: 0.1
+          background: $color-light-green-300
+          bottom: 0
+          display: none
+          left: 0
+          opacity: 0
+          position: absolute
+          right: 0
+          top: 0
+          transition: opacity 0.2s
 
         .selected-icon
-          opacity: 1
+          bottom: 10px
+          color: $color-light-green-500
+          content: ""
+          height: 20px
+          opacity: 0
+          position: absolute
+          right: 10px
+          width: 20px
+          transition: opacity 0.2s
+
+        &.selected
+
+          .selected-overlay
+            display: block
+            opacity: 0.1
+
+          .selected-icon
+            opacity: 1
 
 @media (max-width: 599px)
 
@@ -275,3 +278,7 @@ collection-tiles
 
       h3
         font-size: 14px
+
+      .tile-selector
+        .tile-item-container
+          padding: 0.5rem

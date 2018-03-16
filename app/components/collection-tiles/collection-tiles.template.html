@@ -39,12 +39,14 @@
                     <div layout-align="center center" ng-if="$ctrl.loading">
                         <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
                     </div>
-                    <div class="tile-selector" layout-fill>
-                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | orderBy:'name' | filter: { name: $ctrl.tileQuery }" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" flex="15" flex-xs="100">
-                            <img class="tile-image" ng-src="{{ item.url }}"/>
-                            <h3 class="tile-title" ng-bind="item.name"></h3>
-                            <div class="selected-overlay"></div>
-                            <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                    <div class="tile-selector" layout-fill layout-align="center">
+                        <div class="tile-item-container" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | orderBy:'name' | filter: { name: $ctrl.tileQuery }" flex="20" flex-md="30" flex-sm="30" flex-xs="50">
+                            <div class="tile-item" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" md-whiteframe="1">
+                                <img class="tile-image" ng-src="{{ item.url }}"/>
+                                <h3 class="tile-title" ng-bind="item.name"></h3>
+                                <div class="selected-overlay"></div>
+                                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                            </div>
                         </div>
                     </div>
                 </div>
