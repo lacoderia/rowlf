@@ -260,8 +260,8 @@
             return _selectedTiles;
         };
 
-        ctrl.getSelectedGridType = function () {
-            return ctrl.selectedGridType;
+        ctrl.getSelectedGridSize = function () {
+            return collectionGrids.getSelectedGridSize();
         };
 
         ctrl.setSelectedGridType = function (gridType) {
@@ -276,8 +276,8 @@
             }
 
             // activate selected grid's tiles
-            for(var rowIndex=0; rowIndex<ctrl.selectedGridType.rows; rowIndex++){
-                for(var colIndex=0; colIndex<ctrl.selectedGridType.cols; colIndex++){
+            for(var rowIndex=0; rowIndex<gridType.rows; rowIndex++){
+                for(var colIndex=0; colIndex<gridType.cols; colIndex++){
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
@@ -299,8 +299,8 @@
         ctrl.getGridClasses = function () {
             var _gridClasses = {
                 'hex-grid' : ctrl.isSelectedCollectionHex(),
-                'grid-size-2': ctrl.selectedGridType.cols == 2,
-                'grid-size-5': ctrl.selectedGridType.cols == 5
+                'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
+                'grid-size-5': collectionGrids.getSelectedGridSize() == 5
             };
 
             return _gridClasses;
@@ -317,10 +317,10 @@
                     if (ctrl.isSelectedCollectionHex()){
                         _rowStyle.height = 'auto';
                         if( index % 2 != 0 ) {
-                            _rowStyle['margin-left'] = (50 / ctrl.selectedGridType.cols) + '%';
+                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';
                         }
                     } else {
-                        _rowStyle.height = (100 / ctrl.selectedGridType.cols) + '%';
+                        _rowStyle.height = (100 / collectionGrids.getSelectedGridSize()) + '%';
                     }
                     break;
                 }
@@ -333,7 +333,7 @@
 
             return _cellStyle = {
                 'height': '100%',
-                'width': (100/ctrl.selectedGridType.cols)+'%',
+                'width': (100/collectionGrids.getSelectedGridSize())+'%',
                 'vertical-align': 'top'
             };
         };

@@ -53,6 +53,14 @@
         }
 
         /**
+         * Gets selected grid size (2x2, 5x5)
+         * @returns {*}
+         */
+        function getSelectedGridSize() {
+            return (_selectedGridType ? angular.copy(_selectedGridType.cols) : undefined);
+        }
+
+        /**
          * Sets selected collection
          * @param collection
          */
@@ -78,6 +86,7 @@
                 setCollectionGrids: setCollectionGrids,
                 getSelectedGridType: getSelectedGridType,
                 setSelectedGridType: setSelectedGridType,
+                getSelectedGridSize: getSelectedGridSize,
                 setSelectedCollection: setSelectedCollection,
                 isHexagonalGrid: isHexagonalGrid
             }

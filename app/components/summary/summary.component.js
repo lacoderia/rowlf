@@ -163,7 +163,7 @@
                         }
                     }
 
-                    var factor = Math.floor((images.length)/collectionGrids.getSelectedGridType().cols);
+                    var factor = Math.floor((images.length)/collectionGrids.getSelectedGridSize());
                     var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
                     if(ctrl.isSelectedCollectionHex()){
                         canvasWidth += (tileWidth/2);
@@ -319,8 +319,8 @@
         ctrl.getGridClasses = function () {
             var _gridClasses = {
                 'hex-grid' : ctrl.isSelectedCollectionHex(),
-                'grid-size-2': collectionGrids.getSelectedGridType().cols == 2,
-                'grid-size-5': collectionGrids.getSelectedGridType().cols == 5
+                'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
+                'grid-size-5': collectionGrids.getSelectedGridSize() == 5
             };
 
             return _gridClasses;
@@ -337,10 +337,10 @@
                     if (ctrl.isSelectedCollectionHex()){
                         _rowStyle.height = 'auto';
                         if( index % 2 != 0 ) {
-                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridType().cols) + '%';
+                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';
                         }
                     } else {
-                        _rowStyle.height = (100 / collectionGrids.getSelectedGridType().cols) + '%';
+                        _rowStyle.height = (100 / collectionGrids.getSelectedGridSize()) + '%';
                     }
                     break;
                 }
@@ -354,7 +354,7 @@
             if(collectionGrids.getSelectedGridType()){
                 _cellStyle = {
                     'height': '100%',
-                    'width': (100/collectionGrids.getSelectedGridType().cols)+'%',
+                    'width': (100/collectionGrids.getSelectedGridSize())+'%',
                     'vertical-align': 'top'
                 };
             }

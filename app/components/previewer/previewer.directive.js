@@ -20,7 +20,7 @@
                     var tileWidth = 50;
                     var tileHeight = 50;
                     var loading = false;
-                    var gridSize = scope.gridSize.cols;
+                    var gridSize = scope.gridSize;
                     scope.htmlPattern = '';
 
                     scope.$on('imageChanged', function ($event, image) {
