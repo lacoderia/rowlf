@@ -9,7 +9,8 @@
                 replace: true,
                 scope: {
                     cellId: '=',
-                    tile: '='
+                    tile: '=',
+                    tileShape: '='
                 },
                 restrict: 'E',
                 link: function (scope, element) {
@@ -55,10 +56,8 @@
 
                     var rotateTile = function () {
                         if(tileData && SVGObject){
-                            if(tileData.custom_styles.rotation == 270){
-                                SVGObject.style.transform = 'rotate(0deg);';
-                            }
-                            tileData.custom_styles.rotation+= 90;
+                            var degrees = (scope.tileShape == 'hex' ? 60 : 90);
+                            tileData.custom_styles.rotation += degrees;
                             SVGObject.style.transform = 'rotate(' + tileData.custom_styles.rotation + 'deg)';
                         }
                     };

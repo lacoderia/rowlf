@@ -9,18 +9,20 @@
                 replace: false,
                 scope: {
                     data: '=',
-                    size: '@',
-                    gridSize: '='
+                    tileSize: '@',
+                    gridSize: '=',
+                    hexShape: '='
                 },
                 restrict: 'E',
                 templateUrl: '/components/previewer/previewer.html',
                 link: function (scope, element) {
-                    var TILE_FACTOR = 6;
                     var TILE_SPACE = 1;
                     var tileWidth = 50;
                     var tileHeight = 50;
                     var loading = false;
-                    var gridSize = scope.gridSize.cols;
+                    var gridSize = scope.gridSize;
+                    var hexShape = scope.hexShape;
+
                     scope.htmlPattern = '';
 
                     scope.$on('imageChanged', function ($event, image) {
@@ -123,8 +125,8 @@
                     function createPreview(image) {
 
                         var _grid = angular.copy(scope.data);
-                        var tmpWidth = TILE_SPACE;
-                        var tmpHeight = TILE_SPACE;
+                        var tmpWidth = 0;
+                        var tmpHeight = 0;
                         var canvas = document.createElement("canvas");
                         var ctx = canvas.getContext('2d');
                         var images = [];
@@ -144,53 +146,143 @@
 
                         bgImage.src = image.url;
 
-                        if(scope.size){
-                            tileWidth = scope.size * TILE_FACTOR;
-                            tileHeight = scope.size * TILE_FACTOR;
-                        }
-
                         if(_grid) {
 
-                            for(var row=0; row<_grid.length; row++) {
-                                tmpWidth = TILE_SPACE;
-                                for(var cellIndex=0; cellIndex<_grid[row].length; cellIndex++) {
-                                    if(_grid[row][cellIndex].active) {
+                            if (hexShape) {
 
-                                        var tileId = _grid[row][cellIndex].id;
-                                        var SVGContainer = document.createElement('div');
+                                // hexagon numbers
+                                var hexSide = (tileWidth/2) * 1.15;
+                                tileHeight = hexSide * 2;
+                                tmpHeight = hexSide;
 
-                                        SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
-                                        SVGContainer.setAttribute('class', 'svg-tile');
-                                        SVGContainer.innerHTML = processXML(_grid[row][cellIndex].tile);
-
-                                        var svg = SVGContainer.querySelector('svg');
-                                        svg.setAttribute('version', '1.1');
-                                        svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-
-                                        var degrees = '0';
-                                        if (_grid[row][cellIndex].tile) {
-                                            degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
-                                        }
-                                        var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
-                                        var imageOptions = {
-                                            x: tmpWidth,
-                                            y: tmpHeight,
-                                            width: tileWidth,
-                                            height: tileHeight,
-                                            degrees: degrees,
-                                            url: imgsrc
-                                        };
-
-                                        images.push(createImage(imgsrc, imageOptions, ctx));
-                                        tmpWidth+= tileWidth + TILE_SPACE;
+                                for(var row = 0; row < gridSize; row++) {
+                                    tmpWidth = 0;
+                                    if( row % 2 != 0 ){   // is hex and row is even
+                                        tmpWidth += (tileWidth/2);
                                     }
-                                }
-                                tmpHeight+= tileHeight + TILE_SPACE;
-                            }
+                                    for(var cellIndex = 0; cellIndex < gridSize; cellIndex++) {
+                                        if(_grid[row][cellIndex].active) {
 
-                            var factor = Math.floor((images.length)/gridSize);
-                            var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
-                            var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+                                            var tileId = _grid[row][cellIndex].id;
+                                            var SVGContainer = document.createElement('div');
+
+                                            SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
+                                            SVGContainer.setAttribute('class', 'svg-tile');
+                                            SVGContainer.innerHTML = processXML(_grid[row][cellIndex].tile);
+
+                                            var svg = SVGContainer.querySelector('svg');
+                                            svg.setAttribute('version', '1.1');
+                                            svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+                                            var degrees = '0';
+                                            if (_grid[row][cellIndex].tile) {
+                                                degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
+                                            }
+                                            var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
+                                            var imageOptions = {
+                                                x: tmpWidth,
+                                                y: tmpHeight,
+                                                width: tileWidth,
+                                                height: tileHeight,
+                                                degrees: degrees,
+                                                url: imgsrc
+                                            };
+
+                                            images.push(createImage(imgsrc, imageOptions, ctx));
+
+                                            // Is even row and s the last tile of the row
+                                            if ( (row % 2 != 0) && (cellIndex == (gridSize-1)) ) {
+                                                var imageOptions = {
+                                                    x: (tileWidth/-2) - TILE_SPACE,
+                                                    y: tmpHeight,
+                                                    width: tileWidth,
+                                                    height: tileHeight,
+                                                    degrees: degrees,
+                                                    url: imgsrc
+                                                };
+                                                images.push(createImage(imgsrc, imageOptions, ctx));
+                                            }
+
+                                            // Is the last row
+                                            if (row == (gridSize-1)) {
+
+                                                var imageOptions = {
+                                                    x: tmpWidth,
+                                                    y: (hexSide/-2) - TILE_SPACE,
+                                                    width: tileWidth,
+                                                    height: tileHeight,
+                                                    degrees: degrees,
+                                                    url: imgsrc
+                                                };
+
+                                                images.push(createImage(imgsrc, imageOptions, ctx));
+
+                                                // Is the last tile of the last row
+                                                if ( cellIndex == (gridSize-1) ){
+
+                                                    var imageOptions = {
+                                                        x: (tileWidth/-2) - TILE_SPACE,
+                                                        y: (hexSide/-2) - TILE_SPACE,
+                                                        width: tileWidth,
+                                                        height: tileHeight,
+                                                        degrees: degrees,
+                                                        url: imgsrc
+                                                    };
+                                                    images.push(createImage(imgsrc, imageOptions, ctx));
+                                                }
+
+                                            }
+
+                                            tmpWidth+= tileWidth + TILE_SPACE;
+                                        }
+                                    }
+                                    tmpHeight += (hexSide * 1.5) + TILE_SPACE;
+                                }
+
+                                var canvasWidth = (tileWidth * gridSize) + (TILE_SPACE * gridSize);
+                                var canvasHeight = (hexSide * gridSize * 1.5) + (TILE_SPACE * gridSize);
+
+                            } else {
+                                for(var row=0; row<_grid.length; row++) {
+                                    tmpWidth = 0;
+                                    for(var cellIndex=0; cellIndex<_grid[row].length; cellIndex++) {
+                                        if(_grid[row][cellIndex].active) {
+
+                                            var tileId = _grid[row][cellIndex].id;
+                                            var SVGContainer = document.createElement('div');
+
+                                            SVGContainer.setAttribute('id', 'tile-element-' + tileId + '');
+                                            SVGContainer.setAttribute('class', 'svg-tile');
+                                            SVGContainer.innerHTML = processXML(_grid[row][cellIndex].tile);
+
+                                            var svg = SVGContainer.querySelector('svg');
+                                            svg.setAttribute('version', '1.1');
+                                            svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+                                            var degrees = '0';
+                                            if (_grid[row][cellIndex].tile) {
+                                                degrees = _grid[row][cellIndex].tile.custom_styles.rotation;
+                                            }
+                                            var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.outerHTML);
+                                            var imageOptions = {
+                                                x: tmpWidth,
+                                                y: tmpHeight,
+                                                width: tileWidth,
+                                                height: tileHeight,
+                                                degrees: degrees,
+                                                url: imgsrc
+                                            };
+
+                                            images.push(createImage(imgsrc, imageOptions, ctx));
+                                            tmpWidth+= tileWidth + TILE_SPACE;
+                                        }
+                                    }
+                                    tmpHeight += tileHeight + TILE_SPACE;
+                                }
+
+                                var canvasWidth = (tileWidth * gridSize) + (TILE_SPACE * gridSize);
+                                var canvasHeight = (tileHeight * gridSize) + (TILE_SPACE * gridSize);
+                            }
 
                             canvas.width  = canvasWidth;
                             canvas.height = canvasHeight;

@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function collectionTilesController($scope, collectionTilesService, utilsService) {
+    function collectionTilesController($scope, collectionTilesService, collectionGrids, utilsService) {
 
         /**
          *
@@ -92,7 +92,15 @@
 
         /**
          *
-         * @param collectionId
+         * @param collection
+         */
+        ctrl.isHexagonalCollection = function(collection) {
+            return collectionGrids.isHexagonalGrid(collection);
+        };
+
+        /**
+         *
+         * @param collection
          */
         ctrl.selectCollectionTiles = function(collection){
             try{
@@ -104,7 +112,7 @@
                     collectionTilesService.setSelectedCollection(collection.id);
                 } else {
                         ctrl.loading = true;
-                        collectionTilesService.callTilesByCollectionId(collection.id).
+                        collectionTilesService.callTilesByCollection(collection).
                             then(
                                 function (response) {
                                     collectionTilesService.setSelectedCollection(collection.id);

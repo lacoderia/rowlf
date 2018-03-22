@@ -4,23 +4,30 @@
     <div layout="row" class="tile-collection" layout-align="center start" layout-wrap>
         <div layout="column" class="summary" layout-align="center start" layout-margin layout-wrap layout-fill flex>
             <div layout="row" layout-fill layout-wrap layout-margin>
-                <div layout="row" flex="15" flex-xs="100">
-                    <ul class="tile-collection-list" layout="column" flex-xs="100">
+                <div layout="row" flex="15" flex-sm="100" flex-xs="100">
+                    <ul class="tile-collection-list" layout="column" flex-sm="100" flex-xs="100">
                         <li class="tile-collection-item" ng-repeat="item in $ctrl.getCollectionTiles()" ng-class="{ true:'selected', false:'' }[$ctrl.isSelectedCollectionTiles(item.id)]" md-whiteframe="1">
                             <a title="{{ ::item.title }}" class="tile-content" ng-click="$ctrl.selectCollectionTiles(item)">
                                 <div class="tile-body">
-                                    <div>
-                                        <div class="tile-size size-{{ ::item.inches }}"></div>
+                                    <div ng-if="::!$ctrl.isHexagonalCollection(item)">
+                                        <div class="tile-shape tile-shape-blue size-{{ ::item.inches }}"></div>
+                                    </div>
+                                    <div ng-if="::$ctrl.isHexagonalCollection(item)">
+                                        <div class="hex-container tile-shape size-{{ ::item.inches }}">
+                                            <div class="hex-out">
+                                                <div class="hex-in"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <h3 class="tile-title" ng-bind="::item.title"></h3>
+                                <h3 class="tile-title" ng-class="{ 'tile-title-hex' : item.hex }" ng-bind="::item.title"></h3>
                                 <div class="selected-overlay"></div>
                                 <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div layout="row" class="tile-bottom-sheet" layout-fill flex="80" flex-xs="100">
+                <div layout="row" class="tile-bottom-sheet" layout-fill flex="80" flex-sm="100" flex-xs="100">
                     <p ng-if="!$ctrl.getSelectedCollectionTiles().tiles.length > 0">Select a size</p>
                     <div ng-if="$ctrl.getSelectedCollectionTiles().tiles.length > 0">
                         <md-input-container class="md-icon-float md-block">
@@ -32,12 +39,14 @@
                     <div layout-align="center center" ng-if="$ctrl.loading">
                         <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
                     </div>
-                    <div class="tile-selector" layout-fill>
-                        <div class="tile-item" md-whiteframe="1" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | orderBy:'name' | filter: { name: $ctrl.tileQuery }" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" flex="15" flex-xs="100">
-                            <img class="tile-image" ng-src="{{ item.url }}"/>
-                            <h3 class="tile-title" ng-bind="item.name"></h3>
-                            <div class="selected-overlay"></div>
-                            <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                    <div class="tile-selector" layout-align="center">
+                        <div class="tile-item-container" ng-repeat="item in $ctrl.getSelectedCollectionTiles().tiles | orderBy:'name' | filter: { name: $ctrl.tileQuery }" flex="20" flex-md="30" flex-sm="30" flex-xs="50">
+                            <div class="tile-item" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" md-whiteframe="1">
+                                <img class="tile-image" ng-src="{{ item.url }}"/>
+                                <h3 class="tile-title" ng-bind="item.name"></h3>
+                                <div class="selected-overlay"></div>
+                                <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +55,7 @@
     </div>
 </div>
 <md-toolbar class="bottom-navigation">
-    <div layout="row" layout-sm="column" layout-align="end center" layout-wrap layout-margin>
+    <div layout="row" layout-align="end center" layout-margin>
         <md-button ng-click="$ctrl.completeStep()" ng-disabled="$ctrl.isDisabled()">
             Next <md-icon class="material-icons">&#xE409;</md-icon>
         </md-button>

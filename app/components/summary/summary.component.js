@@ -104,12 +104,21 @@
                 var ctx = canvas.getContext('2d');
                 var images = [];
 
+                // hexagon numbers
+                var hexSide = (tileWidth/2) * 1.15;
+                if(ctrl.isHexagonalGrid()){
+                    tileHeight = hexSide * 2;
+                }
+
                 containerElement.setAttribute('id', 'image-container');
 
                 if(_grid) {
 
                     for(var row=0; row<_grid.length; row++) {
                         tmpWidth = TILE_SPACE;
+                        if(ctrl.isHexagonalGrid() && (row % 2 != 0) ){   // is hex and row is even
+                            tmpWidth += (tileWidth/2);
+                        }
                         for(var cellIndex=0; cellIndex<localGrid[row].length; cellIndex++) {
                             if(localGrid[row][cellIndex].active) {
 
@@ -144,14 +153,21 @@
                                 };
 
                                 images.push(createImage(imgsrc, imageOptions, ctx));
-                                tmpWidth+= tileWidth + TILE_SPACE;
+                                tmpWidth += tileWidth + TILE_SPACE;
                             }
                         }
-                        tmpHeight+= tileHeight + TILE_SPACE;
+                        if(ctrl.isHexagonalGrid()){   // is hex
+                            tmpHeight += (hexSide * 1.5);
+                        } else {
+                            tmpHeight += tileHeight + TILE_SPACE;
+                        }
                     }
 
-                    var factor = Math.floor((images.length)/collectionGrids.getSelectedGridType().cols);
+                    var factor = Math.floor((images.length)/collectionGrids.getSelectedGridSize());
                     var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
+                    if(ctrl.isHexagonalGrid()){
+                        canvasWidth += (tileWidth/2);
+                    }
                     var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
 
                     canvas.width  = canvasWidth;
@@ -198,12 +214,6 @@
                 html2pdfTemplate.setAttribute('class', 'html2pdfTemplate');
                 html2pdfTemplate.setAttribute('style', 'width: 100%; box-sizing: border-box; padding: 0; margin: 0; z-index: 0;');
 
-                // Tile and color list
-                var listElement = angular.copy(document.getElementById('tile-list'));
-                var actionsElement = listElement.querySelector('.dialog-actions');
-                var actionsParentElement = listElement.querySelector('.dialog-content');
-                actionsParentElement.removeChild(actionsElement);
-
                 // Adds the grid as DOM element
                 $timeout(function () {
                     var bodyContainer = document.createElement('div');
@@ -227,9 +237,10 @@
                             listTitle.innerHTML = 'Tile details are shown on the following pages.';
                             bodyContainer.appendChild(listTitle);
 
+                            // Tile and color list
                             var listContainer = document.createElement('div');
                             listContainer.setAttribute('style', 'display: block; width: 100%; margin: 0;');
-                            listContainer.innerHTML = listElement.innerHTML;
+                            listContainer.innerHTML = angular.copy(document.getElementById('tile-list')).innerHTML;
 
                             var tileRows = listContainer.querySelectorAll('.tile-row');
 
@@ -278,7 +289,7 @@
                                                 tileColorsInnerHTML +
                                     '       </td>' +
                                     '   </tr>' +
-                                    '</tbody';
+                                    '</tbody>';
 
                                 bodyContainer.appendChild(t);
                             }
@@ -301,7 +312,21 @@
             return _grid;
         };
 
-        ctrl.getRowStyle = function (row) {
+        ctrl.isHexagonalGrid = function() {
+            return collectionGrids.isHexagonalGrid();
+        };
+
+        ctrl.getGridClasses = function () {
+            var _gridClasses = {
+                'hex-grid' : ctrl.isHexagonalGrid(),
+                'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
+                'grid-size-5': collectionGrids.getSelectedGridSize() == 5
+            };
+
+            return _gridClasses;
+        };
+
+        ctrl.getRowStyle = function (row, index) {
             var _rowStyle = {
                 'height': '0px',
                 'width': '100%'
@@ -309,7 +334,14 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    _rowStyle.height = (100/collectionGrids.getSelectedGridType().cols) + '%';
+                    if (ctrl.isHexagonalGrid()){
+                        _rowStyle.height = 'auto';
+                        if( index % 2 != 0 ) {
+                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';
+                        }
+                    } else {
+                        _rowStyle.height = (100 / collectionGrids.getSelectedGridSize()) + '%';
+                    }
                     break;
                 }
             }
@@ -322,7 +354,7 @@
             if(collectionGrids.getSelectedGridType()){
                 _cellStyle = {
                     'height': '100%',
-                    'width': (100/collectionGrids.getSelectedGridType().cols)+'%',
+                    'width': (100/collectionGrids.getSelectedGridSize())+'%',
                     'vertical-align': 'top'
                 };
             }

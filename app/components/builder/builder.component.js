@@ -34,7 +34,7 @@
             'ROTATE': {code: 'ROTATE'},
             'DELETE': {code: 'DELETE'}
         };
-        ctrl._selectedGridType =undefined;
+        ctrl.selectedGridType = undefined;
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
         ctrl.loading = false;
@@ -248,6 +248,10 @@
             return _selectedCollectionTiles;
         };
 
+        ctrl.getSelectedCollectionSize = function() {
+            return collectionGrids.getSelectedCollectionSize();
+        };
+
         ctrl.getGridTypes = function () {
             return _gridTypes;
         };
@@ -256,12 +260,16 @@
             return _selectedTiles;
         };
 
-        ctrl.getSelectedGridType = function () {
-            return ctrl._selectedGridType;
+        ctrl.getSelectedGridSize = function () {
+            return collectionGrids.getSelectedGridSize();
+        };
+
+        ctrl.isHexagonalGrid = function() {
+            return collectionGrids.isHexagonalGrid();
         };
 
         ctrl.setSelectedGridType = function (gridType) {
-            ctrl._selectedGridType = gridType;
+            ctrl.selectedGridType = gridType;
             collectionGrids.setSelectedGridType(gridType);
 
             // deactivate all tiles
@@ -272,8 +280,8 @@
             }
 
             // activate selected grid's tiles
-            for(var rowIndex=0; rowIndex<ctrl._selectedGridType.rows; rowIndex++){
-                for(var colIndex=0; colIndex<ctrl._selectedGridType.cols; colIndex++){
+            for(var rowIndex=0; rowIndex<gridType.rows; rowIndex++){
+                for(var colIndex=0; colIndex<gridType.cols; colIndex++){
                     _grid[rowIndex][colIndex].active = true;
                 }
             }
@@ -292,7 +300,17 @@
             return _grid;
         };
 
-        ctrl.getRowStyle = function (row) {
+        ctrl.getGridClasses = function () {
+            var _gridClasses = {
+                'hex-grid' : ctrl.isHexagonalGrid(),
+                'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
+                'grid-size-5': collectionGrids.getSelectedGridSize() == 5
+            };
+
+            return _gridClasses;
+        };
+
+        ctrl.getRowStyle = function (row, index) {
             var _rowStyle = {
                 'height': '0px',
                 'width': '100%'
@@ -300,7 +318,14 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    _rowStyle.height = (100 / ctrl._selectedGridType.cols) + '%';
+                    if (ctrl.isHexagonalGrid()){
+                        _rowStyle.height = 'auto';
+                        if( index % 2 != 0 ) {
+                            _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';
+                        }
+                    } else {
+                        _rowStyle.height = (100 / collectionGrids.getSelectedGridSize()) + '%';
+                    }
                     break;
                 }
             }
@@ -312,7 +337,7 @@
 
             return _cellStyle = {
                 'height': '100%',
-                'width': (100/ctrl._selectedGridType.cols)+'%',
+                'width': (100/collectionGrids.getSelectedGridSize())+'%',
                 'vertical-align': 'top'
             };
         };
@@ -689,10 +714,6 @@
             }
 
             return disabled;
-        };
-
-        ctrl.getSelectedCollection = function () {
-            return collectionTilesService.getSelectedCollection();
         };
 
         ctrl.$onInit = function() {

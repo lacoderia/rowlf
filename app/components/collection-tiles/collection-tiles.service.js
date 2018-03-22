@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('tileDesignStudio').factory('collectionTilesService', ['$rootScope', '$http', 'utilsService', 'AUTH_API_URL_BASE', function ($rootScope, $http, utilsService, AUTH_API_URL_BASE) {
+    angular.module('tileDesignStudio').factory('collectionTilesService', ['$rootScope', '$http', 'collectionGrids', 'utilsService', 'AUTH_API_URL_BASE', function ($rootScope, $http, collectionGrids, utilsService, AUTH_API_URL_BASE) {
 
         /**
          * Collection tiles array
@@ -28,7 +28,7 @@
         var getTileCount = function() {
             _tileCount++;
             return _tileCount;
-        }
+        };
 
         var callCollectionTiles = function () {
             var serviceURL = AUTH_API_URL_BASE + '/tile_types';
@@ -44,7 +44,8 @@
                                     title: tile_type.value,
                                     inches: tile_type.inches,
                                     centimeters: tile_type.centimeters,
-                                    tiles: []
+                                    tiles: [],
+                                    shape: tile_type.shape
                                 });
                             }
                         }
@@ -101,13 +102,13 @@
         }
 
 
-        function callTilesByCollectionId(collectionId) {
+        function callTilesByCollection(collection) {
             var serviceURL = AUTH_API_URL_BASE + '/tiles/by_tile_type';
-            return $http.get(serviceURL, { params: { tile_type: collectionId } }).then(
+            return $http.get(serviceURL, { params: { tile_type: collection.id } }).then(
                 function (response) {
                     try{
                         if(response.data){
-                            var collectionTiles = getCollectionTilesById(collectionId);
+                            var collectionTiles = getCollectionTilesById(collection.id);
                             collectionTiles.tiles = [];
                             for(var itemIndex=0; itemIndex<response.data.tiles.length; itemIndex++){
                                 var tile = response.data.tiles[itemIndex];
@@ -121,7 +122,8 @@
                                             rotation: 0,
                                             path_styles: xmlParsed.pathStyles
                                         },
-                                        xml: xmlParsed.xmlString
+                                        xml: xmlParsed.xmlString,
+                                        shape: collection.shape
                                     });
                                 }
                             }
@@ -156,8 +158,8 @@
          * @returns {undefined}
          */
         function getSelectedCollection() {
-            return _selectedCollection
-        };
+            return _selectedCollection;
+        }
 
         /**
          *
@@ -185,8 +187,8 @@
          * @param selectedCollection
          */
         function setSelectedCollection(collectionId) {
-            var selectedCollection = getCollectionTilesById(collectionId);
-            _selectedCollection = selectedCollection;
+            _selectedCollection = getCollectionTilesById(collectionId);
+            collectionGrids.setSelectedCollection(_selectedCollection);
             $rootScope.$broadcast('selectedCollectionTilesChange');
         }
 
@@ -243,7 +245,7 @@
             getSelectedCollectionTiles: getSelectedCollectionTiles,
             getSelectedTiles: getSelectedTiles,
             setSelectedTiles: setSelectedTiles,
-            callTilesByCollectionId: callTilesByCollectionId,
+            callTilesByCollection: callTilesByCollection,
             getTileByTmpId: getTileByTmpId,
             updateTileByTmpId: updateTileByTmpId
         };
