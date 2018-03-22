@@ -106,7 +106,7 @@
 
                 // hexagon numbers
                 var hexSide = (tileWidth/2) * 1.15;
-                if(ctrl.isSelectedCollectionHex()){
+                if(ctrl.isHexagonalGrid()){
                     tileHeight = hexSide * 2;
                 }
 
@@ -116,7 +116,7 @@
 
                     for(var row=0; row<_grid.length; row++) {
                         tmpWidth = TILE_SPACE;
-                        if(ctrl.isSelectedCollectionHex() && (row % 2 != 0) ){   // is hex and row is even
+                        if(ctrl.isHexagonalGrid() && (row % 2 != 0) ){   // is hex and row is even
                             tmpWidth += (tileWidth/2);
                         }
                         for(var cellIndex=0; cellIndex<localGrid[row].length; cellIndex++) {
@@ -156,7 +156,7 @@
                                 tmpWidth += tileWidth + TILE_SPACE;
                             }
                         }
-                        if(ctrl.isSelectedCollectionHex()){   // is hex
+                        if(ctrl.isHexagonalGrid()){   // is hex
                             tmpHeight += (hexSide * 1.5);
                         } else {
                             tmpHeight += tileHeight + TILE_SPACE;
@@ -165,7 +165,7 @@
 
                     var factor = Math.floor((images.length)/collectionGrids.getSelectedGridSize());
                     var canvasWidth = (tileWidth * factor) + (TILE_SPACE * factor) + TILE_SPACE;
-                    if(ctrl.isSelectedCollectionHex()){
+                    if(ctrl.isHexagonalGrid()){
                         canvasWidth += (tileWidth/2);
                     }
                     var canvasHeight = (tileHeight * factor) + (TILE_SPACE * factor) + TILE_SPACE;
@@ -312,13 +312,13 @@
             return _grid;
         };
 
-        ctrl.isSelectedCollectionHex = function() {
+        ctrl.isHexagonalGrid = function() {
             return collectionGrids.isHexagonalGrid();
         };
 
         ctrl.getGridClasses = function () {
             var _gridClasses = {
-                'hex-grid' : ctrl.isSelectedCollectionHex(),
+                'hex-grid' : ctrl.isHexagonalGrid(),
                 'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
                 'grid-size-5': collectionGrids.getSelectedGridSize() == 5
             };
@@ -334,7 +334,7 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    if (ctrl.isSelectedCollectionHex()){
+                    if (ctrl.isHexagonalGrid()){
                         _rowStyle.height = 'auto';
                         if( index % 2 != 0 ) {
                             _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';

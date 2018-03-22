@@ -248,8 +248,8 @@
             return _selectedCollectionTiles;
         };
 
-        ctrl.isSelectedCollectionHex = function() {
-            return collectionGrids.isHexagonalGrid();
+        ctrl.getSelectedCollectionSize = function() {
+            return collectionGrids.getSelectedCollectionSize();
         };
 
         ctrl.getGridTypes = function () {
@@ -262,6 +262,10 @@
 
         ctrl.getSelectedGridSize = function () {
             return collectionGrids.getSelectedGridSize();
+        };
+
+        ctrl.isHexagonalGrid = function() {
+            return collectionGrids.isHexagonalGrid();
         };
 
         ctrl.setSelectedGridType = function (gridType) {
@@ -298,7 +302,7 @@
 
         ctrl.getGridClasses = function () {
             var _gridClasses = {
-                'hex-grid' : ctrl.isSelectedCollectionHex(),
+                'hex-grid' : ctrl.isHexagonalGrid(),
                 'grid-size-2': collectionGrids.getSelectedGridSize() == 2,
                 'grid-size-5': collectionGrids.getSelectedGridSize() == 5
             };
@@ -314,7 +318,7 @@
 
             for(var i=0; i<row.length; i++){
                 if(row[i].active){
-                    if (ctrl.isSelectedCollectionHex()){
+                    if (ctrl.isHexagonalGrid()){
                         _rowStyle.height = 'auto';
                         if( index % 2 != 0 ) {
                             _rowStyle['margin-left'] = (50 / collectionGrids.getSelectedGridSize()) + '%';

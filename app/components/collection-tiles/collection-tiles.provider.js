@@ -61,19 +61,19 @@
         }
 
         /**
-         * Sets selected collection
-         * @param collection
-         */
-        function setSelectedCollection(collection) {
-            _selectedCollection = collection;
-        }
-
-        /**
          * Returns true if grid's shape is hexagonal
          * @param shape
          */
         function isHexagonalGrid(collection) {
             return (collection ? collection.shape == 'hex' : (_selectedCollection && _selectedCollection.shape == 'hex'));
+        }
+
+        /**
+         * Sets selected collection
+         * @param collection
+         */
+        function setSelectedCollection(collection) {
+            _selectedCollection = collection;
         }
 
         /**
@@ -87,8 +87,8 @@
                 getSelectedGridType: getSelectedGridType,
                 setSelectedGridType: setSelectedGridType,
                 getSelectedGridSize: getSelectedGridSize,
-                setSelectedCollection: setSelectedCollection,
-                isHexagonalGrid: isHexagonalGrid
+                isHexagonalGrid: isHexagonalGrid,
+                setSelectedCollection: setSelectedCollection
             }
         };
 

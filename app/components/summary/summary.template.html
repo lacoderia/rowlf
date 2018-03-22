@@ -5,10 +5,10 @@
         <div class="grid-container" flex="65" flex-sm="100" flex-xs="100" layout-fill layout-wrap layout-align="center start">
             <div class="grid" ng-class="$ctrl.getGridClasses()">
                 <div class="row" ng-style="$ctrl.getRowStyle(row, $index)" ng-repeat="row in $ctrl.getGrid()" flex>
-                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && !$ctrl.isSelectedCollectionHex()">
+                    <span class="cell" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && !$ctrl.isHexagonalGrid()">
                         <tile-grid tile="cell.tile" tile-shape="cell.tile.shape" cell-id="cell.id" ng-if="cell.tile.id"></tile-grid>
                     </span>
-                    <div class="hex-container" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && $ctrl.isSelectedCollectionHex()">
+                    <div class="hex-container" ng-style="$ctrl.getCellStyle()" ng-repeat="cell in row" ng-if="cell.active && $ctrl.isHexagonalGrid()">
                         <div class="hex-out">
                             <div class="hex-in">
                                 <span class="cell">

@@ -1,7 +1,7 @@
 <div role="dialog" aria-label="Preview" layout="column" layout-align="center center" layout-fill>
     <div class="work-table" layout="row" layout-fill layout-wrap>
         <div class="tile-preview" layout="row" flex-gt-xs="70" flex-xs="100" layout-align="center center" layout-wrap>
-            <previewer data="$ctrl.getGrid()" size="{{ $ctrl.getSelectedCollection().inches }}" grid-size="$ctrl.getSelectedGridSize()" layout-wrap></previewer>
+            <previewer data="$ctrl.getGrid()" grid-size="$ctrl.getSelectedGridSize()" hex-shape="$ctrl.isHexagonalGrid()" layout-wrap></previewer>
             <div class="preview-instructions" flex="100" layout-align="center center">
                 If you want to save the image, please take a screenshot. Use Command (⌘)+Shift+3 or Win+PrtScn
             </div>
