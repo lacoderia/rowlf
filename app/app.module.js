@@ -1,5 +1,12 @@
 'use strict';
 
+angular.uppercase=function(text){
+    return text.toUpperCase();
+}
+angular.lowercase=function(text){
+    return text.toLowerCase();
+}
+
 // Declare app level module which depends on views, and components
 angular.module('tileDesignStudio', [
     'ngRoute',

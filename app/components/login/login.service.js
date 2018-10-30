@@ -1,7 +1,7 @@
 (function(angular, sessionService) {
     'use strict';
 
-    angular.module('login').factory('loginService', ['$http', '$q', 'sessionService', 'AUTH_API_URL_BASE', function ($http, $q, sessionService, AUTH_API_URL_BASE) {
+    angular.module('login').factory('loginService', ['$http', '$q', 'sessionService', 'localStorageService', 'AUTH_API_URL_BASE', function ($http, $q, sessionService, localStorageService, AUTH_API_URL_BASE) {
 
         var login = function(user){
             var loginServiceURL = AUTH_API_URL_BASE + '/users/sign_in';
@@ -37,6 +37,49 @@
         var signUp = function(user, internal){
             var registerServiceURL = AUTH_API_URL_BASE + '/users/sign_up';
             return $http.post(registerServiceURL, { user: user, internal: internal })
+                .then(function(response) {
+                    var data = response.data;
+                    if (typeof data === 'object') {
+                        return data;
+                    } else {
+                        return $q.reject(data);
+                    }
+
+                }, function(error){
+                    return $q.reject(error.data);
+                });
+        };
+
+        var signUpHubspot = function(user){
+            var registerHubspotServiceURL = 'https://api.hsforms.com/submissions/v3/integration/submit/5068580/8206fd9e-3924-4930-aa82-2b9568b81b4c';
+            var hubspotObject = {
+                "fields": [
+                    {
+                      "name": "email",
+                      "value": user.email
+                    },
+                    {
+                      "name": "firstname",
+                      "value": user.name
+                    },
+                    {
+                      "name":"lastname",
+                      "value": user.name
+                    },
+                    {
+                      "name":"phone",
+                      "value": user.phone
+                    },
+                  ],
+                  "context": {
+                    "hutk": localStorageService.cookie.get('hubspotutk'),
+                    "pageUri": "http://originalmissiontiles.com",
+                    "ipAddress": "1.1.1.1",
+                    "pageName": "Design Studio",
+                    "sfdcCampaignId": "70150000000T85uAAC"
+                  },
+            }
+            return $http.post(registerHubspotServiceURL, hubspotObject)
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {
@@ -143,6 +186,7 @@
         var service = {
             login: login,
             signUp: signUp,
+            signUpHubspot: signUpHubspot,
             recoverPassword: recoverPassword,
             resetPassword: resetPassword,
             getCurrentSession: getCurrentSession,
