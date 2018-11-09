@@ -51,7 +51,7 @@
         };
 
         var signUpHubspot = function(user){
-            var registerHubspotServiceURL = 'https://api.hsforms.com/submissions/v3/integration/submit/5068580/8206fd9e-3924-4930-aa82-2b9568b81b4c';
+            var registerHubspotServiceURL = 'https://api.hsforms.com/submissions/v3/integration/submit/4480883/420ed695-6b77-4406-bccd-267b2c121c1f';
             var hubspotObject = {
                 "fields": [
                     {
@@ -63,20 +63,30 @@
                       "value": user.name
                     },
                     {
-                      "name":"lastname",
-                      "value": user.name
-                    },
-                    {
                       "name":"phone",
                       "value": user.phone
+                    },
+                    {
+                      "name":"address",
+                      "value": user.address
+                    },
+                    {
+                      "name":"city",
+                      "value": user.city
+                    },
+                    {
+                      "name":"state",
+                      "value": user.state
+                    },
+                    {
+                      "name":"country",
+                      "value": user.country
                     },
                   ],
                   "context": {
                     "hutk": localStorageService.cookie.get('hubspotutk'),
-                    "pageUri": "http://originalmissiontiles.com",
-                    "ipAddress": "1.1.1.1",
+                    "pageUri": "http://studio.originalmissiontile.com",
                     "pageName": "Design Studio",
-                    "sfdcCampaignId": "70150000000T85uAAC"
                   },
             }
             return $http.post(registerHubspotServiceURL, hubspotObject)
