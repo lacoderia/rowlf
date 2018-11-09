@@ -441,6 +441,8 @@
                                     ctrl.loading = false;
                                 });
 
+                            loginService.signUpHubspot(user);
+
                         }, function(error) {
                             var errorText = 'An error occured, please try again later...';
                             if(error && error.errors){
