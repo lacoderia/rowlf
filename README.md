@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 Rowlf's repository contains an angular project running on node. To prevent version incompatibilities, the following steps should be followed:
 
 1. Download and install node v10.12.0. The installation file can be found at [https://nodejs.org/download/release/v10.12.0/](https://nodejs.org/download/release/v10.12.0/)
-2. Install npm 6.4.1
+2. Install npm v6.4.1
 3. Install bower as root
 ```
 sudo npm install -g bower
@@ -37,10 +37,12 @@ npm install
 
 ## Running the App
 
-Excecute as user:
+1. Run the development build script on cli as user
 ```
 npm run-script start
 ```
+2. Open `http://localhost:3000/` on a browser
+
 
 ## Deployment
 
