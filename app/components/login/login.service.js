@@ -178,7 +178,7 @@
         };
 
         var getIpInfo = function () {
-            var serviceURL = 'http://ipinfo.io';
+            var serviceURL = 'https://ipinfo.io';
             return $http.get(serviceURL, {})
                 .then(function(response) {
                     if(response.data){
