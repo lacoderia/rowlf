@@ -85,7 +85,7 @@
                   ],
                   "context": {
                     "hutk": localStorageService.cookie.get('hubspotutk'),
-                    "pageUri": "http://studio.originalmissiontile.com",
+                    "pageUri": "https://studio.originalmissiontile.com",
                     "pageName": "Design Studio",
                   },
             }
