@@ -6,19 +6,19 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "~1.5.6",
-    "angular-animate": "~1.5.6",
-    "angular-aria": "~1.5.6",
-    "angular-loader": "~1.5.6",
-    "angular-material": "~1.1.0",
-    "angular-messages": "~1.5.6",
-    "angular-mocks": "~1.5.6",
-    "angular-resource": "~1.5.7",
-    "angular-route": "~1.5.6",
-    "html5-boilerplate": "^5.3.0",
-    "angular-local-storage": "^0.2.7",
-    "md-steppers": "^0.3.2",
-    "d3": "^4.2.2",
-    "dom-to-image": "^2.5.1"
+    "angular": "1.5.6",
+    "angular-animate": "1.5.6",
+    "angular-aria": "1.5.6",
+    "angular-loader": "1.5.6",
+    "angular-material": "1.1.0",
+    "angular-messages": "1.5.6",
+    "angular-mocks": "1.5.6",
+    "angular-resource": "1.5.7",
+    "angular-route": "1.5.6",
+    "html5-boilerplate": "5.3.0",
+    "angular-local-storage": "0.2.7",
+    "md-steppers": "0.3.2",
+    "d3": "4.2.2",
+    "dom-to-image": "2.5.1"
   }
 }
