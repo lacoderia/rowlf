@@ -457,6 +457,22 @@
             _mdPanel.open();
         };
 
+        ctrl.savePreview = function() {
+            domtoimage.toPng(document.getElementById('preview-to-pdf'))
+            .then(function (dataUrl) {
+                var docDefinition = {
+                    content: [{
+                        image: dataUrl,
+                        width: 500,
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("preview.pdf");
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+        };
+
         ctrl.closePreview = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;

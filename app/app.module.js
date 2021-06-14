@@ -29,8 +29,8 @@ angular.module('tileDesignStudio', [
 ]);
 
 angular.module('tileDesignStudio')
-    .constant('AUTH_API_URL_BASE', 'http://backend.originalmissiontile.com')
-    .constant('API_URL_BASE', 'http://backend.originalmissiontile.com')
+    .constant('AUTH_API_URL_BASE', 'https://backend.originalmissiontile.com')
+    .constant('API_URL_BASE', 'https://backend.originalmissiontile.com')
     .constant('TILES_ACTIONS', [
         { code: 'CHANGE_COLOR_TILE', icon: 'color_lens', title: 'Change color'},
         { code: 'ROTATE_TILE', icon: 'rotate_right', title: 'Rotate tile'},
