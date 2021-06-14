@@ -75,7 +75,6 @@
 
                             var SVGObject = document.createElement('svg');
                             var GObject = document.createElement('g');
-                            //console.log('ESTOY ENTRANDO AQUI')
 
                             d3.select(SVGObject)
                                 .attr('xmlns', 'http://www.w3.org/2000/svg')
