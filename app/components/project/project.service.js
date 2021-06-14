@@ -16,7 +16,9 @@
                             _projects = [];
 
                             for(var i=0; i < data.projects.length; i++){
-                                _projects.push(data.projects[i]);
+                                var tempProject = data.projects[i];
+                                tempProject.createdAt = '25/07/2021 12:13'
+                                _projects.push(tempProject);
                             }
                         }
 

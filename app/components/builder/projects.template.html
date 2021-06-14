@@ -6,9 +6,67 @@
                 <md-progress-circular md-mode="indeterminate" md-diameter="50"></md-progress-circular>
             </div>
         </div>
-        <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
+        <div ng-if="!$ctrl.loading">
+            <md-input-container class="md-icon-float md-block project-search-input">
+                <label>Search project by name</label>
+                <input ng-model="$ctrl.projectQuery" type="text">
+            </md-input-container>
+            <md-table-container>
+                <form novalidate class="form" name="$ctrl.emailForm">
+                    <table md-table multiple >
+                    <thead md-head md-order="$ctrl.tableQuery.order">
+                        <tr md-row>
+                        <th md-column md-order-by="name" class="cell-60"><span>Name</span></th>
+                        <th md-column md-numeric md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
+                        <th md-column md-numeric class="cell-20"><span>Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>  
+                        <tr md-row ng-repeat="project in filteredProjects = ($ctrl.getUserProjects() | orderBy: $ctrl.tableQuery.order | filter: { name: $ctrl.projectQuery } ) | limitTo: $ctrl.tableQuery.limit: ($ctrl.tableQuery.page - 1) * $ctrl.tableQuery.limit">
+                            <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-60">{{project.name}}</td>
+                            <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.createdAt}}</td>
+                            <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">
+                                <div class="list-item-buttons" ng-if="!project.deleting">
+                                    <md-icon class="material-icons" ng-click="$ctrl.showEmailView($event, project)">&#xE0BE;</md-icon>
+                                    <md-icon class="material-icons" ng-click="$ctrl.deleteProject($event, project)">&#xE92B;</md-icon>
+                                </div>
+                                <div layout-align="center center" layout="column" ng-if="project.deleting">
+                                    <md-progress-circular md-mode="indeterminate" md-diameter="22"></md-progress-circular>
+                                </div>
+                            </td>
+                            <td colspan="3" class="email-row" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
+                                <div class="email-row-container">
+                                    <md-icon class="material-icons" ng-click="$ctrl.hideEmailView($event, project)">&#xE14C;</md-icon>
+    
+                                    <md-input-container class="md-block" flex="100">
+                                        <label>Email</label>
+                                        <input type="email" name="email_{{$index}}" ng-model="project.email" required>
+                                        <div ng-messages="$ctrl.emailForm['email_' + $index].$error" md-auto-hide="false">
+                                            <div ng-message="required">Email is required</div>
+                                            <div ng-message="email">Not a valid email</div>
+                                        </div>
+                                    </md-input-container>
+            
+                                    <div class="list-item-buttons" ng-if="!project.sending">
+                                        <md-icon class="material-icons" ng-click="$ctrl.sendProject($event, project)">&#xE163;</md-icon>
+                                    </div>
+                                    <div layout-align="center center" layout="column" ng-if="project.sending">
+                                        <md-progress-circular md-mode="indeterminate" md-diameter="22"></md-progress-circular>
+                                    </div>
+                                </div>
+                            </td>
+    
+                        </tr>
+                    </tbody>
+                    </table>
+                </form>
+            </md-table-container>
+            <md-table-pagination md-limit="$ctrl.tableQuery.limit" md-limit-options="[5, 10, 15]" md-page="$ctrl.tableQuery.page" md-total="{{filteredProjects.length}}" md-on-paginate="$ctrl.getUserProjects()"></md-table-pagination>
+        </div>
+        
+        <!-- <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
             <form novalidate class="form" name="$ctrl.emailForm">
-                <div ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name'">
+                <div ng-repeat="project in $ctrl.getUserProjects() | orderBy: 'name' | filter: { name: $ctrl.projectQuery }">
                     <md-list-item class="secondary-button-padding" md-whiteframe="1" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }">
                         <p class="project-name" ng-click="$ctrl.openProject(project)">{{project.name}}</p>
                         <div class="list-item-buttons" ng-if="!project.deleting">
@@ -40,7 +98,8 @@
                     </md-list-item>
                 </div>
             </form>
-        </md-list>
+        </md-list> -->
+        
         <p ng-if="$ctrl.getUserProjects() && !$ctrl.getUserProjects().length">You haven't saved any designs yet</p>
     </div>
     <icon class="material-icons close-button" md-autofocus class="md-primary close-button" ng-click="$ctrl.closeProjectsView()">&#xE14C;</icon>
