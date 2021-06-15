@@ -37,7 +37,14 @@
         ctrl.selectedGridType = undefined;
         ctrl.selectedColor = undefined;
         ctrl.tileQuery = '';
+        ctrl.projectQuery = '';
         ctrl.loading = false;
+
+        ctrl.tableQuery = {
+            order: 'createdAt',
+            limit: 5,
+            page: 1
+          };
 
         $scope.$on('openProjectsView', function(){
             ctrl.openProjectsView();
@@ -457,6 +464,22 @@
             _mdPanel.open();
         };
 
+        ctrl.savePreview = function() {
+            domtoimage.toPng(document.getElementById('preview-to-pdf'))
+            .then(function (dataUrl) {
+                var docDefinition = {
+                    content: [{
+                        image: dataUrl,
+                        width: 500,
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("preview.pdf");
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+        };
+
         ctrl.closePreview = function() {
             _mdPanel.close().then(function() {
                 _mdPanel = undefined;
@@ -550,9 +573,21 @@
             $window.open(project.url, "_blank");
         };
 
+        ctrl.toggleProjectDetail = function($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            project.showDetailView = !project.showDetailView;
+        };
+
         ctrl.showEmailView = function($event, project) {
             $event.preventDefault();
             $event.stopPropagation();
+
+            for(var i=0; i<_projects.length; i++) {
+                _projects[i].email = '',
+                _projects[i].showEmailView = false;
+            }
 
             project.email = '';
             project.showEmailView = true;
