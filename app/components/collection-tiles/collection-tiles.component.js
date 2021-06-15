@@ -116,6 +116,7 @@
                             then(
                                 function (response) {
                                     collectionTilesService.setSelectedCollection(collection.id);
+                                    console.log(collectionTilesService.getSelectedCollectionTiles());
                                     _selectedCollectionTiles.tiles = collectionTilesService.getSelectedCollectionTiles();
                                 }
                             ).

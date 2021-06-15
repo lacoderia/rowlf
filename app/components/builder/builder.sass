@@ -576,28 +576,63 @@ md-step-content
   overflow: hidden
   padding: 40px
   position: relative
-  width: 40%
+  width: 60%
   height: 70%
 
   .work-table-list
     overflow: auto
 
-  md-list-item
+  .project-search-input
+    margin-bottom: 0
+
+  .email-row
+    border-top: 1px rgba(0,0,0,.12) solid;
+    padding: 0 24px
+
+    .email-row-container
+      display: flex
+      align-items: center
+
+    &.disabled
+      color: rgba(0,0,0,0.26)
+      pointer-events: none
+
+      md-icon
+        color: rgba(0,0,0,0.26)
+
+  md-table-container
     background-color: #fff
+    max-height: 350px
+
+    .md-row
+      &.show-details
+        .md-cell
+          padding-top: 12px !important
+          padding-bottom: 12px !important
+          vertical-align: top !important
 
     .project-name
       cursor: pointer
       outline: none
 
-    .list-item-buttons
+    .cell-20
+      width: 20%
 
-      md-icon
-        cursor: pointer
-        outline: none
+    .cell-60
+      width: 60%
+
+    .list-item-buttons
+      display: inline-block
+
+    md-icon
+      cursor: pointer
+      outline: none
 
     md-input-container
       margin-bottom: 0px
-      padding-right: 16px
+      margin-left: 16px
+      margin-right: 16px
+      display: inline-block
 
     &.disabled
       color: rgba(0,0,0,0.26)

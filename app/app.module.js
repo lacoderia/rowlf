@@ -14,6 +14,7 @@ angular.module('tileDesignStudio', [
     'ngMessages',
     'ngMaterial',
     'md-steppers',
+    'md.data.table',
     'LocalStorageModule',
     'intro',
     'login',
