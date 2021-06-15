@@ -20,6 +20,8 @@
     "md-steppers": "0.3.4",
     "d3": "4.3.0",
     "dom-to-image": "2.5.2",
-    "angular-material-data-table": "^0.10.10"
+    "angular-material-data-table": "0.10.10",
+    "moment": "2.29.1",
+    "pdfmake": "0.1.71"
   }
 }
