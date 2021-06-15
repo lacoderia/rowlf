@@ -41,7 +41,7 @@
         ctrl.loading = false;
 
         ctrl.tableQuery = {
-            order: 'name',
+            order: 'createdAt',
             limit: 5,
             page: 1
           };

@@ -9,16 +9,22 @@
             var serviceURL = AUTH_API_URL_BASE + '/projects/by_user';
             return $http.get(serviceURL, {})
                 .then(function(response) {
-                    var data = response.data;
+                    var data = angular.copy(response.data);
                     if (typeof data === 'object') {
 
                         if(data.projects){
                             _projects = [];
 
                             for(var i=0; i < data.projects.length; i++){
-                                var tempProject = data.projects[i];
-                                tempProject.createdAt = '25/07/2021 12:13'
-                                _projects.push(tempProject);
+                                var project = {
+                                    id: data.projects[i].id,
+                                    url: data.projects[i].url,
+                                    name: data.projects[i].name,
+                                    filename: data.projects[i].filename,
+                                    createdAt: data.projects.length - i,
+                                    createdAtFormat: moment(data.projects[i].created_at).format('L, HH:mm '),
+                                };
+                                _projects.push(project);
                             }
                         }
 

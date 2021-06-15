@@ -18,7 +18,7 @@
                         <tr md-row>
                             <th md-column><span></span></th>
                             <th md-column md-order-by="name" class="cell-60"><span>Name</span></th>
-                            <th md-column md-numeric md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
+                            <th md-column md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
                             <th md-column md-numeric class="cell-20"><span>Actions</span></th>
                         </tr>
                     </thead>
@@ -30,11 +30,9 @@
                             </td>
                             <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-60">
                                 {{project.name}}
-                                <div ng-if="project.showDetailView">details</div>
-                                <div ng-if="project.showDetailView">details</div>
-                                <div ng-if="project.showDetailView">details</div>
+                                <div ng-if="project.showDetailView" style="margin-top: 6px; color: #9E9E9E;">No project details</div>
                             </td>
-                            <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.createdAt}}</td>
+                            <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.createdAtFormat}}</td>
                             <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">
                                 <div class="list-item-buttons" ng-if="!project.deleting">
                                     <md-icon class="material-icons" ng-click="$ctrl.showEmailView($event, project)">&#xE0BE;</md-icon>
