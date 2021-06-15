@@ -604,6 +604,13 @@ md-step-content
     background-color: #fff
     max-height: 350px
 
+    .md-row
+      &.show-details
+        .md-cell
+          padding-top: 12px !important
+          padding-bottom: 12px !important
+          vertical-align: top !important
+
     .project-name
       cursor: pointer
       outline: none
@@ -617,9 +624,9 @@ md-step-content
     .list-item-buttons
       display: inline-block
 
-      md-icon
-        cursor: pointer
-        outline: none
+    md-icon
+      cursor: pointer
+      outline: none
 
     md-input-container
       margin-bottom: 0px

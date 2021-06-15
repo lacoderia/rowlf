@@ -16,14 +16,24 @@
                     <table md-table multiple >
                     <thead md-head md-order="$ctrl.tableQuery.order">
                         <tr md-row>
-                        <th md-column md-order-by="name" class="cell-60"><span>Name</span></th>
-                        <th md-column md-numeric md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
-                        <th md-column md-numeric class="cell-20"><span>Actions</span></th>
+                            <th md-column><span></span></th>
+                            <th md-column md-order-by="name" class="cell-60"><span>Name</span></th>
+                            <th md-column md-numeric md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
+                            <th md-column md-numeric class="cell-20"><span>Actions</span></th>
                         </tr>
                     </thead>
                     <tbody md-body>  
-                        <tr md-row ng-repeat="project in filteredProjects = ($ctrl.getUserProjects() | orderBy: $ctrl.tableQuery.order | filter: { name: $ctrl.projectQuery } ) | limitTo: $ctrl.tableQuery.limit: ($ctrl.tableQuery.page - 1) * $ctrl.tableQuery.limit">
-                            <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-60">{{project.name}}</td>
+                        <tr md-row ng-repeat="project in filteredProjects = ($ctrl.getUserProjects() | orderBy: $ctrl.tableQuery.order | filter: { name: $ctrl.projectQuery } ) | limitTo: $ctrl.tableQuery.limit: ($ctrl.tableQuery.page - 1) * $ctrl.tableQuery.limit" ng-class="{ 'show-details': project.showDetailView }">
+                            <td md-cell ng-if="!project.showEmailView">
+                                <md-icon class="material-icons" ng-click="$ctrl.toggleProjectDetail($event, project)" ng-if="!project.showDetailView">&#xe5cf;</md-icon>
+                                <md-icon class="material-icons" ng-click="$ctrl.toggleProjectDetail($event, project)" ng-if="project.showDetailView">&#xe5ce;</md-icon>
+                            </td>
+                            <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-60">
+                                {{project.name}}
+                                <div ng-if="project.showDetailView">details</div>
+                                <div ng-if="project.showDetailView">details</div>
+                                <div ng-if="project.showDetailView">details</div>
+                            </td>
                             <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.createdAt}}</td>
                             <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">
                                 <div class="list-item-buttons" ng-if="!project.deleting">
@@ -34,7 +44,7 @@
                                     <md-progress-circular md-mode="indeterminate" md-diameter="22"></md-progress-circular>
                                 </div>
                             </td>
-                            <td colspan="3" class="email-row" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
+                            <td colspan="4" class="email-row" ng-if="project.showEmailView" ng-disabled="project.sending" ng-class="{ 'disabled': project.sending }">
                                 <div class="email-row-container">
                                     <md-icon class="material-icons" ng-click="$ctrl.hideEmailView($event, project)">&#xE14C;</md-icon>
     

@@ -573,9 +573,21 @@
             $window.open(project.url, "_blank");
         };
 
+        ctrl.toggleProjectDetail = function($event, project) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            project.showDetailView = !project.showDetailView;
+        };
+
         ctrl.showEmailView = function($event, project) {
             $event.preventDefault();
             $event.stopPropagation();
+
+            for(var i=0; i<_projects.length; i++) {
+                _projects[i].email = '',
+                _projects[i].showEmailView = false;
+            }
 
             project.email = '';
             project.showEmailView = true;
