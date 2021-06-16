@@ -23,13 +23,17 @@
         <div id="tile-list" class="tile-list" flex="35" flex-sm="100" flex-xs="100" layout-wrap md-whiteframe="1">
             <div class="dialog-content">
                 <h3>List of tiles</h3>
-                <table style="width: 100%; border-collapse:separate; border-spacing: 0px 16px;" ng-repeat="tile in $ctrl.getTileDetails()">
+                <table ng-repeat="tile in $ctrl.getTileDetails()">
                     <tr class="tile-row">
-                        <td class="tile-cell" style="width: 76px; padding-right: 8px;">
-                            <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;"></tile-button>
+                        <td class="tile-details-container">
+                            <div>
+                                <div class="tile-cell">
+                                    <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;"></tile-button>
+                                </div>
+                                <div class="count">x <span class="tile-count">{{ tile.count }}</span></div>
+                            </div>
+                            <div class="tile-name">{{ tile.name }}</div>
                         </td>
-                        <td class="tile-name" style="display: none">{{ tile.name }}</td>
-                        <td class="count" style="font-size: 1.5rem; color: #212121; margin-right: 32px;">x <span class="tile-count">{{ tile.count }}</span></td>
                         <td class="tile-colors-container" ng-if="tile.proccessedColors.length > 0">
                             <div class="tile-colors">
                                 <table class="color-item" ng-repeat="color in tile.proccessedColors">

@@ -11,6 +11,7 @@
         var _selectedCollectionTiles = [];
         var _gridTypes;
         var _grid = [];
+        var _tileDetails = [];
         var _cellStyle;
         var _selectedCell;
         var _mdPanel = undefined;
@@ -86,6 +87,8 @@
                         _selectedCell.tile = undefined;
                         _selectedCell = undefined;
                     }
+                    // Refresh tile details
+                    refreshTileDetails();
                     break;
             }
         };
@@ -301,6 +304,9 @@
                     }
                 }
             }
+
+            // Refresh tile details
+            refreshTileDetails();
         };
 
         ctrl.getGrid = function () {
@@ -374,11 +380,51 @@
                         if(_grid[i][j].id == cell.id) {
                             cell.tile = angular.copy(_selectedTile);
                             _grid[i][j] = angular.copy(cell);
+
+                            // Refresh tile details
+                            refreshTileDetails();
+
                             return;
                         }
                     }
                 }
             }
+
+            
+        };
+
+        function getTileIndex(tile) {
+            var index = -1;
+            var tmpCustomStyles;
+            for(var k=0; k<_tileDetails.length; k++) {
+                tmpCustomStyles = _tileDetails[k].custom_styles;
+                if(tmpCustomStyles && tile.custom_styles && JSON.stringify(tmpCustomStyles.path_styles) == JSON.stringify(tile.custom_styles.path_styles)){
+                    index = k;
+                    return index;
+                }
+            }
+
+            return index;
+        }
+
+        var refreshTileDetails = function() {
+            _tileDetails = [];
+            var index;
+
+            for(var i=0; i<_grid.length; i++) {
+                for(var j=0; j<_grid[i].length; j++) {
+                    if(_grid[i][j].tile){
+                        index = getTileIndex(_grid[i][j].tile);
+                        if( index == -1){
+                            _tileDetails.push(_grid[i][j].tile);
+                        }
+                    }
+                }
+            }
+        }
+
+        ctrl.getTileDetails = function() {
+            return _tileDetails;
         };
 
         /**

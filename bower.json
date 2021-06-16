@@ -23,5 +23,8 @@
     "angular-material-data-table": "0.10.10",
     "moment": "2.29.1",
     "pdfmake": "0.1.71"
+  },
+  "resolutions": {
+    "angular": "1.8.2"
   }
 }
