@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/app.css">
 
     <!-- Vendor style sheets -->
-    <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.min.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.min.css?v=<%= version %>" type="text/css"/>
 
 </head>
 <body ng-cloak layout="column">
@@ -27,96 +27,96 @@
     <div id="main" ng-view flex layout="column"></div>
 
     <!-- Vendor libs -->
-    <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
-    <script src="bower_components/dom-to-image/dist/dom-to-image.min.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.min.js"></script>
-    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/d3/d3.min.js?v=<%= version %>" charset="utf-8"></script>
+    <script src="bower_components/dom-to-image/dist/dom-to-image.min.js?v=<%= version %>"></script>
+    <script src="bower_components/pdfmake/build/pdfmake.min.js?v=<%= version %>"></script>
+    <script src="bower_components/moment/min/moment.min.js?v=<%= version %>"></script>
    
     <!-- Angular libs -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="bower_components/angular-loader/angular-loader.min.js"></script>
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
-    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
-    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <script src="bower_components/md-steppers/dist/md-steppers.min.js"></script>
-    <script src="bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+    <script src="bower_components/angular/angular.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-loader/angular-loader.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-material/angular-material.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-route/angular-route.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js?v=<%= version %>"></script>
+    <script src="bower_components/md-steppers/dist/md-steppers.min.js?v=<%= version %>"></script>
+    <script src="bower_components/angular-material-data-table/dist/md-data-table.min.js?v=<%= version %>"></script>
 
     <!-- Application scripts -->
-    <script src="app.module.js"></script>
-    <script src="app.config.js"></script>
+    <script src="app.module.js?v=<%= version %>"></script>
+    <script src="app.config.js?v=<%= version %>"></script>
 
     <!-- Application services -->
-    <script src="shared/services/utils.service.js"></script>
-    <script src="shared/services/store.service.js"></script>
-    <script src="shared/services/session.service.js"></script>
-    <script src="shared/services/routing.service.js"></script>
+    <script src="shared/services/utils.service.js?v=<%= version %>"></script>
+    <script src="shared/services/store.service.js?v=<%= version %>"></script>
+    <script src="shared/services/session.service.js?v=<%= version %>"></script>
+    <script src="shared/services/routing.service.js?v=<%= version %>"></script>
 
     <!-- Application directives -->
-    <script src="shared/directives/password-check.directive.js"></script>
+    <script src="shared/directives/password-check.directive.js?v=<%= version %>"></script>
 
     <!-- Common Classes -->
-    <script src="shared/classes/User.js"></script>
+    <script src="shared/classes/User.js?v=<%= version %>"></script>
 
     <!-- Components -->
 
     <!-- Intro Component -->
-    <script src="components/intro/intro.module.js"></script>
-    <script src="components/intro/intro.component.js"></script>
+    <script src="components/intro/intro.module.js?v=<%= version %>"></script>
+    <script src="components/intro/intro.component.js?v=<%= version %>"></script>
 
     <!-- Login Component -->
-    <script src="components/login/login.module.js"></script>
-    <script src="components/login/login.component.js"></script>
-    <script src="components/login/login.service.js"></script>
+    <script src="components/login/login.module.js?v=<%= version %>"></script>
+    <script src="components/login/login.component.js?v=<%= version %>"></script>
+    <script src="components/login/login.service.js?v=<%= version %>"></script>
 
     <!-- Navigation Component -->
-    <script src="components/navigation/navigation.module.js"></script>
-    <script src="components/navigation/navigation.component.js"></script>
-    <script src="components/navigation/navigation.service.js"></script>
+    <script src="components/navigation/navigation.module.js?v=<%= version %>"></script>
+    <script src="components/navigation/navigation.component.js?v=<%= version %>"></script>
+    <script src="components/navigation/navigation.service.js?v=<%= version %>"></script>
 
     <!-- Customizer Component -->
-    <script src="components/customizer/customizer.module.js"></script>
-    <script src="components/customizer/customizer.component.js"></script>
-    <script src="components/customizer/customizer.service.js"></script>
+    <script src="components/customizer/customizer.module.js?v=<%= version %>"></script>
+    <script src="components/customizer/customizer.component.js?v=<%= version %>"></script>
+    <script src="components/customizer/customizer.service.js?v=<%= version %>"></script>
 
     <!-- Collection Tiles Component -->
-    <script src="components/collection-tiles/collection-tiles.module.js"></script>
-    <script src="components/collection-tiles/collection-tiles.component.js"></script>
-    <script src="components/collection-tiles/collection-tiles.service.js"></script>
-    <script src="components/collection-tiles/collection-tiles.provider.js"></script>
+    <script src="components/collection-tiles/collection-tiles.module.js?v=<%= version %>"></script>
+    <script src="components/collection-tiles/collection-tiles.component.js?v=<%= version %>"></script>
+    <script src="components/collection-tiles/collection-tiles.service.js?v=<%= version %>"></script>
+    <script src="components/collection-tiles/collection-tiles.provider.js?v=<%= version %>"></script>
 
     <!-- Tile Builder Component -->
-    <script src="components/builder/builder.module.js"></script>
-    <script src="components/builder/builder.component.js"></script>
-    <script src="components/builder/builder.service.js"></script>
+    <script src="components/builder/builder.module.js?v=<%= version %>"></script>
+    <script src="components/builder/builder.component.js?v=<%= version %>"></script>
+    <script src="components/builder/builder.service.js?v=<%= version %>"></script>
 
     <!-- Tile Summary Component -->
-    <script src="components/summary/summary.module.js"></script>
-    <script src="components/summary/summary.component.js"></script>
-    <script src="components/summary/summary.service.js"></script>
+    <script src="components/summary/summary.module.js?v=<%= version %>"></script>
+    <script src="components/summary/summary.component.js?v=<%= version %>"></script>
+    <script src="components/summary/summary.service.js?v=<%= version %>"></script>
 
     <!-- Tile Canvas Component -->
-    <script src="components/tile-canvas/tile-canvas.module.js"></script>
-    <script src="components/tile-canvas/tile-canvas.directive.js"></script>
+    <script src="components/tile-canvas/tile-canvas.module.js?v=<%= version %>"></script>
+    <script src="components/tile-canvas/tile-canvas.directive.js?v=<%= version %>"></script>
 
     <!-- Tile Button Component -->
-    <script src="components/tile-button/tile-button.module.js"></script>
-    <script src="components/tile-button/tile-button.directive.js"></script>
+    <script src="components/tile-button/tile-button.module.js?v=<%= version %>"></script>
+    <script src="components/tile-button/tile-button.directive.js?v=<%= version %>"></script>
 
     <!-- Tile Grid Component -->
-    <script src="components/tile-grid/tile-grid.module.js"></script>
-    <script src="components/tile-grid/tile-grid.directive.js"></script>
+    <script src="components/tile-grid/tile-grid.module.js?v=<%= version %>"></script>
+    <script src="components/tile-grid/tile-grid.directive.js?v=<%= version %>"></script>
 
     <!-- Previewer Component -->
-    <script src="components/previewer/previewer.module.js"></script>
-    <script src="components/previewer/previewer.directive.js"></script>
+    <script src="components/previewer/previewer.module.js?v=<%= version %>"></script>
+    <script src="components/previewer/previewer.directive.js?v=<%= version %>"></script>
 
     <!-- Project Component -->
-    <script src="components/project/project.service.js"></script>
+    <script src="components/project/project.service.js?v=<%= version %>"></script>
 
     <!-- Start of HubSpot Embed Code -->
     <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4480883.js"></script>
