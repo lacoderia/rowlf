@@ -174,17 +174,6 @@ collection-tiles
   width: 100%
   transition: 1s ease
 
-  md-input-container
-    color: $color-gray-500
-    margin: 0
-    padding: 0
-
-    label, input
-      color: $color-gray-500
-
-    input
-      border-color: $color-gray-500
-
   h3
     color: white
     margin: 0 0 1.4rem
@@ -193,69 +182,101 @@ collection-tiles
     color: $color-gray-400
     margin: 0.8rem 0 2rem
 
-  .tile-selector
-    align-content: space-around
+  .tools-container
     display: flex
-    flex-wrap: wrap
-    width: 100%
+    flex-direction: row
 
-    .tile-item-container
-      padding: 1rem
+    .search-bar
+      color: $color-gray-500
+      flex: 1
+      margin: 0
+      padding: 0
 
-      .tile-item
-        background: white
-        border: 2px solid transparent
-        cursor: pointer
-        display: flex
-        outline: none
+      label, input
+        color: $color-gray-500
+
+      input
+        border-color: $color-gray-500
+    
+    .pagination
+      border-top: none !important
+      color: white
+      flex: 1
+
+      md-select
+        &:not([disabled])
+            &:focus 
+              .md-select-value
+                color: white
+
+      md-icon
+        color: white
+
+  .tile-selector
+
+    md-table-container
+      align-content: space-around
+      display: flex
+      flex-wrap: wrap
+      width: 100%
+
+      .tile-item-container
         padding: 1rem
-        position: relative
-        height: 100%
 
-        &:hover
-          &:not(.selected)
-            border-color: $color-light-green-300
+        .tile-item
+          background: white
+          border: 2px solid transparent
+          cursor: pointer
+          display: flex
+          outline: none
+          padding: 1rem
+          position: relative
+          height: 100%
 
-        .tile-image
-          width: 100%
+          &:hover
+            &:not(.selected)
+              border-color: $color-light-green-300
 
-        .tile-title
-          color: $color-gray-900
-          font-size: 0.9rem
-          margin-bottom: 0
-          margin-top: 1rem
-          text-align: center
+          .tile-image
+            width: 100%
 
-        .selected-overlay
-          background: $color-light-green-300
-          bottom: 0
-          display: none
-          left: 0
-          opacity: 0
-          position: absolute
-          right: 0
-          top: 0
-          transition: opacity 0.2s
-
-        .selected-icon
-          bottom: 10px
-          color: $color-light-green-500
-          content: ""
-          height: 20px
-          opacity: 0
-          position: absolute
-          right: 10px
-          width: 20px
-          transition: opacity 0.2s
-
-        &.selected
+          .tile-title
+            color: $color-gray-900
+            font-size: 0.9rem
+            margin-bottom: 0
+            margin-top: 1rem
+            text-align: center
 
           .selected-overlay
-            display: block
-            opacity: 0.1
+            background: $color-light-green-300
+            bottom: 0
+            display: none
+            left: 0
+            opacity: 0
+            position: absolute
+            right: 0
+            top: 0
+            transition: opacity 0.2s
 
           .selected-icon
-            opacity: 1
+            bottom: 10px
+            color: $color-light-green-500
+            content: ""
+            height: 20px
+            opacity: 0
+            position: absolute
+            right: 10px
+            width: 20px
+            transition: opacity 0.2s
+
+          &.selected
+
+            .selected-overlay
+              display: block
+              opacity: 0.1
+
+            .selected-icon
+              opacity: 1
 
 @media (max-width: 599px)
 
@@ -279,6 +300,14 @@ collection-tiles
 
       h3
         font-size: 14px
+
+      .tools-container
+        display: flex
+        flex-direction: column
+
+        .md-table-pagination
+          >*
+            height: 36px
 
       .tile-selector
         .tile-item-container

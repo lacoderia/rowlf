@@ -24,6 +24,11 @@
          */
         ctrl.tileQuery = '';
 
+        ctrl.tableQuery = {
+            limit: 10,
+            page: 1
+          };
+
         /**
          *
          */
