@@ -24,30 +24,45 @@
             </ul>
         </div>
         <div layout="row" layout-wrap layout-align="center start" flex="100">
-            <div class="worktable-tools" flex="35" flex-sm="100" flex-xs="100" layout-wrap layout-align="center start" md-whiteframe="1">
-                <md-list ng-cloak>
-                    <md-subheader class="md-no-sticky" hide-xs style="background-color: #ffffff">Grid actions</md-subheader>
-                    <md-list-item class="secondary-button-padding md-no-proxy">
-                        <div class="md-list-item-text">
-                            <h4>Grid size</h4>
-                        </div>
-                        <div class="md-secondary">
-                            <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()" ng-click="$ctrl.setSelectedGridType(type)">
-                                <input type="radio" ng-model="$ctrl.selectedGridType" ng-value="type">
-                                <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
-                                <span class="grid-size-selector-text" ng-bind="::type.title"></span>
-                            </label>
-                        </div>
-                    </md-list-item>
-                    <md-list-item class="secondary-button-padding md-no-proxy">
-                        <div class="md-list-item-text">
-                            <h4>Click to see a preview</h4>
-                        </div>
-                        <div class="md-secondary">
-                            <md-button class="md-raised" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip><md-icon>&#xE417;</md-icon> Preview</md-button>
-                        </div>
-                    </md-list-item>
-                </md-list>
+            <div flex="35" flex-sm="100" flex-xs="100" layout-wrap layout-align="center start">
+                <div class="worktable-tools" flex="100" md-whiteframe="1">
+                    <md-list ng-cloak>
+                        <md-subheader class="md-no-sticky" hide-xs style="background-color: #ffffff">Grid actions</md-subheader>
+                        <md-list-item class="secondary-button-padding md-no-proxy">
+                            <div class="md-list-item-text">
+                                <h4>Grid size</h4>
+                            </div>
+                            <div class="md-secondary">
+                                <label class="grid-size-selector" ng-repeat="type in $ctrl.getGridTypes()" ng-click="$ctrl.setSelectedGridType(type)">
+                                    <input type="radio" ng-model="$ctrl.selectedGridType" ng-value="type">
+                                    <img ng-src="{{ type.url }}" aria-label="{{ type.url }}">
+                                    <span class="grid-size-selector-text" ng-bind="::type.title"></span>
+                                </label>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="secondary-button-padding md-no-proxy">
+                            <div class="md-list-item-text">
+                                <h4>Click to see a preview</h4>
+                            </div>
+                            <div class="md-secondary">
+                                <md-button class="md-raised" ng-click="$ctrl.openPreview()"><md-tooltip>Preview</md-tooltip><md-icon>&#xE417;</md-icon> Preview</md-button>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </div>
+                <div class="panel-tile-list" flex="100" flex-sm="100" flex-xs="100" layout-wrap md-whiteframe="1">
+                    <div class="dialog-content">
+                        <h4 class="tile-list-title">List of tiles</h4>
+                        <table style="width: 100%; border-collapse:separate; border-spacing: 0px 16px;" ng-repeat="tile in $ctrl.getTileDetails()">
+                            <tr class="tile-row">
+                                <td class="tile-cell" style="width: 50px; padding-right: 8px;">
+                                    <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;"></tile-button>
+                                </td>
+                                <td class="tile-name">{{tile.name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="work-table" flex="65" flex-sm="100" flex-xs="100" layout-fill layout-wrap layout-align="center start">
                 <div class="grid" ng-class="$ctrl.getGridClasses()">

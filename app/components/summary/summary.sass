@@ -168,6 +168,27 @@ summary-component
       .dialog-content
         padding: 0 16px
 
+        >table
+          width: 100%
+          border-collapse: separate
+          border-spacing: 0px 16px
+
+          .tile-cell
+            display: inline-block
+            padding-right: 8px
+            width: 76px
+          
+          .count
+            display: inline-block
+            font-size: 1.5rem
+            color: #212121
+            margin-right: 32px
+
+          .tile-name
+            font-size: 0.9rem
+            color: #212121
+            margin-top: 8px
+
         .tile-colors
           table
             height: 100%
@@ -190,9 +211,6 @@ summary-component
               font-size: 0.8rem
 
 
-
-
-
 @media (max-width: 599px)
   .summary
     .grid
@@ -213,19 +231,22 @@ summary-component
       .dialog-content
         padding: 0 16px
 
-        table
+        >table
           .tile-row
             text-align: center
-              
-            .tile-cell
-              display: inline-block
 
-            .count
-              display: inline-block
-              margin-right: 0px !important
+            .tile-details-container
+              display: block
+              
+              .tile-cell
+                display: inline-block
+
+              .count
+                display: inline-block
+                margin-right: 0px !important
 
             .tile-colors-container
-              display: inline-block
+              display: block
               margin-top: 2rem
               text-align: center
               width: 100%
