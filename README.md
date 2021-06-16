@@ -56,6 +56,15 @@ constant('AUTH_API_URL_BASE', 'http://servicios.coderia.mx:8081')
 constant('API_URL_BASE', 'http://servicios.coderia.mx/8081')
 ```
 
+2. Update the version number in `/rowlf/app/routes/index.js` file
+
+index.js
+```
+res.render('index', { title: 'Design Studio', version: '2.0' });
+```
+
+This change will force browsers to reload all scripts
+
 ## Additional Notes
 
 * Bower y node libraries inside `/usr/local/lib/node_modules/` must have root access
