@@ -207,7 +207,7 @@
 
         };
 
-        var exportAsPDF = function (projectName) {
+        var exportAsPDF = function (project) {
             return $q(function (resolve, reject) {
                 // Wrapper element
                 var html2pdfTemplate = document.createElement('div');
@@ -221,7 +221,7 @@
                     bodyContainer.innerHTML =
                         '<h1 style="color: white; background: #8BC34A; padding: 4px 16px; font-size: 20px; font-weight: normal; margin: 16px 0;">Design Studio</h1>' +
                         '<div id="summary-body" style="padding: 0; margin: 16px 0 32px;">' +
-                        '<p style="color: #424242; margin: 16px 0; font-size: 12px;">' + sessionService.get().getName().split(' ')[0] + ', this is a summary of your design: "' + projectName + '"</p>' +
+                        '<p style="color: #424242; margin: 16px 0; font-size: 12px;">' + sessionService.get().getName().split(' ')[0] + ', this is a summary of your design: "' + project.name + '"</p>' +
                         '<p style="color: #424242; margin: 16px 0; font-size: 12px;">Preview: </p>' +
                         '</div>';
 
@@ -369,11 +369,12 @@
         ctrl.promptSaveProject = function(event) {
 
             ctrl.projectName = '';
+            ctrl.projectReference = '';
 
             $mdDialog.show({
                 controller: summaryController,
                 template: '' +
-                '<md-dialog md-theme="default" aria-label="Save design" class="md-default-theme" ng-class="dialog.css" flex="20" ng-cloak>' +
+                '<md-dialog md-theme="default" aria-label="Save design" class="md-default-theme save-project-dialog" ng-class="dialog.css" flex="20" ng-cloak>' +
                 '   <md-dialog-content class="md-dialog-content" ng-if="$ctrl.loading">' +
                 '       <div layout="row" flex="100">' +
                 '           <div layout-align="center center" layout="column" flex="100">' +
@@ -382,15 +383,21 @@
                 '       </div>' +
                 '   </md-dialog-content>' +
 
-                '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' + 
-                '      <form novalidate class="form" name="$ctrl.saveDesignForm">' + 
+                '   <md-dialog-content class="md-dialog-content" ng-if="!$ctrl.loading">' +
+                '      <form novalidate class="form" name="$ctrl.saveDesignForm">' +
                 '           <h2 class="md-title">Save design</h2>' +
-                '           <md-input-container class="md-default-theme">' + 
-                '               <input name="projectName" ng-model="$ctrl.projectName" placeholder="Design name" ng-pattern="/^[0-9a-zA-Z ]+$/" required>' + 
+                '           <md-input-container class="md-default-theme project-name">' +
+                '               <input name="projectName" ng-model="$ctrl.projectName" placeholder="Design name" ng-pattern="/^[0-9a-zA-Z ]+$/" required>' +
                 '               <div ng-messages="$ctrl.saveDesignForm.projectName.$error" md-auto-hide="false">' +
                 '                   <div ng-message="required">You must enter a design name</div>' +
-                '                   <div ng-message="pattern">Please enter a valid name.</div>' + 
-                '               </div>' + 
+                '                   <div ng-message="pattern">Please enter a valid name.</div>' +
+                '               </div>' +
+                '           </md-input-container>' +
+                '           <md-input-container class="md-default-theme project-reference">' +
+                '               <input name="projectReference" ng-model="$ctrl.projectReference" placeholder="Reference" required>' +
+                '               <div ng-messages="$ctrl.saveDesignForm.projectReference.$error" md-auto-hide="false">' +
+                '                   <div ng-message="pattern">Please enter a valid reference.</div>' +
+                '               </div>' +
                 '           </md-input-container>' +
                 '       </form>' +
                 '   </md-dialog-content>' +
@@ -425,18 +432,21 @@
 
                 ctrl.loading = true;
 
-                var projectName = (ctrl.projectName)? ctrl.projectName : PROJECT_NAME;
-                exportAsPDF(projectName).then(
+                var project = {
+                    name: (ctrl.projectName)? ctrl.projectName : PROJECT_NAME,
+                    reference: angular.copy(ctrl.projectReference),
+                    tileIds: getTileIds(),
+                }
+                exportAsPDF(project).then(
                     function (data) {
                         var htmlString = data;
-                        summaryService.convert2Pdf(htmlString, projectName).then(
+                        summaryService.convert2Pdf(htmlString, project).then(
                             function (response) {
-                                projectService.saveProject(response.name, response.filename, response.url).then(
+                                projectService.saveProject(project, response.filename, response.url).then(
                                     function (response) {
-                                        var project = response.project;
                                         ctrl.loading = false;
                                         $mdDialog.hide();
-                                        $window.open(project.url);
+                                        $window.open(response.project.url);
                                         $mdToast.show(
                                             $mdToast.simple()
                                                 .textContent('Your design was successfully saved!')
@@ -492,11 +502,11 @@
         };
 
         ctrl.getTileDetails = function() {
-            for(var tileIndex=0; tileIndex<_tileDetails.length; tileIndex++) {
-                var tile = _tileDetails[tileIndex];
+            for(var i=0; i<_tileDetails.length; i++) {
+                var tile = _tileDetails[i];
                 tile.proccessedColors = [];
-                for(var colorIndex=0; colorIndex<tile.colors.length; colorIndex++) {
-                    var hexValue = tile.colors[colorIndex];
+                for(var j=0; j<tile.colors.length; j++) {
+                    var hexValue = tile.colors[j];
                     var color = getColor(hexValue);
                     if(color) {
                         tile.proccessedColors.push(color);
@@ -504,6 +514,14 @@
                 }
             }
             return _tileDetails;
+        };
+
+        var getTileIds = function() {
+            var tileIds = [];
+            for(var i=0; i<_tileDetails.length; i++) {
+                tileIds.push(_tileDetails[i].id);
+            }
+            return tileIds;
         };
 
         var getColor = function(hexValue){

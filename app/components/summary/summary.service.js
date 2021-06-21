@@ -31,9 +31,13 @@
             return undefined;
         }
 
-        function convert2Pdf(htmlString, projectName) {
+        function convert2Pdf(htmlString, project) {
             var serviceURL = '/api/converter';
-            return $http.post(serviceURL, { 'htmlString': htmlString, 'projectName': projectName }).then(
+            return $http.post(serviceURL, { 
+                'htmlString': htmlString, 
+                'projectName': project.name,
+                'projectReference': project.reference,
+            }).then(
                 function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {

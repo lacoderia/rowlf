@@ -43,8 +43,6 @@
 
         ctrl.tableQuery = {
             order: 'createdAt',
-            limit: 5,
-            page: 1
           };
 
         $scope.$on('openProjectsView', function(){
@@ -729,6 +727,19 @@
         ctrl.getUserProjects = function() {
             return _projects;
         };
+
+        ctrl.searchProject = function(item) {
+            if (!ctrl.projectQuery || (item.name.toLowerCase().indexOf(ctrl.projectQuery.toLowerCase()) != -1) || (item.description.toLowerCase().indexOf(ctrl.projectQuery.toLowerCase()) != -1) ){
+                return true;
+            }
+
+            for (var i=0; i<item.tiles.length; i++) {
+                if ( (item.tiles[i].name.toLowerCase().indexOf(ctrl.projectQuery.toLowerCase()) != -1) || item.tiles[i].sku && (item.tiles[i].sku.toLowerCase().indexOf(ctrl.projectQuery.toLowerCase()) != -1) ) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /**
          *

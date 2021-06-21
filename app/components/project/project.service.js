@@ -11,7 +11,6 @@
                 .then(function(response) {
                     var data = angular.copy(response.data);
                     if (typeof data === 'object') {
-
                         if(data.projects){
                             _projects = [];
 
@@ -20,6 +19,8 @@
                                     id: data.projects[i].id,
                                     url: data.projects[i].url,
                                     name: data.projects[i].name,
+                                    description: data.projects[i].description ? data.projects[i].description : '',
+                                    tiles: data.projects[i].tiles,
                                     filename: data.projects[i].filename,
                                     createdAt: data.projects.length - i,
                                     createdAtFormat: moment(data.projects[i].created_at).format('L, HH:mm '),
@@ -105,9 +106,15 @@
                 });
         }
 
-        function saveProject(name, filename, url) {
+        function saveProject(project, filename, url) {
             var serviceURL = AUTH_API_URL_BASE + '/projects/save';
-            return $http.post(serviceURL, { name: name, filename: filename, url: url })
+            return $http.post(serviceURL, { 
+                    name: project.name, 
+                    description: project.reference,
+                    tile_ids: project.tileIds,
+                    filename: filename, 
+                    url: url,  
+                })
                 .then(function(response) {
                     var data = response.data;
                     if (typeof data === 'object') {

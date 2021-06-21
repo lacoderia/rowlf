@@ -8,7 +8,7 @@
         </div>
         <div ng-if="!$ctrl.loading">
             <md-input-container class="md-icon-float md-block project-search-input">
-                <label>Search project by name</label>
+                <label>Search project by sku, name or reference</label>
                 <input ng-model="$ctrl.projectQuery" type="text">
             </md-input-container>
             <md-table-container>
@@ -17,21 +17,26 @@
                     <thead md-head md-order="$ctrl.tableQuery.order">
                         <tr md-row>
                             <th md-column><span></span></th>
-                            <th md-column md-order-by="name" class="cell-60"><span>Name</span></th>
+                            <th md-column md-order-by="name" class="cell-40"><span>Name</span></th>
+                            <th md-column md-order-by="reference" class="cell-20"><span>Reference</span></th>
                             <th md-column md-order-by="createdAt" class="cell-20"><span>Created at</span></th>
                             <th md-column md-numeric class="cell-20"><span>Actions</span></th>
                         </tr>
                     </thead>
                     <tbody md-body>  
-                        <tr md-row ng-repeat="project in filteredProjects = ($ctrl.getUserProjects() | orderBy: $ctrl.tableQuery.order | filter: { name: $ctrl.projectQuery } ) | limitTo: $ctrl.tableQuery.limit: ($ctrl.tableQuery.page - 1) * $ctrl.tableQuery.limit" ng-class="{ 'show-details': project.showDetailView }">
+                        <tr md-row ng-repeat="project in filteredProjects = ($ctrl.getUserProjects() | orderBy: $ctrl.tableQuery.order | filter: $ctrl.searchProject )" ng-class="{ 'show-details': project.showDetailView }">
                             <td md-cell ng-if="!project.showEmailView">
                                 <md-icon class="material-icons" ng-click="$ctrl.toggleProjectDetail($event, project)" ng-if="!project.showDetailView">&#xe5cf;</md-icon>
                                 <md-icon class="material-icons" ng-click="$ctrl.toggleProjectDetail($event, project)" ng-if="project.showDetailView">&#xe5ce;</md-icon>
                             </td>
-                            <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-60">
+                            <td md-cell ng-click="$ctrl.openProject(project)" ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-40">
                                 {{project.name}}
-                                <div ng-if="project.showDetailView" style="margin-top: 6px; color: #9E9E9E;">No project details</div>
+                                <div ng-if="project.showDetailView" style="margin-top: 6px; color: #9E9E9E;">
+                                    <div ng-if="!project.tiles.length">No project details</div>
+                                    <div ng-repeat="tile in project.tiles"><span ng-if="tile.sku">{{ tile.sku }} - </span>{{ tile.name }}</div>
+                                </div>
                             </td>
+                            <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.description}}</td>
                             <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">{{project.createdAtFormat}}</td>
                             <td md-cell ng-if="!project.showEmailView" ng-disabled="project.deleting" ng-class="{ 'disabled': project.deleting }" class="cell-20">
                                 <div class="list-item-buttons" ng-if="!project.deleting">
@@ -69,7 +74,6 @@
                     </table>
                 </form>
             </md-table-container>
-            <md-table-pagination md-limit="$ctrl.tableQuery.limit" md-limit-options="[5, 10, 15]" md-page="$ctrl.tableQuery.page" md-total="{{filteredProjects.length}}" md-on-paginate="$ctrl.getUserProjects()"></md-table-pagination>
         </div>
         
         <!-- <md-list ng-if="$ctrl.getUserProjects() && $ctrl.getUserProjects().length" class="work-table-list">
