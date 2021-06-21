@@ -281,7 +281,12 @@
                                     '   </tr>' +
                                     '   <tr>' +
                                     '       <td style="font-size:12px;" align="center">' +
+                                    '         <div>' +
                                                     tileRows[i].querySelector('.tile-count').innerHTML + ' x ' + tileRows[i].querySelector('.tile-name').innerHTML +
+                                    '         </div>' +
+                                    '         <div>' + 
+                                                    tileRows[i].querySelector('.tile-sku').innerHTML +
+                                    '         </div>' + 
                                     '       </td>' +
                                     '   </tr>' +
                                     '   <tr>' +
@@ -442,33 +447,33 @@
                         var htmlString = data;
                         summaryService.convert2Pdf(htmlString, project).then(
                             function (response) {
-                                projectService.saveProject(project, response.filename, response.url).then(
-                                    function (response) {
-                                        ctrl.loading = false;
-                                        $mdDialog.hide();
-                                        $window.open(response.project.url);
-                                        $mdToast.show(
-                                            $mdToast.simple()
-                                                .textContent('Your design was successfully saved!')
-                                                .position('top right')
-                                        );
+                                // projectService.saveProject(project, response.filename, response.url).then(
+                                //     function (response) {
+                                //         ctrl.loading = false;
+                                //         $mdDialog.hide();
+                                //         $window.open(response.project.url);
+                                //         $mdToast.show(
+                                //             $mdToast.simple()
+                                //                 .textContent('Your design was successfully saved!')
+                                //                 .position('top right')
+                                //         );
 
-                                        $rootScope.$broadcast('openProjectsView');
+                                //         $rootScope.$broadcast('openProjectsView');
 
-                                    },
-                                    function (error) {
-                                        console.log(error);
+                                //     },
+                                //     function (error) {
+                                //         console.log(error);
 
-                                        ctrl.loading = false;
-                                        ctrl.cancel();
+                                //         ctrl.loading = false;
+                                //         ctrl.cancel();
 
-                                        $mdToast.show(
-                                            $mdToast.simple()
-                                                .textContent('An error occurred, please try again later.')
-                                                .position('top right')
-                                        );
-                                    }
-                                );
+                                //         $mdToast.show(
+                                //             $mdToast.simple()
+                                //                 .textContent('An error occurred, please try again later.')
+                                //                 .position('top right')
+                                //         );
+                                //     }
+                                // );
                             },
                             function (error) {
                                 console.log(error);

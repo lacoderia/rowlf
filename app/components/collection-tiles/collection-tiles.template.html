@@ -58,6 +58,7 @@
                                     <div class="tile-item" ng-class="{true:'selected', false:''}[$ctrl.isSelectedTile(item.id)]" ng-click="$ctrl.toggleTile(item)" layout="column" md-whiteframe="1">
                                         <img class="tile-image" ng-src="{{ item.url }}"/>
                                         <h3 class="tile-title" ng-bind="item.name"></h3>
+                                        <div class="tile-sku" ng-bind="item.sku"></div>
                                         <div class="selected-overlay"></div>
                                         <md-icon class="material-icons selected-icon">&#xE86C;</md-icon>
                                     </div>

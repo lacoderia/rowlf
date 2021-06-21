@@ -58,7 +58,10 @@
                                 <td class="tile-cell" style="width: 50px; padding-right: 8px;">
                                     <tile-button class="tile" tile="{{ tile }}" ng-if="tile.id" style="width: 100%; display: block;"></tile-button>
                                 </td>
-                                <td class="tile-name">{{tile.name}}</td>
+                                <td>
+                                    <div class="tile-name">{{tile.name}}</div>
+                                    <div class="tile-sku">{{tile.sku}}</div>
+                                </td>
                             </tr>
                         </table>
                     </div>
