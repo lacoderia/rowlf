@@ -116,24 +116,26 @@
                             </md-input-container>
                         </div>
                         <div layout="row" layout-sm="column" layout-xs="column">
-                            <md-autocomplete flex required
-                                             md-input-name="country"
-                                             md-no-cache="$ctrl.noCache"
-                                             md-selected-item="$ctrl.selectedCountry"
-                                             md-search-text="$ctrl.searchText"
-                                             md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                                             md-item-text="item.display"
-                                             md-floating-label="Country"
-                                             md-require-match="true"
-                                             flex="50" flex-sm="100" flex-xs="100">
-                                <md-item-template>
-                                    <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
-                                </md-item-template>
-                                <div ng-messages="$ctrl.signupForm.country.$error" md-auto-hide="true">
-                                    <div ng-message="required" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">Country is required</div>
-                                    <div ng-message="md-require-match">You must select an item from the country list</div>
-                                </div>
-                            </md-autocomplete>
+                            <div flex="50" flex-sm="100" flex-xs="100">
+                                <md-autocomplete flex required
+                                        md-input-name="cntry"
+                                        md-no-cache="true"
+                                        md-selected-item="$ctrl.selectedCountry"
+                                        md-search-text="$ctrl.searchText"
+                                        md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                                        md-item-text="item.display"
+                                        md-floating-label="ountry"
+                                        md-require-match="true"
+                                        class="country">
+                                    <md-item-template>
+                                        <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
+                                    </md-item-template>
+                                    <div ng-messages="$ctrl.signupForm.cntry.$error" md-auto-hide="true">
+                                        <div ng-message="required" ng-if="$ctrl.signupForm.cntry.$invalid && ($ctrl.signupForm.cntry.$touched || $ctrl.signupForm.$submitted)">Country is required</div>
+                                        <div ng-message="md-require-match">You must select an item from the country list</div>
+                                    </div>
+                                </md-autocomplete>
+                            </div>
                             <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>Phone (numbers and spaces only)</label>
                                 <input type="text" name="phone" ng-model="$ctrl.newUser.phone" ng-pattern="/^[0-9 ]{7,20}$/" required>
