@@ -38,30 +38,58 @@
             </div>
         </div>
         <div class="signup-form" ng-if="$ctrl.isCurrentView($ctrl.VIEWS.SIGNUP)" layout="row" layout-align="center center" flex="100" layout-fill>
-            <div layout="column" flex="60" flex-sm="60" flex-xs="85">
-                <form novalidate class="form" name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
+            <div layout="column" flex="80" flex-sm="80" flex-xs="85">
+                <form novalidate class="form register" name="$ctrl.signupForm" ng-submit="$ctrl.signUp()">
                     <hgroup>
                         <h1>
                             Create an account
                         </h1>
                     </hgroup>
-                    <div layout="row" layout-padding layout-wrap>
-                        <div layout="column" flex="50" flex-sm="100" flex-xs="100">
-                            <md-input-container class="md-block">
+                    <div layout="column" layout-padding layout-wrap>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>Your name</label>
                                 <input type="text" name="name" ng-model="$ctrl.newUser.name" required>
                                 <div ng-messages="$ctrl.signupForm.name.$error" md-auto-hide="false">
                                     <div ng-message="required">Your name is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Email</label>
+                                <input type="email" name="email" ng-model="$ctrl.newUser.email" required>
+                                <div ng-messages="$ctrl.signupForm.email.$error" md-auto-hide="false">
+                                    <div ng-message="required">Email is required</div>
+                                    <div ng-message="email">Not a valid email</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Password</label>
+                                <input type="password" name="password" ng-model="$ctrl.newUser.password" minlength="8" required>
+                                <div ng-messages="$ctrl.signupForm.password.$error" md-auto-hide="false">
+                                    <div ng-message="required">A password is required</div>
+                                    <div ng-message="minlength">Use at least 8 characters</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Confirm password</label>
+                                <input type="password" name="confirmation" ng-model="$ctrl.newUser.confirmation" pw-check="$ctrl.newUser.password" required>
+                                <div ng-messages="$ctrl.signupForm.confirmation.$error" md-auto-hide="false">
+                                    <div ng-message="required">A password is required</div>
+                                    <div ng-message="pwCheck">Passwords don't match</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>Address</label>
                                 <input type="text" name="address" ng-model="$ctrl.newUser.address" required>
                                 <div ng-messages="$ctrl.signupForm.address.$error" md-auto-hide="false">
                                     <div ng-message="required">Address is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>ZIP code</label>
                                 <input type="text" name="zip" ng-model="$ctrl.newUser.zip" minlength="3" maxlength="8" required>
                                 <div ng-messages="$ctrl.signupForm.zip.$error" md-auto-hide="false">
@@ -70,28 +98,24 @@
                                     <div ng-message="maxlength">ZIP code is too long.</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
-                                <label>Phone (numbers and spaces only)</label>
-                                <input type="text" name="phone" ng-model="$ctrl.newUser.phone" ng-pattern="/^[0-9 ]{7,20}$/" required>
-                                <div ng-messages="$ctrl.signupForm.phone.$error" md-auto-hide="false">
-                                    <div ng-message="required">Phone is required</div>
-                                    <div ng-message="pattern">Please enter a valid phone.</div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block">
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>City</label>
                                 <input type="text" name="city" ng-model="$ctrl.newUser.city" required>
                                 <div ng-messages="$ctrl.signupForm.city.$error" md-auto-hide="false">
                                     <div ng-message="required">City is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>State/Province/Region</label>
                                 <input type="text" name="state" ng-model="$ctrl.newUser.state" required>
                                 <div ng-messages="$ctrl.signupForm.state.$error" md-auto-hide="false">
                                     <div ng-message="required">State/Province/Region is required</div>
                                 </div>
                             </md-input-container>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
                             <md-autocomplete flex required
                                              md-input-name="country"
                                              md-no-cache="$ctrl.noCache"
@@ -100,7 +124,8 @@
                                              md-items="item in $ctrl.querySearch($ctrl.searchText)"
                                              md-item-text="item.display"
                                              md-floating-label="Country"
-                                             md-require-match="true">
+                                             md-require-match="true"
+                                             flex="50" flex-sm="100" flex-xs="100">
                                 <md-item-template>
                                     <span md-highlight-text="$ctrl.searchText">{{item.display}}</span>
                                 </md-item-template>
@@ -109,38 +134,117 @@
                                     <div ng-message="md-require-match">You must select an item from the country list</div>
                                 </div>
                             </md-autocomplete>
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Phone (numbers and spaces only)</label>
+                                <input type="text" name="phone" ng-model="$ctrl.newUser.phone" ng-pattern="/^[0-9 ]{7,20}$/" required>
+                                <div ng-messages="$ctrl.signupForm.phone.$error" md-auto-hide="false">
+                                    <div ng-message="required">Phone is required</div>
+                                    <div ng-message="pattern">Please enter a valid phone.</div>
+                                </div>
+                            </md-input-container>
                         </div>
-                        <div layout="column" flex="50" flex-sm="100" flex-xs="100">
-                            <md-input-container class="md-block">
-                                <label>Email</label>
-                                <input type="email" name="email" ng-model="$ctrl.newUser.email" required>
-                                <div ng-messages="$ctrl.signupForm.email.$error" md-auto-hide="false">
-                                    <div ng-message="required">Email is required</div>
-                                    <div ng-message="email">Not a valid email</div>
+                        <div>
+                            <h3>Company</h3>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Company name</label>
+                                <input type="text" name="company" ng-model="$ctrl.newUser.company">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Business Type</label>
+                                <md-select name="businessType" ng-model="$ctrl.newUser.businessType" required>
+                                  <md-option value="Residential">Showroom</md-option>
+                                  <md-option value="Interior Designer">Interior Designer</md-option>
+                                  <md-option value="Architect">Architect</md-option>
+                                  <md-option value="Contractor">Contractor</md-option>
+                                  <md-option value="Private">Private</md-option>
+                                  <md-option value="Other">Other</md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.signupForm.businessType.$error" md-auto-hide="true">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.businessType.$invalid && ($ctrl.signupForm.businessType.$touched || $ctrl.signupForm.$submitted)">Business type is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
-                                <label>Password</label>
-                                <input type="password" name="password" ng-model="$ctrl.newUser.password" minlength="8" required>
-                                <div ng-messages="$ctrl.signupForm.password.$error" md-auto-hide="false">
-                                    <div ng-message="required">A password is required</div>
-                                    <div ng-message="minlength">Use at least 8 characters</div>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Job title</label>
+                                <input type="text" name="jobTitle" ng-model="$ctrl.newUser.jobTitle">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>What type of installation are you planning</label>
+                                <md-select name="installationType" ng-model="$ctrl.newUser.installationType" required>
+                                  <md-option value="Residential">Residential</md-option>
+                                  <md-option value="Commercial">Commercial</md-option>
+                                  <md-option value="Hospitality">Hospitality</md-option>
+                                  <md-option value="Others">Others</md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.signupForm.installationType.$error" md-auto-hide="true">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.installationType.$invalid && ($ctrl.signupForm.installationType.$touched || $ctrl.signupForm.$submitted)">Installation type is required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
-                                <label>Confirm password</label>
-                                <input type="password" name="confirmation" ng-model="$ctrl.newUser.confirmation" pw-check="$ctrl.newUser.password" required>
-                                <div ng-messages="$ctrl.signupForm.confirmation.$error" md-auto-hide="false">
-                                    <div ng-message="required">A password is required</div>
-                                    <div ng-message="pwCheck">Passwords don't match</div>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>How did you hear about us</label>
+                                <md-select name="aboutUs" ng-model="$ctrl.newUser.aboutUs" required>
+                                  <md-option value="Internet search">Internet search</md-option>
+                                  <md-option value="Facebook">Facebook</md-option>
+                                  <md-option value="Instagram">Instagram</md-option>
+                                  <md-option value="Pinterest">Pinterest</md-option>
+                                  <md-option value="Twitter">Twitter</md-option>
+                                  <md-option value="Trade show">Trade show</md-option>
+                                  <md-option value="Magazine">Magazine</md-option>
+                                  <md-option value="Referals">Referals</md-option>
+                                  <md-option value="Other">Other</md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.signupForm.aboutUs.$error" md-auto-hide="true">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.aboutUs.$invalid && ($ctrl.signupForm.aboutUs.$touched || $ctrl.signupForm.$submitted)">Required</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>Distributor reference</label>
                                 <input type="text" name="reference" ng-model="$ctrl.newUser.reference" ng-required="$root.iframe">
                                 <div class="hint" ng-hide="$ctrl.signupForm.reference.$invalid && ($ctrl.signupForm.reference.$touched || $ctrl.signupForm.$submitted)">Who recommended our tool?</div>
                                 <div ng-messages="$ctrl.signupForm.reference.$error" md-auto-hide="false">
                                     <div ng-message="required">Distributor reference is required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <h3>Your project</h3>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Project references</label>
+                                <input type="text" name="projectReferences" ng-model="$ctrl.newUser.projectReferences" required>
+                                <div ng-messages="$ctrl.signupForm.projectReferences.$error" md-auto-hide="false">
+                                    <div ng-message="required">Project reference is required</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Designs and required quantities</label>
+                                <input type="text" name="designsQuantity" ng-model="$ctrl.newUser.designsQuantity" required>
+                                <div ng-messages="$ctrl.signupForm.designsQuantity.$error" md-auto-hide="false">
+                                    <div ng-message="required">Designs and quantity is required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="100" flex-sm="100" flex-xs="100">
+                                <label>Complete delivery address</label>
+                                <input type="text" name="deliveryAddress" ng-model="$ctrl.newUser.deliveryAddress" required>
+                                <div ng-messages="$ctrl.signupForm.deliveryAddress.$error" md-auto-hide="false">
+                                    <div ng-message="required">Delivery address is required</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-sm="column" layout-xs="column">
+                            <md-input-container class="md-block" flex="100" flex-sm="100" flex-xs="100">
+                                <label>Message</label>
+                                <input type="text" name="message" ng-model="$ctrl.newUser.message" required>
+                                <div ng-messages="$ctrl.signupForm.message.$error" md-auto-hide="false">
+                                    <div ng-message="required">Message is required</div>
                                 </div>
                             </md-input-container>
                         </div>

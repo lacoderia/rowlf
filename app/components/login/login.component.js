@@ -308,7 +308,16 @@
             email: '',
             password: '',
             confirmation: '',
-            reference: undefined
+            reference: undefined,
+            company: undefined,
+            businessType: undefined,
+            jobTitle: undefined,
+            installationType: undefined,
+            aboutUs: undefined,
+            projectReferences: undefined,
+            designsQuantity: undefined,
+            deliveryAddress: undefined,
+            message: undefined,
         };
 
         // Object that holds the recover password data
@@ -417,6 +426,15 @@
                                 password: ctrl.newUser.password,
                                 password_confirmation: ctrl.newUser.confirmation,
                                 reference: ctrl.newUser.reference,
+                                company_name: ctrl.newUser.company,
+                                business_type: ctrl.newUser.businessType,
+                                job_title: ctrl.newUser.jobTitle,
+                                type_of_installation: ctrl.newUser.installationType,
+                                about_us: ctrl.newUser.aboutUs,
+                                project_references: ctrl.newUser.projectReferences,
+                                designs_quantities: ctrl.newUser.designsQuantity,
+                                complete_delivery_address: ctrl.newUser.deliveryAddress,
+                                message: ctrl.newUser.message,
                                 location: location
                             };
 
