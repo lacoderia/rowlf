@@ -5,10 +5,10 @@
 
 previewer
   background: transparent
-  height: 64vh
   overflow: hidden
   position: relative
-  width: 80%
+  max-width: 1000px !important
+  width: 70%
   z-index: 100
 
   md-progress-circular
@@ -18,8 +18,12 @@ previewer
     transform: translate(-50%, -50%)
     z-index: 300
 
-  #previewer-container
+  #preview-to-pdf
     position: relative
+    overflow: hidden
+
+  #previewer-container
+    position: absolute
 
   #image-container
     display: inline-block
@@ -47,11 +51,7 @@ previewer
 
   #previewer-image
     height: 100%
-    left: 50%
-    position: absolute
-    transform: translate(-50%, -50%)
-    top: 50%
-    width: auto
+    width: 100%
     z-index: 200
 
   #grid
