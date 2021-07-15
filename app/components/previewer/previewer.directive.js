@@ -172,6 +172,8 @@
                                             var svg = SVGContainer.querySelector('svg');
                                             svg.setAttribute('version', '1.1');
                                             svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                                            svg.setAttribute('height', tileHeight);
+                                            svg.setAttribute('width', tileWidth);
 
                                             var degrees = '0';
                                             if (_grid[row][cellIndex].tile) {
@@ -257,6 +259,8 @@
                                             var svg = SVGContainer.querySelector('svg');
                                             svg.setAttribute('version', '1.1');
                                             svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                                            svg.setAttribute('height', tileHeight);
+                                            svg.setAttribute('width', tileWidth);
 
                                             var degrees = '0';
                                             if (_grid[row][cellIndex].tile) {
