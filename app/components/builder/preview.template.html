@@ -5,6 +5,7 @@
             <div class="preview-instructions" ng-if="$ctrl.getSelectedImage()" flex="100" layout-align="center center">
                 <md-button class="md-raised" ng-click="$ctrl.savePreview()"><md-tooltip>Download</md-tooltip><md-icon>&#xf090;</md-icon> Download</md-button>
             </div>
+            <div ng-if="$ctrl.showFirefoxNotice()">To ensure a better experience please use Safari or Chrome browser.</div>
         </div>
         <div class="tile-tools" layout="row" flex-gt-xs="30" flex-xs="100" layout-wrap md-whiteframe="1" layout-align="start start">
             <div class="tile-tools-wrapper" layout-wrap flex="100">

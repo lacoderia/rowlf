@@ -508,6 +508,10 @@
             _mdPanel.open();
         };
 
+        ctrl.showFirefoxNotice = function() {
+            return navigator.userAgent.indexOf("Firefox") !== -1 ? true : false;
+        }
+
         ctrl.savePreview = function() {
             domtoimage.toPng(document.getElementById('preview-to-pdf'))
             .then(function (dataUrl) {
@@ -845,6 +849,17 @@
 
             if(_gridTypes.length > 0){
                 ctrl.setSelectedGridType(_gridTypes[0]);
+            }
+
+            // Show notification if user agent is Firefox
+            if (navigator.userAgent.indexOf("Firefox") !== -1){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('To ensure a better experience please use Safari or Chrome browser.')
+                        .position('top right')
+                        .hideDelay(10000)
+                        .action('CLOSE')
+                );
             }
 
         };
