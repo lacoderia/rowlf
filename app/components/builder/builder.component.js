@@ -636,8 +636,34 @@
             _mdPanel.open();
         };
 
-        ctrl.showFirefoxNotice = function() {
-            return navigator.userAgent.indexOf("Firefox") !== -1 ? true : false;
+        var isChrome = function() {
+            var isChromium = window.chrome;
+            var winNav = window.navigator;
+            var vendorName = winNav.vendor;
+            var isOpera = typeof window.opr !== "undefined";
+            var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+            var isIOSChrome = winNav.userAgent.match("CriOS");
+
+            if (isIOSChrome) {
+                // is Google Chrome on IOS
+                return true;
+            } else if(
+            isChromium !== null &&
+            typeof isChromium !== "undefined" &&
+            vendorName === "Google Inc." &&
+            isOpera === false &&
+            isIEedge === false
+            ) {
+                // is Google Chrome
+                return true;
+            } else { 
+                // is not Google Chrome
+                return false;
+            }
+        }
+
+        ctrl.showChromeNotice = function() {
+            return !isChrome();
         }
 
         ctrl.savePreview = function() {
@@ -991,24 +1017,7 @@
 
             // Show notification if user agent is not Chrome
 
-            var isChromium = window.chrome;
-            var winNav = window.navigator;
-            var vendorName = winNav.vendor;
-            var isOpera = typeof window.opr !== "undefined";
-            var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
-            var isIOSChrome = winNav.userAgent.match("CriOS");
-
-            if (isIOSChrome) {
-            // is Google Chrome on IOS
-            } else if(
-            isChromium !== null &&
-            typeof isChromium !== "undefined" &&
-            vendorName === "Google Inc." &&
-            isOpera === false &&
-            isIEedge === false
-            ) {
-            // is Google Chrome
-            } else { 
+            if (!isChrome()) {
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('To ensure a better experience please use Chrome browser.')
