@@ -17,8 +17,8 @@
                 templateUrl: '/components/previewer/previewer.html',
                 link: function (scope, element) {
                     var TILE_SPACE = 1;
-                    var tileWidth = 50;
-                    var tileHeight = 50;
+                    var tileWidth = 400;
+                    var tileHeight = 400;
                     var loading = false;
                     var gridSize = scope.gridSize;
                     var hexShape = scope.hexShape;
@@ -299,85 +299,26 @@
                                 tmpImage.style.width  = canvasWidth + 'px';
                                 tmpImage.style.height = canvasHeight + 'px';
 
-                                switch(image.code) {
-                                    case ('backsplash'):
-                                        d3.select('#grid')
-                                            .style('perspective', '0px')
-                                            .style('perspective-origin', '50% 50%');
+                                d3.select('#preview-to-pdf')
+                                    .style('position', 'relative')
+                                    .style('overflow', 'hidden');
 
-                                        var bgSize = (gridSize * 10)/2 + '%';
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', bgSize)
-                                            .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
+                                d3.select('#previewer-container')
+                                    .style('position', 'absolute')
+                                    .style('top', image.top);
 
-                                        break;
+                                d3.select('#grid')
+                                    .style('perspective', image.perspective)
+                                    .style('perspective-origin', image.perspectiveOrigin);
 
-                                    case ('bathroom'):
-                                        d3.select('#grid')
-                                            .style('perspective', '500px')
-                                            .style('perspective-origin', '50% 50%');
-
-                                        var bgSize = (gridSize * 5)/2 + '%';
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', bgSize)
-                                            .style('transform', 'rotateX(75deg) rotateY(0deg) rotateZ(0deg) translate(0%, 60%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
-
-                                        break;
-
-                                    case ('dining-room'):
-                                        d3.select('#grid')
-                                            .style('perspective', '500px')
-                                            .style('perspective-origin', '50% 50%');
-
-                                        var bgSize = (gridSize * 7)/2 + '%';
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', bgSize)
-                                            .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
-
-                                        break;
-
-                                    case ('living-room'):
-                                        d3.select('#grid')
-                                            .style('perspective', '500px')
-                                            .style('perspective-origin', '50% 50%');
-
-                                        var bgSize = (gridSize * 5)/2 + '%';
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', bgSize)
-                                            .style('transform', 'rotateX(70deg) rotateY(0deg) rotateZ(0deg) translate(0%, 80%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
-
-                                        break;
-
-                                    case ('kitchen'):
-                                        d3.select('#grid')
-                                            .style('perspective', '0px')
-                                            .style('perspective-origin', '50% 50%');
-
-                                        var bgSize = (gridSize * 10)/2 + '%';
-                                        d3.select('#grid-inner-wrapper')
-                                            .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
-                                            .style('background-size', bgSize)
-                                            .style('transform', 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0%, 0%)')
-                                            .style('height', '100%')
-                                            .style('width', '100%');
-
-                                        break;
-
-                                    default:
-                                        break;
-                                }
+                                var bgSize = (gridSize * image.bgSizeMultiplier)/2 + '%';
+                                d3.select('#grid-inner-wrapper')
+                                    .style('background', 'transparent url(' + backgroundUrl + ') repeat top left')
+                                    .style('background-size', bgSize)
+                                    .style('transform', 'rotateX(' + image.transformX + ') rotateY(0deg) rotateZ(0deg) translate(' + image.translate + ')')
+                                    .style('height', '100%')
+                                    .style('width', image.width)
+                                    .style('margin', '0 auto');
 
                                 d3.select('#image-container')
                                     .style('display', 'none');

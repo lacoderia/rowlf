@@ -20,11 +20,139 @@
         var _selectedImage = undefined;
 
         ctrl.EXAMPLE_IMAGES = [
-            { code: 'backsplash', title: 'Backsplash', url: '/assets/images/preview/preview_1.png'},
-            { code: 'bathroom',title: 'Bathroom', url: '/assets/images/preview/preview_2.png'},
-            { code: 'dining-room',title: 'Dining Room', url: '/assets/images/preview/preview_3.png'},
-            { code: 'living-room',title: 'Living Room', url: '/assets/images/preview/preview_4.png'},
-            { code: 'kitchen',title: 'Kitchen', url: '/assets/images/preview/preview_5.png'}
+            { 
+                code: 'bathroom-1', 
+                title: 'Bathroom 1', 
+                url: '/assets/images/preview/bathroom_1.png',
+                top: '35%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '101deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'bathroom-2', 
+                title: 'Bathroom 2', 
+                url: '/assets/images/preview/bathroom_2.png',
+                top: '27%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '101deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'bedroom-1', 
+                title: 'Bedroom', 
+                url: '/assets/images/preview/bedroom_1.png',
+                top: '29%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '101deg',
+                translate: '8%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'kitchen-1', 
+                title: 'Kitchen 1', 
+                url: '/assets/images/preview/kitchen_1.png',
+                top: '0%',
+                perspective: '0px',
+                perspectiveOrigin: '50% 50%',
+                bgSizeMultiplier: 10,
+                transformX: '0deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'kitchen-2', 
+                title: 'Kitchen 2', 
+                url: '/assets/images/preview/kitchen_2.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '104deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'entry-1', 
+                title: 'Entry', 
+                url: '/assets/images/preview/entry_1.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '104deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'dining-1', 
+                title: 'Dining room', 
+                url: '/assets/images/preview/dining_1.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '104deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'living-room-1', 
+                title: 'Living Room', 
+                url: '/assets/images/preview/living_room_1.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '104deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'laundry-1', 
+                title: 'Laundry Room', 
+                url: '/assets/images/preview/laundry_room_1.png',
+                top: '30%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '105deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'outdoor-1', 
+                title: 'Outdoor', 
+                url: '/assets/images/preview/outdoor_1.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '105deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+            { 
+                code: 'office-1', 
+                title: 'Office', 
+                url: '/assets/images/preview/office_1.png',
+                top: '25%',
+                perspective: '30vw',
+                perspectiveOrigin: '50% 0%',
+                bgSizeMultiplier: 8,
+                transformX: '104deg',
+                translate: '0%, 0%',
+                width: '100%',
+            },
+
         ];
         ctrl.ACTIONS = {
             'EDIT': {code: 'EDIT'},
@@ -513,19 +641,29 @@
         }
 
         ctrl.savePreview = function() {
-            domtoimage.toPng(document.getElementById('preview-to-pdf'))
-            .then(function (dataUrl) {
-                var docDefinition = {
-                    content: [{
-                        image: dataUrl,
-                        width: 500,
-                    }]
-                };
-                pdfMake.createPdf(docDefinition).download("preview.pdf");
+
+            domtoimage.toJpeg(document.getElementById('preview-to-pdf'), { 
+                height: document.getElementById('preview-to-pdf').clientHeight, 
+                width: document.getElementById('preview-to-pdf').clientWidth 
             })
-            .catch(function (error) {
-                console.error('oops, something went wrong!', error);
-            });
+                .then(function (dataUrl) {
+                    var link = document.createElement('a');
+                    link.download = 'preview.jpeg';
+                    link.href = dataUrl;
+                    link.click();
+
+                    // var docDefinition = {
+                    //     content: [{
+                    //         image: dataUrl,
+                    //         width: 500,
+                    //     }]
+                    // };
+                    // pdfMake.createPdf(docDefinition).download("preview.pdf");
+                })
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+
         };
 
         ctrl.closePreview = function() {
@@ -851,11 +989,29 @@
                 ctrl.setSelectedGridType(_gridTypes[0]);
             }
 
-            // Show notification if user agent is Firefox
-            if (navigator.userAgent.indexOf("Firefox") !== -1){
+            // Show notification if user agent is not Chrome
+
+            var isChromium = window.chrome;
+            var winNav = window.navigator;
+            var vendorName = winNav.vendor;
+            var isOpera = typeof window.opr !== "undefined";
+            var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+            var isIOSChrome = winNav.userAgent.match("CriOS");
+
+            if (isIOSChrome) {
+            // is Google Chrome on IOS
+            } else if(
+            isChromium !== null &&
+            typeof isChromium !== "undefined" &&
+            vendorName === "Google Inc." &&
+            isOpera === false &&
+            isIEedge === false
+            ) {
+            // is Google Chrome
+            } else { 
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('To ensure a better experience please use Safari or Chrome browser.')
+                        .textContent('To ensure a better experience please use Chrome browser.')
                         .position('top right')
                         .hideDelay(10000)
                         .action('CLOSE')

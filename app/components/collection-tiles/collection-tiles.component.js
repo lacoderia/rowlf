@@ -108,6 +108,9 @@
          * @param collection
          */
         ctrl.selectCollectionTiles = function(collection){
+            if (ctrl.loading) {
+                return;
+            }
             try{
 
                 _selectedCollectionTiles = collection;
