@@ -116,7 +116,7 @@
                             </md-input-container>
                         </div>
                         <div layout="row" layout-sm="column" layout-xs="column">
-                            <div flex="50" flex-sm="100" flex-xs="100">
+                            <!-- <div flex="50" flex-sm="100" flex-xs="100">
                                 <md-autocomplete flex required
                                         md-input-name="cntry"
                                         md-no-cache="true"
@@ -135,7 +135,20 @@
                                         <div ng-message="md-require-match">You must select an item from the country list</div>
                                     </div>
                                 </md-autocomplete>
-                            </div>
+                            </div> -->
+                            <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+                                <label>Country</label>
+                                <md-select name="country" ng-model="$ctrl.selectedCountry" required>
+                                    <md-option 
+                                        ng-value="item" 
+                                        ng-repeat="item in $ctrl.countries"
+                                        ng-selected="$ctrl.countries.indexOf(item) == 232"
+                                        >{{item.display}}</md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.signupForm.country.$error" md-auto-hide="true">
+                                    <div ng-message="required" ng-if="$ctrl.signupForm.country.$invalid && ($ctrl.signupForm.country.$touched || $ctrl.signupForm.$submitted)">Country is required</div>
+                                </div>
+                            </md-input-container>
                             <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
                                 <label>Phone (numbers and spaces only)</label>
                                 <input type="text" name="phone" ng-model="$ctrl.newUser.phone" ng-pattern="/^[0-9 ]{7,20}$/" required>
